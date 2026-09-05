@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setStatus("Ready. Choose the included demo or drop a CCCCO Program Awards Excel export.", "neutral");
 });
 
+function preferredScrollBehavior() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+}
+
 function setStatus(message, kind="neutral") {
   els.status.textContent = message;
   els.status.dataset.kind = kind;
@@ -178,7 +182,7 @@ function initializeWorkspace(defaultProgram="") {
 
   els.programSearch.value = defaultProgram;
   renderResults();
-  els.workspace.scrollIntoView({behavior:"smooth", block:"start"});
+  els.workspace.scrollIntoView({behavior:preferredScrollBehavior(), block:"start"});
 }
 
 function populatePrograms() {
@@ -306,6 +310,7 @@ async function copyMethod() {
     await navigator.clipboard.writeText(els.methodText.textContent);
     const old = els.copyMethod.textContent;
     els.copyMethod.textContent = "Copied";
+    setStatus("Method copied to the clipboard.", "success");
     setTimeout(() => els.copyMethod.textContent = old, 1400);
   } catch {
     setStatus("Your browser blocked automatic copying. You can select and copy the method text manually.", "error");
@@ -314,7 +319,7 @@ async function copyMethod() {
 
 function downloadCsv() {
   const records = matchingRecords();
-  if (!records.length) return;
+  if (!records.length) { setStatus("There are no matching rows to download. Adjust the filters and try again.", "error"); return; }
   const grouped = new Map();
   records.forEach(r => grouped.set(r.college, (grouped.get(r.college) || 0) + r.count));
   const rows = [...grouped.entries()].sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
@@ -329,6 +334,7 @@ function downloadCsv() {
   a.download = "data-mart-smart-program-awards.csv";
   a.click();
   URL.revokeObjectURL(url);
+  setStatus("Comparison CSV downloaded.", "success");
 }
 
 function csvCell(value) {
@@ -346,7 +352,7 @@ function resetViewer() {
   els.fileInput.value = "";
   els.programSearch.value = "";
   setStatus("Reset. Choose the included demo or drop a CCCCO Program Awards Excel export.", "neutral");
-  window.scrollTo({top:0, behavior:"smooth"});
+  window.scrollTo({top:0, behavior:preferredScrollBehavior()});
 }
 
 function escapeHtml(value) {
