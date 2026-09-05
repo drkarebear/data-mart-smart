@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How-To Guides | Data Mart Smart</title>
-  <meta name="description" content="Practical step-by-step guides for common California Community Colleges Data Mart tasks.">
+  <meta name="description" content="Task-based CCC Data Mart recipes grouped by students, courses, outcomes, awards, services, staffing, and data skills.">
   <link rel="icon" type="image/png" href="favicon8.png">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,92 +14,81 @@
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="Data Mart Smart home">
         <img src="favicon8.png" alt="">
-        <span>
-          <span class="brand-title">Data Mart Smart</span>
-          <span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span>
-        </span>
+        <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
       </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="query-guide.html">Find the Right Report</a></li>
-          <li><a href="reports.html" aria-current="page">How-To Guides</a></li>
-          <li><a href="understand-data.html">Data Tips</a></li>
-          <li><a href="examples.html">Examples</a></li>
-          <li><a href="index.html#coach">Ask the Coach</a></li>
-          <li><a href="about.html">About</a></li>
-        </ul>
-      </nav>
+      <nav class="site-nav" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="query-guide.html">Find the Right Report</a></li><li><a href="reports.html" aria-current="page">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="examples.html">Examples</a></li><li><a href="index.html#coach">Ask the Coach</a></li><li><a href="about.html">About</a></li></ul></nav>
     </div>
   </header>
-
   <main id="main-content">
+
     <section class="page-hero" aria-labelledby="page-title">
       <div class="container page-hero-inner">
-        <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> How-To Guides</p>
-        <p class="eyebrow">Practical recipes for common questions</p>
+        <p class="eyebrow">Practical recipes, not a report catalog</p>
         <h1 id="page-title">How-To Guides</h1>
-        <p>Each guide starts with a real institutional question, identifies the best Data Mart report, walks through the setup, explains what the result means, and flags the places where interpretation can go wrong.</p>
+        <p>Start with the job you need to do. The guides below are grouped by the kind of question you are asking so you do not have to know the Data Mart menu first.</p>
       </div>
     </section>
 
-    <section aria-labelledby="popular-heading">
+    <section>
       <div class="container">
-        <div class="section-heading">
-          <h2 id="popular-heading">Start With a Common Task</h2>
-          <p>These are designed to be followed from question to interpretation.</p>
+        <div class="info-box">
+          <h2>Short on Time?</h2>
+          <p>Every recipe now begins with an <strong>In a Hurry?</strong> box showing the report, measure, setup, main caution, and typical setup time.</p>
         </div>
 
-        <div class="guide-grid">
-          <article class="guide-card">
-            <span class="tag">Courses</span>
-            <h3>Compare Course Sections Across Colleges</h3>
-            <p>Compare how many sections of a discipline or course were reported by different colleges while checking prefixes, TOP codes, and linked section structures.</p>
-            <a href="sections-across-colleges.html">Follow the section-count recipe <span aria-hidden="true">→</span></a>
-          </article>
+        <section class="guide-group" aria-labelledby="students-group">
+          <h2 id="students-group">Students & Enrollment</h2>
+          <p>Use these when the question is about distinct students, participation, trends, or instructional activity.</p>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="tag">Students</span><h3>Find Student Headcount</h3><p>Count distinct students correctly, including current deduplication rules.</p><a href="student-headcount.html">Headcount recipe <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Trends</span><h3>Build an Enrollment Trend</h3><p>Keep measures, populations, and intervals consistent across time.</p><a href="enrollment-trends.html">Trend recipe <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">FTES</span><h3>Understand and Use FTES</h3><p>Use instructional-activity measures without confusing FTES with headcount.</p><a href="ftes.html">FTES recipe <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
 
-          <article class="guide-card">
-            <span class="tag">Students</span>
-            <h3>Compare Enrollment Over Time</h3>
-            <p>Build a clean Fall-to-Fall or academic-year trend without mixing headcount, enrollment count, or incompatible time periods.</p>
-            <a href="query-guide.html">Choose the student report <span aria-hidden="true">→</span></a>
-          </article>
+        <section class="guide-group" aria-labelledby="courses-group">
+          <h2 id="courses-group">Courses & Outcomes</h2>
+          <p>Use these for sections, grades, retention, and success.</p>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="tag">Sections</span><h3>Compare Sections Across Colleges</h3><p>Define the course population and account for linked section structures.</p><a href="sections-across-colleges.html">Sections recipe <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Outcomes</span><h3>Compare Course Success and Retention</h3><p>Read rates together with the underlying counts and denominator.</p><a href="course-success.html">Success recipe <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Grades</span><h3>Explore Grade Distribution</h3><p>Examine reported grade composition when a single success rate is not enough.</p><a href="grade-distribution.html">Grade recipe <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
 
-          <article class="guide-card">
-            <span class="tag">Outcomes</span>
-            <h3>Compare Course Success Rates</h3>
-            <p>Use success and retention data carefully by checking numerators, denominators, underlying N, and comparable populations.</p>
-            <a href="understand-data.html">Review rate and denominator tips <span aria-hidden="true">→</span></a>
-          </article>
+        <section class="guide-group" aria-labelledby="awards-group">
+          <h2 id="awards-group">Awards, Transfer & Careers</h2>
+          <p>Use these for completions, transfer questions, and wage outcomes.</p>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="tag">Awards</span><h3>Compare Program Awards</h3><p>Keep award type and program classification consistent.</p><a href="program-awards.html">Awards recipe <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Transfer</span><h3>Choose the Right Transfer Report</h3><p>Distinguish historical cohort-based Velocity from count-based Volume.</p><a href="transfer-data.html">Transfer guide <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Wages</span><h3>Use the Wage Trackers Carefully</h3><p>Interpret wages with match-rate, suppression, and time-frame cautions.</p><a href="wage-trackers.html">Wage guide <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
 
-          <article class="guide-card">
-            <span class="tag">Awards</span>
-            <h3>Compare Degrees and Certificates</h3>
-            <p>Use Program Awards to compare reported awards by college, award type, instructional area, and time period.</p>
-            <a href="query-guide.html">Find the Program Awards report <span aria-hidden="true">→</span></a>
-          </article>
+        <section class="guide-group" aria-labelledby="services-group">
+          <h2 id="services-group">Services & Staffing</h2>
+          <p>Use these for service participation and employee/staffing questions.</p>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="tag">Student Services</span><h3>Use Student Services Reports</h3><p>Choose by service and follow the report-specific population definition.</p><a href="student-services.html">Services guide <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Faculty & Staff</span><h3>Explore Faculty & Staff Data</h3><p>Separate employee count, FTE, assignment, salary, and primary-location measures.</p><a href="faculty-staff.html">Staffing guide <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
 
-          <article class="guide-card">
-            <span class="tag">Comparisons</span>
-            <h3>Compare Colleges Without Mixing Measures</h3>
-            <p>Make sure the report, population, time period, course definition, and denominator match before ranking or comparing colleges.</p>
-            <a href="compare-colleges.html">Open the college-comparison guide <span aria-hidden="true">→</span></a>
-          </article>
-
-          <article class="guide-card">
-            <span class="tag">Exports</span>
-            <h3>Work With a Data Mart Export</h3>
-            <p>Inspect totals, subtotals, repeated labels, blank cells, and overlapping categories before calculating from a spreadsheet.</p>
-            <a href="exports.html">Open the export guide <span aria-hidden="true">→</span></a>
-          </article>
-        </div>
-
-        <div class="info-box" style="margin-top: 1.4rem;">
-          <h2>Why These Are Called Recipes</h2>
-          <p>A report name tells you where to click. A recipe connects the question, measure, population, setup, interpretation, and caveats. That makes the analysis easier to reproduce later.</p>
-        </div>
+        <section class="guide-group" aria-labelledby="skills-group">
+          <h2 id="skills-group">Data Skills & Quality Checks</h2>
+          <p>Use these when you already have a question or result and want to make the method more defensible.</p>
+          <div class="guide-grid">
+            <article class="guide-card"><span class="tag">Compare</span><h3>Compare Colleges Carefully</h3><p>Check measure, population, time period, and denominator before ranking differences.</p><a href="compare-colleges.html">Comparison checklist <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Exports</span><h3>Work With an Export</h3><p>Move from downloaded data to a transparent calculation or visualization.</p><a href="exports.html">Export workflow <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Check</span><h3>Check My Query</h3><p>Run a quick self-audit before you rely on a Data Mart result.</p><a href="check-query.html">Check your query <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Inquiry</span><h3>From Data to a Conversation</h3><p>Turn a descriptive result into a responsible department or institutional inquiry.</p><a href="from-data-to-conversation.html">Use the inquiry framework <span aria-hidden="true">→</span></a></article>
+            <article class="guide-card"><span class="tag">Current Data</span><h3>Current Availability & Legacy Reports</h3><p>Check which reports are current, lagged, or intentionally historical.</p><a href="current-data.html">Check availability <span aria-hidden="true">→</span></a></article>
+          </div>
+        </section>
       </div>
     </section>
+
   </main>
   <footer class="site-footer">
     <div class="container footer-grid">
@@ -123,6 +112,5 @@
       </ul>
     </div>
   </footer>
-
 </body>
 </html>
