@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "exploreGradeFileSummary","exploreGradeProgramSearch","exploreGradeProgramOptions","exploreGradeMeasure","exploreGradeResultsTitle","exploreGradeResultMeta","exploreGradeKpis","exploreGradeWarning","exploreGradeBarChart","exploreGradeResultsBody","exploreGradeMethodText","exploreGradeCopyMethod","exploreGradeDownloadCsv",
     "headcountFileSummary","headcountBreakdown","headcountStatusFilter","headcountGenderFilter","headcountAgeFilter","headcountEthnicityFilter","headcountMeasure","headcountResultsTitle","headcountResultMeta","headcountKpis","headcountWarning","headcountBarChart","headcountCategoryHeader","headcountResultsBody","headcountMethodText","headcountCopyMethod","headcountDownloadCsv",
     "courseFileSummary","courseSearch","courseCreditFilter","courseTransferFilter","courseSamFilter","courseTableLimit","courseResultsTitle","courseResultMeta","courseKpis","courseBarChart","courseChartNote","courseResultsBody","courseMethodText","courseCopyMethod","courseDownloadCsv",
-    "creditSectionsFileSummary","creditSectionsMeasure","creditSectionsResultsTitle","creditSectionsResultMeta","creditSectionsKpis","creditSectionsWarning","creditSectionsBarChart","creditSectionsResultsBody","creditSectionsMethodText","creditSectionsCopyMethod","creditSectionsDownloadCsv"
+    "creditSectionsFileSummary","creditSectionsMeasure","creditSectionsResultsTitle","creditSectionsResultMeta","creditSectionsKpis","creditSectionsWarning","creditSectionsBarChart","creditSectionsResultsBody","creditSectionsMethodText","creditSectionsCopyMethod","creditSectionsDownloadCsv",
+    "withinFileCompare","withinFileCompareIntro","withinCompareDimension","withinCompareContextWrap","withinCompareContextLabel","withinCompareContext","withinCompareExtraWrap","withinCompareExtraLabel","withinCompareExtra","withinCompareMeasure","withinCompareChoicesLegend","withinCompareChoices","withinCompareAvailability","withinCompareTitle","withinCompareMeta","withinCompareCaution","withinCompareChart","withinCompareCaption","withinCompareLabelHeader","withinCompareValueHeader","withinCompareBody"
   ].forEach(id => els[id] = document.getElementById(id));
 
   els.exploreBrowseButton.addEventListener("click", () => els.exploreFileInput.click());
@@ -97,6 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   els.demoLoadButton.addEventListener("click", loadSelectedDemo);
+  [els.withinCompareDimension, els.withinCompareContext, els.withinCompareExtra, els.withinCompareMeasure].forEach(control => control.addEventListener("change", () => {
+    if (control === els.withinCompareDimension) setupWithinFileCompareControls();
+    else renderWithinFileCompare();
+  }));
   document.querySelectorAll(".explore-reset").forEach(button => button.addEventListener("click", resetExplorer));
 
   els.awardsProgramSearch.addEventListener("input", renderAwards);
@@ -164,11 +169,7 @@ async function loadFile(file) {
 
   setStatus(`Reading ${file.name} in your browser...`, "neutral");
   try {
-    const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, {type:"array", cellDates:false});
-    if (!workbook.SheetNames.length) throw new Error("No worksheets were found in this file.");
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, {header:1, raw:true, defval:null});
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:true, defval:null});
     const detected = DataMartParsers.detectReport(rows);
 
     state.sourceName = file.name;
@@ -181,6 +182,7 @@ async function loadFile(file) {
       state.awards = parsed;
       showDetected("Program Awards detected", `${parsed.period || "Period not detected"}. The working Program Awards module is ready.`, true);
       initAwards();
+      initWithinFileCompare("program-awards", parsed);
       setStatus(`Loaded ${parsed.records.length.toLocaleString()} program-award rows from ${file.name}. The file stayed in this browser tab.`, "success");
       return;
     }
@@ -191,6 +193,7 @@ async function loadFile(file) {
       state.success = parsed;
       showDetected("Success & Retention detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The working outcomes module is ready.`, true);
       initSuccess();
+      initWithinFileCompare("retention-success", parsed);
       setStatus(`Loaded ${parsed.records.length.toLocaleString()} six-digit TOP outcome rows from ${file.name}. The file stayed in this browser tab.`, "success");
       return;
     }
@@ -201,6 +204,7 @@ async function loadFile(file) {
       state.grade = parsed;
       showDetected("Grade Distribution detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The grade composition module is ready.`, true);
       initExploreGrade();
+      initWithinFileCompare("grade-distribution", parsed);
       setStatus(`Loaded ${parsed.records.length.toLocaleString()} grade-category rows from ${file.name}. The file stayed in this browser tab.`, "success");
       return;
     }
@@ -221,6 +225,7 @@ async function loadFile(file) {
       state.courseDetails = parsed;
       showDetected("Course Details detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The course explorer is ready.`, true);
       initCourseDetails();
+      initWithinFileCompare("course-details", parsed);
       setStatus(`Loaded ${parsed.records.length.toLocaleString()} course rows from ${file.name}. The file stayed in this browser tab.`, "success");
       return;
     }
@@ -239,9 +244,9 @@ async function loadFile(file) {
     if (generic.rows.length && generic.numericColumns.length) {
       state.kind = "generic-table";
       state.generic = generic;
-      showDetected("Flexible table view ready", `${generic.reportTitle || "Tabular export"}${generic.period ? `, ${generic.period}` : ""}. Choose the columns you want to visualize.`, true);
+      showDetected("Basic table view ready", `${generic.reportTitle || "Tabular export"}${generic.period ? `, ${generic.period}` : ""}. Choose the columns you want to visualize.`, true);
       initGeneric();
-      setStatus(`Loaded ${generic.rows.length.toLocaleString()} table rows from ${file.name}. Report-specific definitions are not inferred in the Flexible Explorer.`, "success");
+      setStatus(`Loaded ${generic.rows.length.toLocaleString()} table rows from ${file.name}. Report-specific definitions are not inferred in the basic table view.`, "success");
       return;
     }
     showDetected("Export opened, but no chartable table was detected", "The file did not contain a usable tabular layout with a numeric measure that the Flexible Explorer could identify.", false);
@@ -266,6 +271,7 @@ function loadAwardsDemo() {
   hideModules();
   showDetected("Program Awards demo loaded", "Annual 2025-2026, Los Angeles CCD. The working Program Awards module is ready.", true);
   initAwards();
+  initWithinFileCompare("program-awards", state.awards);
   setStatus("Program Awards demo loaded. The demo uses English award records from the earlier LACCD export.", "success");
 }
 
@@ -276,6 +282,7 @@ function loadSuccessDemo() {
   hideModules();
   showDetected("Success & Retention demo loaded", "LA Mission, Fall 2025. The working outcomes module is ready.", true);
   initSuccess();
+  initWithinFileCompare("retention-success", state.success);
   setStatus("Success & Retention demo loaded. The demo uses English TOP 150100 records from the supplied LA Mission Fall 2025 export.", "success");
 }
 
@@ -286,6 +293,7 @@ function loadGradeDemo() {
   hideModules();
   showDetected("Grade Distribution demo loaded", "LA Mission, Fall 2025. The grade composition module is ready.", true);
   initExploreGrade();
+  initWithinFileCompare("grade-distribution", state.grade);
   setStatus("Grade Distribution demo loaded. The demo uses English TOP 150100 records from the supplied LA Mission Fall 2025 export.", "success");
 }
 
@@ -313,6 +321,7 @@ function loadSelectedDemo() {
     state.courseDetails = JSON.parse(JSON.stringify(window.DMS_DEMOS.courseDetails));
     showDetected("Course Details sample loaded", "LA Mission, Fall 2025. The course explorer is ready.", true);
     initCourseDetails();
+    initWithinFileCompare("course-details", state.courseDetails);
     setStatus("Course Details sample loaded. It uses English course rows from the supplied LA Mission Fall 2025 export.", "success");
     return;
   }
@@ -328,6 +337,7 @@ function loadSelectedDemo() {
 
 function hideModules() {
   els.exploreWorkspace.hidden = true;
+  if (els.withinFileCompare) { els.withinFileCompare.hidden = true; els.withinFileCompare.open = false; }
   els.awardsModule.hidden = true;
   els.successModule.hidden = true;
   els.gradeModule.hidden = true;
@@ -541,10 +551,10 @@ function renderSuccess() {
   els.successResultMeta.textContent = `${state.success.college || "College not detected"} · ${state.success.period || "Term not detected"} · ${population}`;
 
   fillSummary(els.successKpis, [
-    ["Enrollments", formatInteger(overall.enrollment)],
-    ["Successful", formatInteger(overall.success)],
-    ["Success rate", formatPercent(overall.successRate)],
-    ["Retention rate", formatPercent(overall.retentionRate)]
+    ["Course enrollments", formatInteger(overall.enrollment)],
+    ["Successful enrollments", formatInteger(overall.success)],
+    ["Course success", formatPercent(overall.successRate)],
+    ["Course retention", formatPercent(overall.retentionRate)]
   ]);
 
   const smallRows = rows.filter(row => row.enrollment > 0 && row.enrollment < 30);
@@ -813,10 +823,10 @@ function renderHeadcount() {
   els.headcountResultMeta.textContent = `${state.headcount.college || "College not detected"} · ${state.headcount.period || "Term not detected"} · ${formatInteger(total)} selected students`;
   els.headcountCategoryHeader.textContent = label;
   fillSummary(els.headcountKpis, [
-    ["Selected students", formatInteger(total)],
+    ["Distinct students", formatInteger(total)],
     ["Share of college headcount", formatPercent(collegeShare)],
     ["Categories shown", rows.length.toLocaleString()],
-    ["College headcount", formatInteger(collegeTotal)]
+    ["College distinct students", formatInteger(collegeTotal)]
   ]);
 
   const unknownStatusCount = records.filter(r => /^X\s*-\s*Unknown$/i.test(r.status)).reduce((sum,r) => sum + Number(r.count || 0), 0);
@@ -1025,7 +1035,7 @@ function renderCreditSections() {
 }
 
 function creditSectionsMeasureLabel() {
-  return {sections:"Section count",enrollment:"Enrollment count",ftes:"Section FTES"}[els.creditSectionsMeasure.value] || "Section count";
+  return {sections:"Reported sections",enrollment:"Course enrollments",ftes:"Instructional activity (FTES)"}[els.creditSectionsMeasure.value] || "Section count";
 }
 
 function downloadCreditSectionsCsv() {
@@ -1118,7 +1128,7 @@ function renderGeneric() {
     `Label column: ${labelCol.name}`,
     `Measure column: ${measureCol.name}`,
     `Numeric rows displayed: ${rows.length.toLocaleString()}`,
-    "Method note: Flexible Explorer visualized the selected columns only. It did not determine whether rows are mutually exclusive, whether totals/subtotals overlap, how the denominator is defined, or whether suppressed/blank values have report-specific meaning.",
+    "Method note: Basic table view visualized the selected columns only. It did not determine whether rows are mutually exclusive, whether totals/subtotals overlap, how the denominator is defined, or whether suppressed/blank values have report-specific meaning.",
     "Verification: Consult the official Data Mart report notes before adding rows, calculating rates, or using the result consequentially."
   ].join("\n");
 }
@@ -1127,7 +1137,7 @@ function downloadGenericCsv() {
   const {rows,labelCol,measureCol} = genericSelection();
   if (!rows.length || !labelCol || !measureCol) return setStatus("There are no selected numeric rows to download.", "error");
   downloadCsvFile("data-mart-smart-flexible-view.csv", [[labelCol.name,measureCol.name], ...rows.map(r => [r.label,r.value])]);
-  setStatus("Flexible Explorer CSV downloaded.", "success");
+  setStatus("Basic table CSV downloaded.", "success");
 }
 
 function showUnsupported(kind, label) {
@@ -1196,10 +1206,7 @@ function downloadCsvFile(filename, rows) {
   URL.revokeObjectURL(url);
 }
 
-function csvCell(value) {
-  const s = value === null || value === undefined ? "" : String(value);
-  return `"${s.replace(/"/g, '""')}"`;
-}
+function csvCell(value) { return DataMartFileSecurity.csvCell(value); }
 
 function decimalPercent(value) {
   return Number.isFinite(value) ? (value * 100).toFixed(1) + "%" : "";
@@ -1221,6 +1228,181 @@ function scrollWorkspace() {
   els.exploreWorkspace.scrollIntoView({behavior:preferredScrollBehavior(), block:"start"});
 }
 
+
+function uniquePrograms(records) {
+  const map = new Map();
+  (records || []).forEach(r => {
+    const top = r.top || "";
+    const name = r.program || r.topName || top || "Unlabeled program";
+    if (top || name) map.set(`${name}|${top}`, {key:`${name}|${top}`, name, top});
+  });
+  return [...map.values()].sort((a,b) => a.name.localeCompare(b.name) || a.top.localeCompare(b.top));
+}
+
+function uniqueColleges(records) {
+  return [...new Set((records || []).map(r => r.college).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+}
+
+function comparisonRecords(kind, parsed) {
+  if (kind === "course-details" || kind === "program-awards" || kind === "retention-success" || kind === "grade-distribution") return parsed.records || [];
+  return [];
+}
+
+function initWithinFileCompare(kind, parsed) {
+  const records = comparisonRecords(kind, parsed);
+  if (!records.length) return;
+  const programs = uniquePrograms(records);
+  const colleges = uniqueColleges(records);
+  if (programs.length < 2 && colleges.length < 2) return;
+  state.withinCompare = {kind, parsed, selected:new Set()};
+  els.withinFileCompare.hidden = false;
+  els.withinCompareDimension.innerHTML = "";
+  const p = document.createElement("option");
+  p.value = "programs"; p.textContent = "Programs"; p.disabled = programs.length < 2;
+  const c = document.createElement("option");
+  c.value = "colleges"; c.textContent = "Colleges"; c.disabled = colleges.length < 2;
+  els.withinCompareDimension.append(p,c);
+  els.withinCompareDimension.value = programs.length >= 2 ? "programs" : "colleges";
+  els.withinCompareAvailability.textContent = colleges.length < 2
+    ? "This file contains one college. To compare colleges, use a district-wide export or Compare Files."
+    : "Only items already contained in this export are offered here.";
+  setupWithinFileCompareControls();
+}
+
+function setupWithinFileCompareControls() {
+  if (!state.withinCompare) return;
+  const {kind, parsed} = state.withinCompare;
+  const records = comparisonRecords(kind, parsed);
+  const programs = uniquePrograms(records);
+  const colleges = uniqueColleges(records);
+  const dimension = els.withinCompareDimension.value;
+  const comparePrograms = dimension === "programs";
+
+  els.withinCompareContext.innerHTML = "";
+  const contexts = comparePrograms ? colleges : programs;
+  contexts.forEach(item => {
+    const option = document.createElement("option");
+    if (comparePrograms) { option.value = item; option.textContent = item; }
+    else { option.value = item.key; option.textContent = `${item.name}${item.top ? ` · TOP ${item.top}` : ""}`; }
+    els.withinCompareContext.appendChild(option);
+  });
+  els.withinCompareContextLabel.textContent = comparePrograms ? "College" : "Program";
+  els.withinCompareContextWrap.hidden = contexts.length <= 1;
+
+  els.withinCompareMeasure.innerHTML = "";
+  const measures = [];
+  if (kind === "course-details") measures.push(["sections","Reported sections"]);
+  if (kind === "program-awards") measures.push(["awards","Awards granted"]);
+  if (kind === "retention-success") measures.push(["successRate","Course success"],["retentionRate","Course retention"],["enrollment","Course enrollments"]);
+  if (kind === "grade-distribution") measures.push(["gradeRecords","Reported grade records"]);
+  measures.forEach(([value,label]) => { const o=document.createElement("option"); o.value=value; o.textContent=label; els.withinCompareMeasure.appendChild(o); });
+
+  els.withinCompareExtraWrap.hidden = true;
+  els.withinCompareExtra.innerHTML = "";
+  if (kind === "retention-success") {
+    els.withinCompareExtraWrap.hidden = false;
+    els.withinCompareExtraLabel.textContent = "Course population";
+    (parsed.populations || []).forEach(pop => { const o=document.createElement("option"); o.value=pop; o.textContent=pop; els.withinCompareExtra.appendChild(o); });
+  } else if (kind === "program-awards") {
+    const types = [...new Set(records.map(r => r.awardType).filter(Boolean))].sort();
+    if (types.length > 1) {
+      els.withinCompareExtraWrap.hidden = false;
+      els.withinCompareExtraLabel.textContent = "Award type";
+      const all=document.createElement("option"); all.value=""; all.textContent="All award types"; els.withinCompareExtra.appendChild(all);
+      types.forEach(type => { const o=document.createElement("option"); o.value=type; o.textContent=type; els.withinCompareExtra.appendChild(o); });
+    }
+  }
+
+  const choices = comparePrograms ? programs : colleges.map(name => ({key:name,name,top:""}));
+  state.withinCompare.selected = new Set(choices.slice(0, Math.min(8, choices.length)).map(x => x.key));
+  els.withinCompareChoices.innerHTML = "";
+  choices.forEach((item,index) => {
+    const id=`within-compare-${dimension}-${index}`;
+    const label=document.createElement("label");
+    label.className="check-chip";
+    const checked=state.withinCompare.selected.has(item.key);
+    label.innerHTML=`<input type="checkbox" id="${id}" ${checked ? "checked" : ""}> <span>${escapeHtml(item.name)}${item.top ? ` <small>TOP ${escapeHtml(item.top)}</small>` : ""}</span>`;
+    const input=label.querySelector("input");
+    input.addEventListener("change", e => { if(e.target.checked) state.withinCompare.selected.add(item.key); else state.withinCompare.selected.delete(item.key); renderWithinFileCompare(); });
+    els.withinCompareChoices.appendChild(label);
+  });
+  els.withinCompareChoicesLegend.textContent = comparePrograms ? "Programs to show" : "Colleges to show";
+  renderWithinFileCompare();
+}
+
+function renderWithinFileCompare() {
+  if (!state.withinCompare) return;
+  const {kind, parsed} = state.withinCompare;
+  const records = comparisonRecords(kind, parsed);
+  const dimension = els.withinCompareDimension.value;
+  const comparePrograms = dimension === "programs";
+  const context = els.withinCompareContext.value;
+  const measure = els.withinCompareMeasure.value;
+  const extra = els.withinCompareExtra.value;
+  let filtered = records.slice();
+
+  if (comparePrograms && context) filtered = filtered.filter(r => r.college === context);
+  if (!comparePrograms && context) {
+    const [program,top] = context.split("|");
+    filtered = filtered.filter(r => (r.program || r.topName || r.top || "") === program && (r.top || "") === top);
+  }
+  if (kind === "program-awards" && extra) filtered = filtered.filter(r => r.awardType === extra);
+
+  const groups = new Map();
+  function groupKey(r) { return comparePrograms ? `${r.program || r.topName || r.top || "Unlabeled program"}|${r.top || ""}` : (r.college || "College not labeled"); }
+  function groupLabel(key) { if (!comparePrograms) return key; const [name,top] = key.split("|"); return `${name}${top ? ` (TOP ${top})` : ""}`; }
+
+  if (kind === "course-details") {
+    filtered.forEach(r => { const key=groupKey(r); const g=groups.get(key)||{value:0,has:false}; if(r.sections!==null){g.value+=r.sections;g.has=true;} groups.set(key,g); });
+  } else if (kind === "program-awards") {
+    filtered.forEach(r => { const key=groupKey(r); const g=groups.get(key)||{value:0,has:false}; if(r.count!==null){g.value+=r.count;g.has=true;} groups.set(key,g); });
+  } else if (kind === "retention-success") {
+    const pop = extra || (parsed.populations || [])[0];
+    filtered.forEach(r => {
+      const m=(r.measures||{})[pop]||{}; const key=groupKey(r); const g=groups.get(key)||{enrollment:0,retention:0,success:0,has:false};
+      if(m.enrollment!==null && m.enrollment!==undefined){g.enrollment+=m.enrollment;g.has=true;}
+      if(m.retention!==null && m.retention!==undefined)g.retention+=m.retention;
+      if(m.success!==null && m.success!==undefined)g.success+=m.success;
+      groups.set(key,g);
+    });
+  } else if (kind === "grade-distribution") {
+    filtered.forEach(r => { const key=groupKey(r); const g=groups.get(key)||{value:null}; const total=r.programTotal; if(total!==null && total!==undefined) g.value = g.value===null ? total : Math.max(g.value,total); groups.set(key,g); });
+  }
+
+  let rows=[];
+  groups.forEach((g,key) => {
+    if (!state.withinCompare.selected.has(key)) return;
+    let value=null;
+    if (kind === "retention-success") {
+      if (measure === "enrollment") value=g.has ? g.enrollment : null;
+      if (measure === "successRate") value=g.enrollment ? g.success/g.enrollment : null;
+      if (measure === "retentionRate") value=g.enrollment ? g.retention/g.enrollment : null;
+    } else value=g.value;
+    if (value!==null && Number.isFinite(value)) rows.push({label:groupLabel(key),value,key});
+  });
+  rows.sort((a,b)=>b.value-a.value || a.label.localeCompare(b.label));
+
+  const measureLabel = els.withinCompareMeasure.options[els.withinCompareMeasure.selectedIndex]?.textContent || "Value";
+  const dimLabel = comparePrograms ? "programs" : "colleges";
+  els.withinCompareTitle.textContent = `${measureLabel} by ${comparePrograms ? "program" : "college"}`;
+  els.withinCompareMeta.textContent = `${rows.length} selected ${dimLabel}${parsed.period ? ` · ${parsed.period}` : ""}`;
+  els.withinCompareLabelHeader.textContent = comparePrograms ? "Program" : "College";
+  els.withinCompareValueHeader.textContent = measureLabel;
+  els.withinCompareCaption.textContent = `${measureLabel} for selected ${dimLabel}`;
+
+  let caution = "Keep the report, period, population, and measure consistent before treating differences as meaningful.";
+  if (kind === "program-awards") caution = "Award counts are not unique graduate counts. One student may receive more than one award.";
+  if (kind === "retention-success") caution = "Rates are recalculated from the underlying enrollment counts. They are not averages of displayed percentages.";
+  if (kind === "course-details") caution = "Reported section records may not equal the number of locally understood classes when linked instructional components are involved.";
+  if (kind === "grade-distribution") caution = "Reported grade records are enrollment records, not unique students.";
+  els.withinCompareCaution.innerHTML = `<strong>Watch for:</strong> ${escapeHtml(caution)}`;
+
+  els.withinCompareBody.innerHTML = "";
+  if (!rows.length) els.withinCompareBody.innerHTML = '<tr><td colspan="2">Choose at least one item that has data for these filters.</td></tr>';
+  rows.forEach(row => { const tr=document.createElement("tr"); const formatted=(measure.endsWith("Rate"))?formatPercent(row.value):formatInteger(row.value); tr.innerHTML=`<th scope="row">${escapeHtml(row.label)}</th><td>${escapeHtml(formatted)}</td>`; els.withinCompareBody.appendChild(tr); });
+  renderBarRows(els.withinCompareChart, rows, {format:measure.endsWith("Rate") ? "percent" : "integer"});
+}
+
 function resetExplorer() {
   state.sourceName = "";
   state.kind = "";
@@ -1236,6 +1418,7 @@ function resetExplorer() {
   hideModules();
   setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
   window.scrollTo({top:0, behavior:preferredScrollBehavior()});
+  els.exploreBrowseButton.focus();
 }
 
 function escapeHtml(value) {

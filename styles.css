@@ -2064,6 +2064,9 @@ h2[id], h3[id], section[id], div[id] {
 }
 
 @media (max-width: 1050px) {
+  /* A stacked sticky header can obscure keyboard focus at high zoom and on narrow screens. */
+  .site-header { position: static; }
+
   .header-inner {
     align-items: flex-start;
     padding-block: .9rem;
@@ -2780,3 +2783,102 @@ html { scroll-behavior: auto; }
 
 /* v19: program review dashboard */
 .program-review-principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin-top:1rem}.program-review-principles>div{border:1px solid var(--line);border-radius:.85rem;padding:.9rem 1rem;background:#fff}.program-review-principles strong,.program-review-principles span{display:block}.program-review-principles strong{color:var(--navy-dark);margin-bottom:.2rem}.program-review-principles span{color:var(--muted);font-size:.9rem;line-height:1.45}.program-review-layout{align-items:start}.program-review-readiness{margin:1rem 0 1.2rem}.program-review-readiness>h3{margin-bottom:.6rem}.readiness-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65rem}.readiness-item{border:1px solid var(--line);border-radius:.8rem;padding:.75rem;background:#fff;display:grid;grid-template-columns:auto 1fr;column-gap:.5rem;align-items:start}.readiness-item>span{font-weight:900}.readiness-item strong,.readiness-item small{display:block}.readiness-item small{grid-column:2;color:var(--muted);margin-top:.1rem}.readiness-item.is-ready{border-color:#a9d5bc;background:#f1f9f4}.readiness-item.is-ready>span{color:#2b7d58}.readiness-item.is-missing>span{color:#946200}.program-review-kpis .viewer-stat small{display:block;color:var(--muted);font-size:.78rem;margin-top:.15rem}.program-review-section{border-top:1px solid var(--line);padding-top:1.3rem;margin-top:1.6rem}.program-review-section>h3{font-size:1.35rem;color:var(--navy-dark);margin-bottom:.85rem}.program-review-section h4{margin:1rem 0 .45rem;color:var(--navy-dark)}.program-review-two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.single-evidence,.empty-evidence{border:1px solid var(--line);border-radius:.85rem;padding:1rem;background:var(--surface-soft)}.single-evidence strong,.single-evidence span{display:block}.single-evidence strong{font-size:1.65rem;color:var(--navy-dark)}.single-evidence span,.empty-evidence p{color:var(--muted);margin:.2rem 0 0}.program-review-chart{min-width:620px;height:auto}.program-review-table td.numeric,.program-review-table th.numeric{text-align:right;font-variant-numeric:tabular-nums}.context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem}.context-card{border:1px solid var(--line);border-radius:.85rem;padding:1rem;background:#fff}.context-card strong,.context-card span,.context-card small{display:block}.context-card strong{font-size:1.5rem;color:var(--navy-dark)}.context-card span{font-weight:800;margin-top:.2rem}.context-card small{color:var(--muted);margin-top:.2rem}@media(max-width:850px){.program-review-principles,.readiness-grid,.program-review-two-col{grid-template-columns:1fr 1fr}}@media(max-width:600px){.program-review-principles,.readiness-grid,.program-review-two-col{grid-template-columns:1fr}.program-review-chart{min-width:560px}}
+
+
+/* v20 cognitive simplification */
+.four-door-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.two-choice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.compact-purpose-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.report-area-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; margin:1.5rem 0; }
+.report-area { border:1px solid var(--border, #d7e0e8); border-top:4px solid currentColor; border-radius:14px; padding:1rem; background:#fff; }
+.report-area ul { margin:.6rem 0 0; padding-left:1.15rem; }
+.report-area li + li { margin-top:.4rem; }
+.finder-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.finder-card { border:1px solid var(--border, #d7e0e8); border-left:5px solid currentColor; border-radius:14px; padding:1rem 1.1rem; background:#fff; }
+.finder-card h3 { margin-top:0; }
+.choice-strip { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin-top:2rem; }
+.choice-strip > div { background:#f7fafc; border:1px solid #d7e0e8; border-radius:14px; padding:1rem 1.1rem; }
+.reference-details, .guide-details, .caution-details { margin:1.25rem 0; border:1px solid #d7e0e8; border-radius:12px; background:#fff; }
+.reference-details > summary, .guide-details > summary, .caution-details > summary { cursor:pointer; padding:.9rem 1rem; font-weight:700; color:#16324f; }
+.reference-details[open] > summary, .guide-details[open] > summary, .caution-details[open] > summary { border-bottom:1px solid #d7e0e8; }
+.details-body, .guide-details-body { padding:1rem; }
+.details-heading { font-size:1rem; }
+.guide-route-section { padding:1.5rem 0; background:#f7fafc; }
+.guide-route-section h2 { margin-top:0; }
+.caution-level { margin:0 0 .25rem; font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:#6b4900; }
+.support-reference { margin-top:1rem; }
+.compact-coach { margin-top:1.5rem; }
+/* Let category color carry subject meaning. Instructional panels stay more neutral. */
+.bf-action, .bf-meaning, .bf-purpose, .bf-method, .bf-next { background:#f8fafc; border-left-color:#7d8d9d; }
+.bf-caution { background:#fff8e8; border-left-color:#946200; }
+.caution-stop { border-left-color:#a61b1b !important; background:#fff4f4 !important; }
+.caution-watch { border-left-color:#946200 !important; background:#fff8e8 !important; }
+@media (max-width: 1000px) {
+  .four-door-grid, .compact-purpose-grid, .report-area-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 680px) {
+  .four-door-grid, .two-choice-grid, .compact-purpose-grid, .report-area-grid, .finder-grid, .choice-strip { grid-template-columns:1fr; }
+}
+
+/* ---------- CCC Data Mart Coach ---------- */
+.coach-hero {
+  padding-bottom: 1.4rem;
+}
+
+.coach-hero-inner {
+  grid-template-columns: minmax(0, 760px);
+}
+
+.coach-intro {
+  padding-top: 1.6rem;
+  padding-bottom: 1.1rem;
+}
+
+.coach-intro h2,
+.coach-note h2 {
+  margin-top: 0;
+}
+
+.coach-embed-section {
+  padding-top: .5rem;
+  padding-bottom: 2rem;
+}
+
+.coach-frame-wrap {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(8, 46, 86, .08);
+}
+
+.coach-frame {
+  display: block;
+  width: 100%;
+  min-height: 700px;
+  border: 0;
+  background: #fff;
+}
+
+.coach-note {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 650px) {
+  .coach-frame {
+    min-height: 760px;
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}

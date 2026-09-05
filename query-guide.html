@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Find the Right Report | Data Mart Smart</title>
 <meta content="Start with your California Community Colleges data question and find the CCC Data Mart report that best matches what you are trying to measure." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,245 +19,24 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
-<section aria-labelledby="page-title" class="page-hero">
-<div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Find the Right Report</p>
-<p class="eyebrow">Question first. Report second.</p>
-<h1 id="page-title"><span aria-hidden="true" class="emoji-icon heading-emoji">🧭</span> Find the Right Data Mart Report</h1>
-<p>You do not need to memorize the Data Mart menu. Start with what you want to know, decide what needs to be counted, and then choose the report that matches the question.</p>
-<div class="quick-principle">The report is not the research question. The report is the tool you choose after the question is clear.</div>
+<section aria-labelledby="page-title" class="page-hero"><div class="container page-hero-inner"><p class="eyebrow">Question first, report second</p><h1 id="page-title">Find the Right Data</h1><p>Choose the question closest to yours. Each option gives you one strong starting report and the distinction that matters most.</p></div></section>
+<section aria-labelledby="questions-heading"><div class="container"><div class="section-heading"><h2 id="questions-heading">What are you trying to find out?</h2></div>
+<div class="finder-grid">
+<article class="finder-card cat-blue"><h3>How many students are there?</h3><p><strong>Start with:</strong> Student Annual/Term Count.</p><p class="small-note">Use this for distinct students. Do not substitute course enrollments.</p><a href="student-headcount.html">Open the Student Headcount guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-teal"><h3>How many courses or sections are being offered?</h3><p><strong>Start with:</strong> Course Details when you need identifiable courses. Use Credit Courses/Sections for broader section, enrollment, or FTES summaries.</p><a href="sections-across-colleges.html">Open the course and section guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-blue"><h3>Is enrollment growing or declining?</h3><p><strong>Start with:</strong> a consistent course or enrollment report across comparable terms or years.</p><a href="enrollment-trends.html">Open the trend guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-green"><h3>How are students doing in courses?</h3><p><strong>Start with:</strong> Retention/Success Rate.</p><p class="small-note">Keep the enrollment denominator beside the rate.</p><a href="course-success.html">Open the success and retention guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-purple"><h3>What does the grade pattern look like?</h3><p><strong>Start with:</strong> Grade Distribution.</p><p class="small-note">Grade composition is not the same measure as the CCCCO success rate.</p><a href="grade-distribution.html">Open the Grade Distribution guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-gold"><h3>How many degrees or certificates were awarded?</h3><p><strong>Start with:</strong> Program Awards.</p><p class="small-note">Award Count counts awards, not unique graduates.</p><a href="program-awards.html">Open the Program Awards guide <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-purple"><h3>How does one college compare with another?</h3><p><strong>Start with:</strong> the report that matches the measure you care about, then keep the period and population consistent.</p><a href="compare-trends.html">Compare comparable exports <span aria-hidden="true">→</span></a></article>
+<article class="finder-card cat-green"><h3>I need services, staffing, transfer, wage, or another specialized report</h3><p><strong>Start with:</strong> the report guides by Data Mart area.</p><a href="reports.html#report-guides">Browse report guides <span aria-hidden="true">→</span></a></article>
 </div>
-</section>
-<section aria-labelledby="before-heading" class="question-checklist">
-<div class="container">
-<div class="section-heading">
-<h2 id="before-heading">Before You Choose a Report</h2>
-<p>Four quick decisions prevent a lot of confusion later.</p>
-</div>
-<div class="check-grid">
-<article class="check-card">
-<div aria-hidden="true" class="check-number">1</div>
-<h3>What do you want to count?</h3>
-<p>Students, enrollments, sections, FTES, grades, awards, or something else?</p>
-</article>
-<article class="check-card">
-<div aria-hidden="true" class="check-number">2</div>
-<h3>Who or what belongs in the population?</h3>
-<p>A college, district, discipline, TOP code, course, program, or student group?</p>
-</article>
-<article class="check-card">
-<div aria-hidden="true" class="check-number">3</div>
-<h3>What time period matches the question?</h3>
-<p>A term, academic year, fiscal year, or multi-year trend?</p>
-</article>
-<article class="check-card">
-<div aria-hidden="true" class="check-number">4</div>
-<h3>What comparison do you need?</h3>
-<p>Across colleges, across years, across student groups, or no comparison at all?</p>
-</article>
-</div>
-</div>
-</section>
-<section aria-labelledby="chooser-heading" class="report-chooser">
-<div class="container">
-<div class="section-heading">
-<h2 id="chooser-heading">Choose the Question Closest to Yours</h2>
-<p>These are common starting points for faculty, chairs, program leads, and college staff.</p>
-</div>
-<div class="report-grid">
-<article class="report-card">
-<h3>How many students are enrolled?</h3>
-<p class="report-question">Use this path when your unit of analysis is the student rather than the individual course enrollment.</p>
-<span class="report-match">Best starting match</span>
-<p class="report-name">Annual/Term Student Count</p>
-<ul>
-<li>Student headcount by term or annual period</li>
-<li>Useful for demographic breakouts and broad enrollment questions</li>
-<li>Annual counts should not be created by simply adding term counts</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Students/Student_Headcount_Term_Annual.aspx">Open official report</a>
-<a class="text-link" href="student-headcount.html">Follow the headcount guide <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>How many sections are being offered?</h3>
-<p class="report-question">The right report depends on whether you need identifiable courses or a broader aggregate.</p>
-<span class="report-match">Specific courses</span>
-<p class="report-name">Course Details</p>
-<ul>
-<li>Useful for Course ID, title, control number, TOP code, units, and Sections Count</li>
-<li>Best when you need to inspect particular courses</li>
-<li>Review linked or related section structures before treating every section record as an independent class</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Courses/Course_Details.aspx">Open Course Details</a>
-<a class="text-link" href="reports.html">See the section guide <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>How many total credit sections, enrollments, or FTES?</h3>
-<p class="report-question">Use an aggregate course report when the question is about totals by college or classification rather than individual courses.</p>
-<span class="report-match">Broader aggregate</span>
-<p class="report-name">Credit Courses/Sections</p>
-<ul>
-<li>Counts credit sections, enrollment, and FTES</li>
-<li>Useful for comparisons by college and course characteristics</li>
-<li>Do not assume its section results are interchangeable with Course Details</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Courses/Credit_Course_Summary.aspx">Open official report</a>
-<a class="text-link" href="reports.html">Compare the course reports <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>How are students doing in courses?</h3>
-<p class="report-question">Use this path for success and retention rates rather than raw enrollment alone.</p>
-<span class="report-match">Best starting match</span>
-<p class="report-name">Enrollment Retention and Success Rate</p>
-<ul>
-<li>Compares enrollment, retention, and success measures</li>
-<li>Always inspect both the rate and the underlying count</li>
-<li>Keep numerator, denominator, population, and time period consistent across comparisons</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Outcomes/Course_Ret_Success.aspx">Open official report</a>
-<a class="text-link" href="course-success.html">Follow the success-rate guide <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>What grades are students receiving?</h3>
-<p class="report-question">Use this report when the distribution of reported grades,not just the success rate,is the point of the inquiry.</p>
-<span class="report-match">Best starting match</span>
-<p class="report-name">Grade Distribution</p>
-<ul>
-<li>Shows reported grade outcomes</li>
-<li>Useful for looking beyond one summary success percentage</li>
-<li>Compare equivalent populations and course definitions</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Outcomes/Grades_Distribution_Summary.aspx">Open official report</a>
-<a class="text-link" href="understand-data.html">Read comparison tips <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>How many degrees or certificates were awarded?</h3>
-<p class="report-question">Use this path for reported program awards by award type and instructional area.</p>
-<span class="report-match">Best starting match</span>
-<p class="report-name">Program Awards</p>
-<ul>
-<li>Useful for associate degrees, certificates, and other reported award categories</li>
-<li>Keep award type and time period consistent across colleges</li>
-<li>Award Count is not automatically a count of unique graduates</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Outcomes/Program_Awards.aspx">Open official report</a>
-<a class="text-link" href="program-awards.html">Follow the awards guide <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>What services or programs are students participating in?</h3>
-<p class="report-question">Choose the Student Services report that matches the specific program or service you are studying.</p>
-<span class="report-match">Choose by service</span>
-<p class="report-name">Student Services Reports</p>
-<ul>
-<li>Includes Financial Aid, EOPS, DSPS, CalWORKs, matriculation, and other service reports</li>
-<li>Definitions and populations vary by report</li>
-<li>Do not assume every Student Services count uses the same headcount logic</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Services/Services_main.aspx">Browse official reports</a> <a class="text-link" href="student-services.html">Read the Student Services guide <span aria-hidden="true">→</span></a>
-<a class="text-link" href="#directory">See the report list <span aria-hidden="true">→</span></a>
-</div>
-</article>
-<article class="report-card">
-<h3>What can Data Mart tell me about faculty and staff?</h3>
-<p class="report-question">Use this path for statewide staffing summaries and faculty/staff demographic reporting.</p>
-<span class="report-match">Faculty &amp; staff</span>
-<p class="report-name">Faculty &amp; Staff Reports</p>
-<ul>
-<li>Annual Statewide Staffing Reports</li>
-<li>Faculty &amp; Staff Demographics</li>
-<li>Confirm whether the report's unit is people, assignments, or another staffing measure before interpreting results</li>
-</ul>
-<div class="report-actions">
-<a class="button button-secondary" href="https://datamart.cccco.edu/Faculty-Staff/Staff_main.aspx">Browse official reports</a> <a class="text-link" href="faculty-staff.html">Read the Faculty &amp; Staff guide <span aria-hidden="true">→</span></a>
-<a class="text-link" href="#directory">See the report list <span aria-hidden="true">→</span></a>
-</div>
-</article>
-</div>
-<div class="caution-box" style="margin-top: 1.4rem;">
-<h2>Data Caution: Similar-Sounding Measures Can Answer Different Questions</h2>
-<p>Student Count is not Enrollment Count. A section is not a course. An award is not automatically a unique graduate. A percentage is not meaningful without its denominator. Define the measure before you compare the number.</p>
-</div>
-</div>
-</section>
-<section aria-labelledby="directory-heading" class="report-directory" id="directory">
-<div class="container">
-<div class="section-heading">
-<h2 id="directory-heading">Current Data Mart Report Areas</h2>
-<p>If you already know the general area, use these official entry points.</p>
-</div>
-<div class="directory-groups">
-<article class="directory-card">
-<h3>Students / Headcounts</h3>
-<ul>
-<li><a href="https://datamart.cccco.edu/Students/Student_Headcount_Term_Annual.aspx">Annual/Term Student Count</a></li>
-<li><a href="https://datamart.cccco.edu/Students/Enrollment_Status.aspx">Enrollment Status</a></li>
-<li><a href="https://datamart.cccco.edu/Students/Student_Special_Population.aspx">Special Population/Group Student Count</a></li>
-<li><a href="https://datamart.cccco.edu/Students/Unit_Load_Status.aspx">Full-Time/Part-Time Status</a></li>
-<li><a href="https://datamart.cccco.edu/Students/FTES_Summary.aspx">FTES Counts</a></li>
-</ul>
-</article>
-<article class="directory-card">
-<h3>Courses / Calendar</h3>
-<ul>
-<li><a href="https://datamart.cccco.edu/Courses/Credit_Course_Summary.aspx">Credit Courses/Sections</a></li>
-<li><a href="https://datamart.cccco.edu/Courses/NCredit_Course_Summary.aspx">Noncredit Courses/Sections</a></li>
-<li><a href="https://datamart.cccco.edu/Courses/BasicSkills_Course_Summary.aspx">Basic Skills Course Summary</a></li>
-<li><a href="https://datamart.cccco.edu/Courses/Course_Details.aspx">Course Details</a></li>
-<li><a href="https://datamart.cccco.edu/Courses/College_MCF.aspx">College Master Course/Program File</a></li>
-</ul>
-</article>
-<article class="directory-card">
-<h3>Outcomes</h3>
-<ul>
-<li><a href="https://datamart.cccco.edu/Outcomes/Course_Ret_Success.aspx">Enrollment Retention and Success Rate</a></li>
-<li><a href="https://datamart.cccco.edu/Outcomes/Grades_Distribution_Summary.aspx">Grade Distribution</a></li>
-<li><a href="https://datamart.cccco.edu/Outcomes/Program_Awards.aspx">Program Awards</a></li>
-<li><a href="https://datamart.cccco.edu/Outcomes/Transfer_Velocity.aspx">Transfer Velocity</a></li>
-<li><a href="https://datamart.cccco.edu/Outcomes/System_Wage_Tracker.aspx">System Wage Tracker</a></li>
-<li><a href="https://datamart.cccco.edu/Outcomes/College_Wage_Tracker.aspx">College Wage Tracker</a></li>
-</ul>
-</article>
-<article class="directory-card">
-<h3>Student Services and Faculty &amp; Staff</h3>
-<ul>
-<li><a href="https://datamart.cccco.edu/Services/Services_main.aspx">Student Services reports</a></li>
-<li><a href="https://datamart.cccco.edu/Faculty-Staff/Staff_Annual.aspx">Annual Statewide Staffing Reports</a></li>
-<li><a href="https://datamart.cccco.edu/Faculty-Staff/Staff_Demo.aspx">Faculty &amp; Staff Demographics</a></li>
-</ul>
-</article>
-</div>
-</div>
-</section>
-<section aria-labelledby="next-heading" class="next-step-panel">
-<div class="container next-step-grid">
-<div>
-<h2 id="next-heading">Still Not Sure Which Report Fits?</h2>
-<p>That is exactly what CCC Data Mart Coach is for. Describe the question in plain language and let the coach help translate it into a report, measure, population, and time period.</p>
-</div>
-<div class="next-step-actions">
-<a class="button button-primary" href="index.html#coach">Ask CCC Data Mart Coach</a>
-<a class="button button-secondary" href="reports.html">Browse the how-to guides</a>
-</div>
-</div>
-</section>
-</main>
+<div class="coach-banner compact-coach"><div aria-hidden="true" class="icon-badge icon-blue emoji-badge">💬</div><div><h2>Still not sure?</h2><p>Ask the Coach with the question you are actually trying to answer. You do not need to know the report name.</p><a class="button button-secondary" href="coach.html">Ask the Coach</a></div></div>
+</div></section></main>
 <footer class="site-footer">
 <div class="container footer-grid">
 <div>

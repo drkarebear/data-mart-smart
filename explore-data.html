@@ -4,11 +4,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Explore Data | Data Mart Smart</title>
 <meta content="Open a California Community Colleges Data Mart export in your browser and turn it into clearer filters, comparisons, charts, tables, cautions, and method notes." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
-<script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" referrerpolicy="no-referrer" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script defer="" src="file-security.js"></script>
 <script defer="" src="data-mart-parsers.js"></script>
 <script defer="" src="explorer-demos.js"></script><script defer="" src="explore-data.js"></script>
 </head>
@@ -20,64 +23,58 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="start-here.html">Start Here</a></li>
-<li><a href="uses.html">Use Data</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li>
-<li><a href="query-guide.html">Find a Report</a></li>
-<li><a href="reports.html">How-To Guides</a></li>
-<li><a href="understand-data.html">Data Tips</a></li>
-<li><a href="index.html#coach">Ask the Coach</a></li>
-</ul>
-</nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
-<section aria-labelledby="page-title" class="page-hero viewer-hero">
-<div class="container page-hero-inner">
-<p class="eyebrow">Experimental tool · browser-only file processing</p>
-<h1 id="page-title">Explore a Data Mart Export</h1>
-<p>Open a report you downloaded from CCC Data Mart. Data Mart Smart identifies the report and turns supported exports into clearer filters, charts, accessible tables, cautions, and reusable method notes.</p>
-</div>
-</section><section aria-labelledby="one-or-several-heading" class="section-cool"><div class="container content-narrow"><h2 id="one-or-several-heading">Do You Have One Export or Several?</h2><p>Use the one-file Explorer to understand a single report. Use Compare &amp; Trends when you downloaded the same report for several colleges or periods.</p><div class="explore-choice-grid"><article class="explore-choice-card cat-teal"><h3><span aria-hidden="true" class="heading-emoji">📄</span> One export</h3><p>Filter and visualize one Data Mart file, with report-specific cautions where available.</p><a class="button button-secondary" href="#upload-heading">Explore one export</a></article><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true" class="heading-emoji">📈</span> Several comparable exports</h3><p>Compare colleges in the same period or build a multi-period trend using one consistent measure.</p><a class="button button-primary" href="compare-trends.html">Compare files or build a trend</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true" class="heading-emoji">📋</span> Program review evidence</h3><p>Combine different report families for one program while keeping unlike measures separate.</p><a class="button button-primary" href="program-review-dashboard.html">Build a program review picture</a></article></div></div></section>
-<section aria-labelledby="major-categories-heading" class="section-cool">
-<div class="container">
-<div class="section-heading"><p class="eyebrow">The major CCC Data Mart areas</p><h2 id="major-categories-heading">Start With the Kind of Data You Have</h2><p>The state Data Mart is organized into five major areas. Data Mart Smart keeps those areas recognizable, but gives you one place to open and visualize exports.</p></div>
-<div class="purpose-grid major-data-grid five-area-grid">
-<article class="purpose-card themed-card cat-blue"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">👥</span> Students</h3><p>Student Headcount, demographics, enrollment status, unit load, FTES, and special populations.</p><p class="small-note"><strong>Working now:</strong> Student Headcount. Other tabular exports can use the Flexible Explorer.</p></article>
-<article class="purpose-card themed-card cat-teal"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">📚</span> Courses / Calendar</h3><p>Course Details, credit sections, enrollments, FTES, TOP areas, and course characteristics.</p><p class="small-note"><strong>Working now:</strong> Course Details and Credit Courses/Sections.</p></article>
-<article class="purpose-card themed-card cat-green"><p class="coverage-status coverage-flex">Flexible Explorer</p><h3><span aria-hidden="true">🤝</span> Student Services</h3><p>Student Success Services, special populations, financial aid, DSPS, EOPS, CalWORKs, and related reports.</p><p class="small-note">Open a tabular export now. Dedicated report logic will be added as we collect representative exports.</p></article>
-<article class="purpose-card themed-card cat-purple"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">🎯</span> Outcomes</h3><p>Success and retention, grades, program awards, transfer, and wage outcomes.</p><p class="small-note"><strong>Working now:</strong> Success &amp; Retention, Grade Distribution, and Program Awards. Transfer and wage exports can use the Flexible Explorer.</p></article>
-<article class="purpose-card themed-card cat-gold"><p class="coverage-status coverage-flex">Flexible Explorer</p><h3><span aria-hidden="true">👩‍🏫</span> Faculty &amp; Staff</h3><p>Employee counts, classifications, demographics, staffing FTE, occupational activity, and related reports.</p><p class="small-note">Open a tabular export now. Dedicated staffing logic will be added after we test representative staffing exports.</p></article>
-</div>
-</div>
-</section><section aria-labelledby="upload-heading">
-<div class="container content-narrow">
-<div class="viewer-privacy" role="note">
-<strong>Your spreadsheet stays in this browser tab.</strong>
-    Data Mart Smart reads the selected file locally with JavaScript. The spreadsheet itself is not uploaded to Data Mart Smart.
-  </div>
-<div aria-label="How Explore Data works" class="viewer-steps">
-<div class="viewer-step"><strong>1. Download</strong><span>Export an Excel or CSV report from CCC Data Mart.</span></div>
-<div class="viewer-step"><strong>2. Open</strong><span>Choose the file here. The report type is detected automatically.</span></div>
-<div class="viewer-step"><strong>3. Explore</strong><span>Filter, visualize, check the denominator, and save your method.</span></div>
-</div>
-<div class="upload-zone" id="exploreDropZone">
-<div aria-hidden="true" class="upload-icon">⇧</div>
-<h2 id="upload-heading">Choose a Data Mart export</h2>
-<p>Dedicated explorers are available for six common reports. Other tabular Excel or CSV exports open in the Flexible Explorer so you can still choose a label, choose a measure, chart the data, and inspect the rows.</p>
-<div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div>
-<input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/>
-</div>
-<p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p>
-<div class="detected-report" hidden="" id="detectedReport">
-<span aria-hidden="true" class="detected-report-icon">✅</span>
-<div><strong id="detectedReportName">Report detected</strong><span id="detectedReportNote"></span></div>
-</div>
-</div>
-</section>
+<section aria-labelledby="upload-heading"><div class="container content-narrow"><div class="viewer-privacy" role="note"><strong>Your spreadsheet stays in this browser tab.</strong> Data Mart Smart reads the selected file locally with JavaScript. The spreadsheet itself is not uploaded to Data Mart Smart.</div><div class="upload-zone" id="exploreDropZone"><div aria-hidden="true" class="upload-icon">⇧</div><h2 id="upload-heading">Choose your Excel or CSV export</h2><p>Choose the file. I will identify the report when possible, then show the controls, comparisons, and cautions that belong with it.</p><div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div><input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/></div><p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p><div class="detected-report" hidden="" id="detectedReport"><span aria-hidden="true" class="detected-report-icon">✅</span><div><strong id="detectedReportName">Report detected</strong><span id="detectedReportNote"></span></div></div>
+<details class="reference-details support-reference"><summary>What files can I open?</summary><div class="details-body"><p><strong>Full support:</strong> Data Mart Smart understands the tested report structure and can add report-specific interpretation and cautions.</p><ul><li>Student Headcount</li><li>Course Details</li><li>Credit Courses/Sections</li><li>Success &amp; Retention</li><li>Grade Distribution</li><li>Program Awards</li></ul><p><strong>Basic support:</strong> For many other tabular Excel or CSV exports, you can choose a category and numeric measure to chart. The site will not invent report-specific definitions.</p></div></details>
+</div></section>
+<section aria-labelledby="what-have-heading" class="section-cool"><div class="container content-narrow"><h2 id="what-have-heading">What do you have?</h2><div class="explore-choice-grid"><article class="explore-choice-card cat-teal"><h3><span aria-hidden="true">📄</span> One export</h3><p>Open, understand, and compare programs or colleges already included in one Data Mart file.</p><a class="button button-primary" href="#upload-heading">Open one export</a></article><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📈</span> Several versions of the same report</h3><p>Compare colleges or build a trend.</p><a class="button button-secondary" href="compare-trends.html">Compare files</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">📋</span> Several kinds of evidence for one program</h3><p>Build a program review picture without mixing unlike measures.</p><a class="button button-secondary" href="program-review-dashboard.html">Build a program review picture</a></article></div></div></section>
+<section aria-labelledby="page-title" class="page-hero viewer-hero"><div class="container page-hero-inner"><p class="eyebrow">Your file stays in this browser tab</p><h1 id="page-title">Open a Data Mart Export</h1><p>Choose what you have. Data Mart Smart will identify the report when it can and show the shortest useful next step.</p></div></section>
 <section hidden="" id="exploreWorkspace">
+<details class="reference-details support-reference" hidden id="withinFileCompare">
+<summary><span aria-hidden="true">🔀</span> Compare programs or colleges in this file</summary>
+<div class="details-body">
+<p id="withinFileCompareIntro">If this export contains more than one program or college, you can compare them without making another spreadsheet.</p>
+<div class="viewer-layout">
+<div class="viewer-controls" aria-labelledby="within-compare-heading">
+<h2 id="within-compare-heading">Choose the comparison</h2>
+<label for="withinCompareDimension">Compare</label>
+<select id="withinCompareDimension"></select>
+<div id="withinCompareContextWrap">
+<label for="withinCompareContext" id="withinCompareContextLabel">Keep this fixed</label>
+<select id="withinCompareContext"></select>
+</div>
+<div id="withinCompareExtraWrap" hidden>
+<label for="withinCompareExtra" id="withinCompareExtraLabel">Filter</label>
+<select id="withinCompareExtra"></select>
+</div>
+<label for="withinCompareMeasure">Measure</label>
+<select id="withinCompareMeasure"></select>
+<fieldset>
+<legend id="withinCompareChoicesLegend">Choose items</legend>
+<div class="check-chip-group" id="withinCompareChoices"></div>
+</fieldset>
+<p class="field-help" id="withinCompareAvailability"></p>
+</div>
+<div class="viewer-results">
+<p class="eyebrow">Side-by-side comparison</p>
+<h2 id="withinCompareTitle">Comparison</h2>
+<p class="viewer-result-meta" id="withinCompareMeta"></p>
+<div class="data-caution-box" id="withinCompareCaution"></div>
+<div class="bar-chart" id="withinCompareChart" aria-label="Comparison chart"></div>
+<div class="table-scroll" tabindex="0" aria-label="Comparison table">
+<table class="viewer-table">
+<caption id="withinCompareCaption">Selected comparison</caption>
+<thead><tr><th scope="col" id="withinCompareLabelHeader">Item</th><th scope="col" id="withinCompareValueHeader">Value</th></tr></thead>
+<tbody id="withinCompareBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</details>
 <div hidden="" id="awardsModule">
 <div class="container">
 <div aria-label="Loaded Program Awards file summary" class="viewer-stats" id="awardsFileSummary"></div>
@@ -112,7 +109,7 @@
 <div aria-label="Selected program awards by college" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption>Selected program awards by college</caption>
-<thead><tr><th scope="col">College</th><th scope="col">Award count</th></tr></thead>
+<thead><tr><th scope="col">College</th><th scope="col">Awards granted</th></tr></thead>
 <tbody id="awardsResultsBody"></tbody>
 </table>
 </div>
@@ -140,9 +137,9 @@
 <select id="successPopulation"></select>
 <label for="successChartMeasure">Chart</label>
 <select id="successChartMeasure">
-<option value="successRate">Success rate</option>
-<option value="retentionRate">Retention rate</option>
-<option value="enrollment">Enrollment count</option>
+<option value="successRate">Course success</option>
+<option value="retentionRate">Course retention</option>
+<option value="enrollment">Course enrollments</option>
 </select>
 <div class="viewer-control-actions">
 <button class="button button-secondary" id="successDownloadCsv" type="button">Download selected CSV</button>
@@ -167,11 +164,11 @@
 <thead>
 <tr>
 <th scope="col">Modality</th>
-<th scope="col">Enrollments</th>
+<th scope="col">Course enrollments</th>
 <th scope="col">Retained</th>
-<th scope="col">Retention rate</th>
+<th scope="col">Course retention</th>
 <th scope="col">Successful</th>
-<th scope="col">Success rate</th>
+<th scope="col">Course success</th>
 </tr>
 </thead>
 <tbody id="successResultsBody"></tbody>
@@ -232,7 +229,7 @@
 <label for="headcountAgeFilter">Age group</label><select id="headcountAgeFilter"></select>
 <label for="headcountEthnicityFilter">Ethnicity</label><select id="headcountEthnicityFilter"></select>
 <label for="headcountMeasure">Chart display</label>
-<select id="headcountMeasure"><option value="percent">Percent of selected students</option><option value="count">Student count</option></select>
+<select id="headcountMeasure"><option value="percent">Percent of selected students</option><option value="count">Distinct students</option></select>
 <p class="field-help">The percentage denominator changes with your filters. The college total remains visible for context.</p>
 <div class="viewer-control-actions">
 <button class="button button-secondary" id="headcountDownloadCsv" type="button">Download selected CSV</button>
@@ -251,7 +248,7 @@
 <div aria-label="Selected student headcount distribution" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Selected student headcount distribution</caption>
-<thead><tr><th id="headcountCategoryHeader" scope="col">Category</th><th scope="col">Student count</th><th scope="col">Percent</th></tr></thead>
+<thead><tr><th id="headcountCategoryHeader" scope="col">Category</th><th scope="col">Distinct students</th><th scope="col">Percent</th></tr></thead>
 <tbody id="headcountResultsBody"></tbody>
 </table>
 </div>
@@ -316,7 +313,7 @@
 <p class="module-label"><span aria-hidden="true">📈</span> Credit Courses/Sections</p>
 <h2 id="credit-sections-filter-heading">Choose the measure</h2>
 <label for="creditSectionsMeasure">Chart display</label>
-<select id="creditSectionsMeasure"><option value="sections">Section count</option><option value="enrollment">Enrollment count</option><option value="ftes">Section FTES</option></select>
+<select id="creditSectionsMeasure"><option value="sections">Reported sections</option><option value="enrollment">Course enrollments</option><option value="ftes">Instructional activity (FTES)</option></select>
 <div class="viewer-control-actions">
 <button class="button button-secondary" id="creditSectionsDownloadCsv" type="button">Download cleaned CSV</button>
 <button class="text-button explore-reset" type="button">Choose another file</button>
@@ -352,7 +349,7 @@
 <div aria-label="Loaded flexible table summary" class="viewer-stats" id="genericFileSummary"></div>
 <div class="viewer-layout">
 <aside aria-labelledby="generic-filter-heading" class="viewer-controls">
-<p class="module-label"><span aria-hidden="true">🧰</span> Flexible Explorer</p>
+<p class="module-label"><span aria-hidden="true">🧰</span> basic table view</p>
 <h2 id="generic-filter-heading">Choose what to visualize</h2>
 <label for="genericLabelColumn">Category or label column</label><select id="genericLabelColumn"></select>
 <label for="genericMeasureColumn">Numeric measure</label><select id="genericMeasureColumn"></select>
@@ -361,7 +358,7 @@
 <div class="viewer-control-actions"><button class="button button-secondary" id="genericDownloadCsv" type="button">Download selected columns</button><button class="text-button explore-reset" type="button">Choose another file</button></div>
 </aside>
 <div class="viewer-results">
-<p class="eyebrow">Flexible table view</p><h2 id="genericResultsTitle">Visualize an export</h2><p class="viewer-result-meta" id="genericResultMeta"></p>
+<p class="eyebrow">Basic table view</p><h2 id="genericResultsTitle">Visualize an export</h2><p class="viewer-result-meta" id="genericResultMeta"></p>
 <div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> Data Mart Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
 <div class="small-n-warning" hidden="" id="genericWarning"></div>
 <h3 id="genericChartHeading">Selected measure</h3><div aria-labelledby="genericChartHeading" class="bar-chart" id="genericBarChart"></div>
@@ -371,7 +368,7 @@
 <div class="container content-narrow">
 <div class="feature-panel cat-purple unsupported-report-panel">
 <p class="eyebrow">Report recognized</p>
-<h2 id="unsupportedTitle">This report is next in the build queue</h2>
+<h2 id="unsupportedTitle">This file needs a different setup</h2>
 <p id="unsupportedText"></p>
 <p><a class="button button-secondary" href="reports.html" id="unsupportedGuideLink">Open the related guide</a></p>
 <button class="text-button explore-reset" type="button">Choose another file</button>
@@ -379,29 +376,7 @@
 </div>
 </div>
 </section>
-<section aria-labelledby="supported-heading" class="soft-section">
-<div class="container">
-<div class="section-heading"><p class="eyebrow">Two levels of help</p><h2 id="supported-heading">Dedicated Explorers When We Know the Report, Flexible Explorer When We Do Not</h2><p>Dedicated modules understand a specific Data Mart layout and can add report-specific cautions. The Flexible Explorer is a safe fallback for other tabular exports: it visualizes selected columns without pretending to know what the report means.</p></div>
-<div class="purpose-grid explorer-report-grid">
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p><strong>Dedicated.</strong> Gender, age, ethnicity, and headcount status with counts and percentages.</p></article>
-<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p><strong>Dedicated.</strong> Course search, TOP codes, course characteristics, and reported section counts.</p></article>
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p><strong>Dedicated.</strong> Sections, enrollment, and FTES from the dimensions contained in the export.</p></article>
-<article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Dedicated.</strong> Counts, rates, denominator-aware aggregation, TOP, and modality.</p></article>
-<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p><strong>Dedicated.</strong> Grade composition by TOP with counts, percentages, and blank-category preservation.</p></article>
-<article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Dedicated.</strong> Program, TOP, award type, and college comparisons.</p></article>
-<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">🧰</span> Other Tabular Exports</h3><p><strong>Flexible.</strong> Choose a category column and numeric measure, chart the rows, inspect values, and save a selection record without adding unsupported methodological claims.</p></article>
-</div></div></section>
-<section aria-labelledby="scope-heading">
-<div class="container content-narrow bf-readable">
-<h2 id="scope-heading">What This Tool Does, and Does Not Do</h2>
-<p>Explore Data makes an official Data Mart export easier to work with. It does not change the source data, create new official measures, or replace CCCCO documentation. The tool should help you see the measure, population, time period, grouping, and caution that belong with the number.</p>
-<div class="info-box">
-<h3>Keep the official source in the research trail</h3>
-<p>For consequential planning, reporting, accreditation, hiring, curriculum, or resource decisions, verify the result against the current Data Mart report, its Notes &amp; Links information, and appropriate local institutional sources.</p>
-</div>
-<p class="small-note">Spreadsheet parsing uses SheetJS Community Edition 0.18.5 (Apache-2.0), loaded from jsDelivr.</p>
-</div>
-</section>
+<section aria-labelledby="scope-heading"><div class="container content-narrow"><div class="boundary-box"><h2 id="scope-heading">Keep the source with the chart</h2><p>Data Mart Smart does not create new official measures. Keep the report, period, population, denominator, and relevant caution with the result, and verify consequential findings against the official source.</p></div></div></section>
 </main>
 <footer class="site-footer">
 <div class="container footer-grid">

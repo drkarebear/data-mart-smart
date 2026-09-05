@@ -1,22 +1,26 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Program Review Dashboard | Data Mart Smart</title>
 <meta content="Combine several California Community Colleges Data Mart exports into a program review evidence picture with trends, outcomes, awards, cautions, and a reusable method note." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
-<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script defer src="data-mart-parsers.js"></script>
-<script defer src="explorer-demos.js"></script>
-<script defer src="program-review-dashboard.js"></script>
+<script defer="" referrerpolicy="no-referrer" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script defer="" src="file-security.js"></script>
+<script defer="" src="data-mart-parsers.js"></script>
+<script defer="" src="explorer-demos.js"></script>
+<script defer="" src="program-review-dashboard.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-header"><div class="container header-inner">
 <a aria-label="Data Mart Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span></a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div></header>
 <main id="main-content">
 <section aria-labelledby="page-title" class="page-hero viewer-hero"><div class="container page-hero-inner">
@@ -24,10 +28,10 @@
 <h1 id="page-title">Program Review Dashboard</h1>
 <p>Open several Data Mart exports from the same program or discipline. Data Mart Smart keeps the measures separate, connects what can be connected safely, and builds a compact evidence picture for reflection and planning.</p>
 </div></section>
-<section class="section-cool" aria-labelledby="what-it-does"><div class="container content-narrow"><div class="feature-panel cat-blue">
+<section aria-labelledby="what-it-does" class="section-cool"><div class="container content-narrow"><div class="feature-panel cat-blue">
 <h2 id="what-it-does"><span aria-hidden="true" class="emoji-icon">📋</span> One Program, Several Kinds of Evidence</h2>
 <p>This dashboard can combine different report families because program review needs more than one number. It does not merge unlike measures into one score.</p>
-<div class="program-review-principles" aria-label="Program review safeguards">
+<div aria-label="Program review safeguards" class="program-review-principles">
 <div><strong>Keep measures distinct</strong><span>Sections, enrollments, FTES, success, grades, and awards answer different questions.</span></div>
 <div><strong>Use one program definition</strong><span>Six-digit TOP is used across report families when it is available. Local prefixes may not match TOP exactly.</span></div>
 <div><strong>Show the period</strong><span>Every metric keeps its own term or academic year visible so unlike periods are not silently treated as the same.</span></div>
@@ -35,11 +39,11 @@
 </div></div></section>
 <section aria-labelledby="pr-upload-heading"><div class="container content-narrow">
 <div class="viewer-privacy" role="note"><strong>Your spreadsheets stay in this browser tab.</strong> Data Mart Smart reads the selected files locally with JavaScript. The spreadsheets themselves are not uploaded to Data Mart Smart.</div>
-<div class="upload-zone" id="prDropZone"><div aria-hidden="true" class="upload-icon">⇧</div><h2 id="pr-upload-heading">Choose the exports for your review</h2><p>Select up to 30 Excel or CSV exports. You can mix supported report types such as Course Details, Success &amp; Retention, Grade Distribution, Program Awards, Student Headcount, and Credit Courses/Sections.</p><div class="viewer-actions"><button class="button button-primary" id="prBrowseButton" type="button">Choose files</button><button class="button button-secondary" id="prDemoButton" type="button">Try the English example</button><a class="button button-quiet" href="compare-trends.html">Compare one report over time instead</a></div><input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden id="prFileInput" multiple type="file"/></div>
+<div class="upload-zone" id="prDropZone"><div aria-hidden="true" class="upload-icon">⇧</div><h2 id="pr-upload-heading">Add the evidence you have</h2><p>Add what you have. One or two files is enough to start, and you can add more evidence later. The dashboard can combine supported report types while keeping unlike measures separate.</p><div class="viewer-actions"><button class="button button-primary" id="prBrowseButton" type="button">Choose files</button><button class="button button-secondary" id="prDemoButton" type="button">Try the English example</button><a class="button button-quiet" href="compare-trends.html">Compare one report over time instead</a></div><input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="prFileInput" multiple="" type="file"/></div>
 <p aria-live="polite" class="viewer-status" id="prStatus" role="status"></p>
-<div hidden id="prFileArea"><div class="compare-file-heading"><h2>Evidence files</h2><button class="text-button" id="prClearFiles" type="button">Clear files</button></div><div class="compare-file-list" id="prFileList"></div></div>
+<div hidden="" id="prFileArea"><div class="compare-file-heading"><h2>Files added</h2><button class="text-button" id="prClearFiles" type="button">Clear files</button></div><div class="compare-file-list" id="prFileList"></div></div>
 </div></section>
-<section hidden id="prWorkspace"><div class="container">
+<section hidden="" id="prWorkspace"><div class="container">
 <div class="viewer-layout program-review-layout">
 <aside aria-labelledby="pr-controls-heading" class="viewer-controls"><p class="module-label"><span aria-hidden="true">🔎</span> Program definition</p><h2 id="pr-controls-heading">Keep the program consistent</h2>
 <label for="prProgram">Program / six-digit TOP</label><select id="prProgram"></select><p class="field-help">Use the same six-digit TOP across report families when possible. This is a classification, not necessarily the same thing as a local department prefix.</p>
@@ -50,9 +54,9 @@
 </aside>
 <div class="viewer-results">
 <p class="eyebrow">Current program picture</p><h2 id="prTitle">Program review evidence</h2><p class="viewer-result-meta" id="prMeta"></p>
-<div class="program-review-readiness" id="prReadiness" aria-live="polite"></div>
-<div class="comparison-cautions" id="prCautions" aria-live="polite"></div>
-<section aria-labelledby="pr-latest-heading"><h3 id="pr-latest-heading">Latest Available Evidence by Measure</h3><div class="viewer-stats program-review-kpis" id="prKpis"></div><p class="small-note">The cards may use different periods. Each card keeps its own period visible.</p></section>
+<div aria-live="polite" class="program-review-readiness" id="prReadiness"></div>
+<div aria-live="polite" class="comparison-cautions" id="prCautions"></div>
+<section aria-labelledby="pr-latest-heading"><h3 id="pr-latest-heading">Latest evidence by measure</h3><div class="viewer-stats program-review-kpis" id="prKpis"></div><p class="small-note">The cards may use different periods. Each card keeps its own period visible.</p></section>
 <section aria-labelledby="pr-activity-heading" class="program-review-section"><h3 id="pr-activity-heading"><span aria-hidden="true">📚</span> Instructional Activity</h3><div id="prActivity"></div></section>
 <section aria-labelledby="pr-outcomes-heading" class="program-review-section"><h3 id="pr-outcomes-heading"><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><div id="prOutcomes"></div></section>
 <section aria-labelledby="pr-grades-heading" class="program-review-section"><h3 id="pr-grades-heading"><span aria-hidden="true">📊</span> Grade Composition</h3><div id="prGrades"></div></section>
@@ -62,7 +66,7 @@
 </div>
 </div>
 </div></section>
-<section class="soft-section" aria-labelledby="pr-not-decision-heading"><div class="container content-narrow"><div class="boundary-box"><h2 id="pr-not-decision-heading">A Dashboard Is Evidence, Not the Program Review</h2><p>Data Mart can describe participation, instructional activity, outcomes, and awards. Program review still needs local curriculum, scheduling, staffing, student experience, prior goals, and professional judgment. The dashboard should help you ask better questions, not make the decision for you.</p></div></div></section>
+<section aria-labelledby="pr-not-decision-heading" class="soft-section"><div class="container content-narrow"><div class="boundary-box"><h2 id="pr-not-decision-heading">A Dashboard Is Evidence, Not the Program Review</h2><p>Data Mart can describe participation, instructional activity, outcomes, and awards. Program review still needs local curriculum, scheduling, staffing, student experience, prior goals, and professional judgment. The dashboard should help you ask better questions, not make the decision for you.</p></div></div></section>
 </main>
 <footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body></html>

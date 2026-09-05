@@ -4,11 +4,14 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Compare &amp; Trends | Data Mart Smart</title>
 <meta content="Open several comparable California Community Colleges Data Mart exports and build safer college comparisons or multi-period trends in your browser." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
-<script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" referrerpolicy="no-referrer" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script defer="" src="file-security.js"></script>
 <script defer="" src="data-mart-parsers.js"></script>
 <script defer="" src="compare-trends.js"></script>
 </head>
@@ -20,18 +23,7 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav">
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="start-here.html">Start Here</a></li>
-<li><a href="uses.html">Use Data</a></li>
-<li><a aria-current="page" href="explore-data.html">Explore Data</a></li>
-<li><a href="query-guide.html">Find a Report</a></li>
-<li><a href="reports.html">How-To Guides</a></li>
-<li><a href="understand-data.html">Data Tips</a></li>
-<li><a href="index.html#coach">Ask the Coach</a></li>
-</ul>
-</nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
@@ -64,7 +56,7 @@ Data Mart Smart reads the selected files locally with JavaScript. The spreadshee
 <div class="upload-zone" id="compareDropZone">
 <div aria-hidden="true" class="upload-icon">⇧</div>
 <h2 id="upload-heading">Choose two or more comparable exports</h2>
-<p>Select up to 20 Excel or CSV files from the same Data Mart report. For example, choose the same Course Details setup for Fall 2022, Fall 2023, Fall 2024, and Fall 2025.</p>
+<p>Start with two comparable Excel or CSV files from the same Data Mart report. Add more periods or colleges when you are ready.</p>
 <div class="viewer-actions">
 <button class="button button-primary" id="compareBrowseButton" type="button">Choose files</button>
 <a class="button button-secondary" href="explore-data.html">Explore one file instead</a>
@@ -127,7 +119,7 @@ Data Mart Smart reads the selected files locally with JavaScript. The spreadshee
 <article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true" class="heading-emoji">📊</span> Grade Distribution</h3><p>Compare the same grade category as a count or share of a selected TOP area.</p></article>
 <article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true" class="heading-emoji">🎓</span> Program Awards</h3><p>Compare the same program and award type without treating awards as unique graduates.</p></article>
 </div>
-<p class="small-note"><strong>Why not every export?</strong> The Flexible Explorer can visualize many one-file tables, but multi-file comparison has a higher risk of mixing totals, subtotals, populations, or incompatible definitions. Data Mart Smart only enables comparison logic where we have tested the report structure.</p>
+<p class="small-note"><strong>Why not every export?</strong> The basic one-file table view can chart many exports, but multi-file comparison has a higher risk of mixing totals, subtotals, populations, or incompatible definitions. Data Mart Smart only enables comparison logic where we have tested the report structure.</p>
 </div>
 </section>
 </main>

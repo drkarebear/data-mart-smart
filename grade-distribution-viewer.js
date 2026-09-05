@@ -73,11 +73,7 @@ async function loadGradeFile(file) {
   }
   setGradeStatus(`Reading ${file.name} in your browser...`, "neutral");
   try {
-    const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, {type:"array", cellDates:false});
-    if (!workbook.SheetNames.length) throw new Error("No worksheets were found in this file.");
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, {header:1, raw:true, defval:null});
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:true, defval:null});
     const detected = DataMartParsers.detectReport(rows);
     if (detected.kind !== "grade-distribution") throw new Error(`This looks like ${detected.label}, not a Grade Distribution export. Use Explore Data for automatic report detection.`);
     const parsed = DataMartParsers.parseGradeDistribution(rows);
@@ -273,6 +269,7 @@ function resetGradeViewer() {
   gradeEls.gradeResultsBody.innerHTML = "";
   setGradeStatus("Ready. Choose another Grade Distribution export, or try the English sample.", "neutral");
   gradeEls.gradeDropZone.scrollIntoView({behavior:preferredGradeScroll(), block:"center"});
+  gradeEls.gradeBrowseButton.focus();
 }
 
 function formatGradeInteger(value) {
@@ -287,7 +284,4 @@ function preferredGradeScroll() {
 function escapeGradeHtml(value) {
   return String(value ?? "").replace(/[&<>\"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[ch]));
 }
-function csvGradeCell(value) {
-  const text = String(value ?? "");
-  return /[",\r\n]/.test(text) ? `"${text.replace(/"/g,'""')}"` : text;
-}
+function csvGradeCell(value) { return DataMartFileSecurity.csvCell(value); }

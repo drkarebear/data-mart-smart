@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Compare Program Awards | Data Mart Smart</title>
 <meta content="A step-by-step guide to comparing degrees and certificates with the CCC Data Mart Program Awards report." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,19 +19,19 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
 <section aria-labelledby="page-title" class="page-hero">
 <div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Program Awards</p>
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">Guides &amp; Tasks</a> <span aria-hidden="true">/</span> Program Awards</p>
 <p class="eyebrow">Data recipe: degrees and certificates</p>
 <h1 id="page-title">Compare Program Awards</h1>
 <p>Use this recipe when you want to compare reported degrees, certificates, or other award categories by college, year, or instructional area.</p>
 <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
 </div>
-</section>
+</section><section aria-labelledby="guide-route-heading" class="guide-route-section"><div class="container content-narrow"><h2 id="guide-route-heading">What do you need?</h2><div class="explore-choice-grid two-choice-grid"><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📊</span> I already have the export</h3><p>Open the file first. The interpretation and cautions will stay with the result.</p><a class="button button-primary" href="program-awards-viewer.html">Open my export</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">🧭</span> I need to get the export</h3><p>Go straight to the report choice and setup.</p><a class="button button-secondary" href="#get-export">Show the setup</a></article></div></div></section>
 <section>
 <div class="container recipe-layout">
 <div class="recipe-main">
@@ -42,21 +44,21 @@
 <dt>Watch for</dt><dd>awards are not automatically unique graduates</dd>
 <dt>Typical setup</dt><dd>about 4 minutes</dd>
 </dl>
-<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Outcomes/Program_Awards.aspx">Open the report</a><a class="button button-secondary" href="explore-data.html">Explore an Export</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a></nav>
-<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
+<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Outcomes/Program_Awards.aspx">Open the report</a><a class="button button-secondary" href="explore-data.html">Explore an Export</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="coach.html">Ask the Coach</a></nav>
+<details class="guide-details"><summary><span class="details-heading" id="use-this-for">Why Might I Use This?</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <ul class="use-cases"><li>Program review</li><li>Career education</li><li>Department planning</li><li>College comparisons</li></ul>
-</section>
-<section aria-labelledby="report-heading" class="bf-panel bf-action">
+</div></details>
+<section aria-labelledby="report-heading" class="bf-panel bf-action" id="get-export">
 <p class="section-kicker">Do this</p><h2 id="report-heading">Best Data Mart Report</h2>
 <p><strong>Program Awards</strong> is the best starting report for reported award counts.</p>
 <p><a class="button button-secondary" href="https://datamart.cccco.edu/Outcomes/Program_Awards.aspx">Open the official Program Awards report</a></p>
 </section><section aria-labelledby="viewer-heading" class="bf-panel bf-action smart-viewer-callout cat-purple"><p class="section-kicker">Make the export easier to use</p><h2 id="viewer-heading"><span aria-hidden="true" class="emoji-icon">✨</span> Visualize a Program Awards Export</h2><p>Already downloaded the Program Awards Excel report? Use the Explore Data tool to turn the CCCCO export into a cleaner, filterable college comparison.</p><ul><li>Choose a program or six-digit TOP code.</li><li>Filter by award type.</li><li>Compare colleges in a chart and accessible table.</li><li>Download a cleaned comparison CSV.</li><li>Copy a method statement that records the source, period, filters, and measure.</li></ul><div class="info-box"><h3>Your file stays in your browser</h3><p>Explore Data processes the spreadsheet locally in the browser. The selected workbook is not uploaded to Data Mart Smart.</p></div><p><a class="button button-primary" href="explore-data.html">Open Explore Data</a></p></section>
-<section aria-labelledby="before-heading" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="before-heading">Decide What Counts as an Award for Your Question</h2>
+<details class="guide-details"><summary><span class="details-heading" id="before-heading">Decide What Counts as an Award for Your Question</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <p>The report supports different award categories. Be explicit about whether you want associate degrees only, certificates, all awards, or another defined subset.</p>
 <div class="info-box"><h3>All Awards vs. Chancellor's Office Approved Awards</h3><p>The report includes different award-selection modes. Do not assume they are interchangeable. Use the live report notes and official award-code definitions when a category is unclear.</p></div>
-</section>
+</div></details>
 <section aria-labelledby="setup-heading" class="bf-panel bf-action">
 <p class="section-kicker">Do this</p><h2 id="setup-heading">How to Set It Up</h2>
 <ol class="step-list">
@@ -68,13 +70,13 @@
 <li><h3>Do not combine award categories until you know they can be combined</h3><p>A person can be associated with more than one award record.</p></li>
 </ol>
 </section>
-<section aria-labelledby="meaning-heading" class="bf-panel bf-meaning">
-<p class="section-kicker">What it means</p><h2 id="meaning-heading">What Award Count Means</h2>
+<details class="guide-details"><summary><span class="details-heading" id="meaning-heading">What Award Count Means</span></summary><div class="guide-details-body">
+<p class="section-kicker">What it means</p>
 <p><strong>Award Count is a count of reported awards.</strong> It is not automatically a count of unique graduates. One person can earn more than one award.</p>
 <div class="caution-box"><h3>Do Not Turn Raw Awards Into Program Quality</h3><p>A college reporting more awards does not by itself establish a stronger program. Program size, enrollment, award structures, curriculum, student pathways, and other factors can affect the count.</p></div>
-</section>
-<section aria-labelledby="method-heading" class="bf-panel bf-method">
-<p class="section-kicker">Save this</p><h2 id="method-heading">Save the Method</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="method-heading">Save the Method</span></summary><div class="guide-details-body">
+<p class="section-kicker">Save this</p>
 <div class="method-box">
 <dl>
 <dt>Report</dt><dd>Program Awards</dd>
@@ -86,22 +88,18 @@
 <dt>Measure</dt><dd>Award Count</dd>
 </dl>
 </div>
-</section>
-<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
-<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="what-next-heading">You Found a Result. What Should You Ask Next?</span></summary><div class="guide-details-body">
+<p class="section-kicker">What next</p>
 <ul><li>Is the difference stable across several years?</li><li>How large are the programs being compared?</li><li>Are the colleges using comparable award structures and classifications?</li></ul>
 <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-</section>
+</div></details>
 <div class="coach-cta">
 <h2>Want a Second Set of Eyes?</h2>
 <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+<p><a class="button button-secondary" href="coach.html">Ask the Coach</a></p>
 </div>
 </div>
-<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#report-heading">Best Data Mart Report</a></li><li><a href="#viewer-heading">Visualize an Export</a></li><li><a href="#setup-heading">How to Set It Up</a></li><li><a href="#meaning-heading">What Award Count Means</a></li><li><a href="#method-heading">Save the Method</a></li></ul></nav>
-<div class="side-card"><h2>Quick Summary</h2><ul><li><strong>Report:</strong> Program Awards</li><li><strong>Measure:</strong> Award Count</li><li><strong>Main risk:</strong> treating awards as unique graduates or mixing award categories</li></ul></div>
-<div class="side-card"><h2>Related</h2><p><a href="examples.html">See an awards example</a></p><p><a href="compare-colleges.html">Compare colleges carefully</a></p></div>
-</aside>
 </div>
 </section>
 </main>

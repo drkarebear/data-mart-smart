@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Compare Course Success and Retention | Data Mart Smart</title>
 <meta content="A practical guide to using CCC Data Mart retention and success rates with denominator and comparison cautions." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,19 +19,19 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
 <section aria-labelledby="page-title" class="page-hero">
 <div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Course Success</p>
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">Guides &amp; Tasks</a> <span aria-hidden="true">/</span> Course Success</p>
 <p class="eyebrow">Data recipe: retention and success</p>
 <h1 id="page-title">Compare Course Success and Retention</h1>
 <p>Use this recipe when you want to compare course outcomes across colleges, terms, instructional areas, or student groups.</p>
 <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
 </div>
-</section>
+</section><section aria-labelledby="guide-route-heading" class="guide-route-section"><div class="container content-narrow"><h2 id="guide-route-heading">What do you need?</h2><div class="explore-choice-grid two-choice-grid"><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📊</span> I already have the export</h3><p>Open the file first. The interpretation and cautions will stay with the result.</p><a class="button button-primary" href="explore-data.html">Open my export</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">🧭</span> I need to get the export</h3><p>Go straight to the report choice and setup.</p><a class="button button-secondary" href="#get-export">Show the setup</a></article></div></div></section>
 <section>
 <div class="container recipe-layout">
 <div class="recipe-main">
@@ -42,12 +44,12 @@
 <dt>Watch for</dt><dd>always inspect the underlying N with the percentage</dd>
 <dt>Typical setup</dt><dd>about 4 minutes</dd>
 </dl>
-<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Outcomes/Course_Ret_Success.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a><a class="button button-secondary" href="explore-data.html">Visualize an export</a></nav>
-<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
+<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Outcomes/Course_Ret_Success.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="coach.html">Ask the Coach</a><a class="button button-secondary" href="explore-data.html">Visualize an export</a></nav>
+<details class="guide-details"><summary><span class="details-heading" id="use-this-for">Why Might I Use This?</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <ul class="use-cases"><li>Program review</li><li>Equity inquiry</li><li>Course review</li><li>Student-success conversations</li></ul>
-</section>
-<section aria-labelledby="report-heading" class="bf-panel bf-action">
+</div></details>
+<section aria-labelledby="report-heading" class="bf-panel bf-action" id="get-export">
 <p class="section-kicker">Do this</p><h2 id="report-heading">Best Data Mart Report</h2>
 <p><strong>Enrollment Retention and Success Rate</strong> is the best starting report for the Chancellor's Office retention and success measures.</p>
 <p><a class="button button-secondary" href="https://datamart.cccco.edu/Outcomes/Course_Ret_Success.aspx">Open the official report</a></p>
@@ -58,9 +60,8 @@
 <p>Open the Excel or CSV export in Explore Data to choose a six-digit TOP area, compare instructional modalities, see the underlying enrollment counts, and recalculate combined rates from the counts rather than averaging percentages.</p>
 <p><a class="button button-primary" href="explore-data.html">Open Explore Data</a></p>
 </section>
-
-<section aria-labelledby="gives-heading" class="bf-panel bf-meaning">
-<p class="section-kicker">What it means</p><h2 id="gives-heading">What the Report Gives You</h2>
+<details class="guide-details"><summary><span class="details-heading" id="gives-heading">What the Report Gives You</span></summary><div class="guide-details-body">
+<p class="section-kicker">What it means</p>
 <ul>
 <li>Enrollment Count</li>
 <li>Retention Count</li>
@@ -69,7 +70,7 @@
 <li>Success Rate</li>
 </ul>
 <div class="caution-box"><h3>Retention Here Has a Specific Report Definition</h3><p>Do not interpret Data Mart retention as “the student stayed enrolled at the college.” The report defines retention from course-enrollment grade codes.</p></div>
-</section>
+</div></details>
 <section aria-labelledby="setup-heading" class="bf-panel bf-action">
 <p class="section-kicker">Do this</p><h2 id="setup-heading">How to Set It Up</h2>
 <ol class="step-list">
@@ -81,8 +82,8 @@
 <li><h3>Read the live notes</h3><p>The formulas depend on report-defined grade-code groups. If an unfamiliar grade code matters, verify it rather than guessing.</p></li>
 </ol>
 </section>
-<section aria-labelledby="definitions-heading" class="bf-panel bf-meaning">
-<p class="section-kicker">What it means</p><h2 id="definitions-heading">What the Counts Mean</h2>
+<details class="guide-details"><summary><span class="details-heading" id="definitions-heading">What the Counts Mean</span></summary><div class="guide-details-body">
+<p class="section-kicker">What it means</p>
 <div aria-label="Plain-language interpretation of the report measures" class="table-scroll" role="region" tabindex="0"><table class="field-table">
 <caption>Plain-language interpretation of the report measures</caption>
 <thead><tr><th scope="col">Measure</th><th scope="col">Interpretation</th></tr></thead>
@@ -94,7 +95,7 @@
 <tr><td>Success Rate</td><td>Success Count divided by the relevant Enrollment Count.</td></tr>
 </tbody>
 </table></div>
-</section>
+</div></details>
 <section aria-labelledby="compare-heading" class="bf-panel bf-caution">
 <p class="section-kicker">Watch for</p><h2 id="compare-heading">Before Comparing Rates</h2>
 <ul>
@@ -106,25 +107,21 @@
 <li>underlying N considered alongside the percentage.</li>
 </ul>
 </section>
-<section aria-labelledby="interpret-heading" class="bf-panel bf-caution">
-<p class="section-kicker">Watch for</p><h2 id="interpret-heading">What the Data Do Not Establish</h2>
+<details class="guide-details"><summary><span class="details-heading" id="interpret-heading">What the Data Do Not Establish</span></summary><div class="guide-details-body">
+<p class="section-kicker">Watch for</p>
 <p>If College A has a higher success rate than College B, the report establishes a descriptive difference in the selected population. It does not by itself establish that one college teaches better, that one program is stronger, or why the difference exists.</p>
-</section>
-<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
-<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="what-next-heading">You Found a Result. What Should You Ask Next?</span></summary><div class="guide-details-body">
+<p class="section-kicker">What next</p>
 <ul><li>How large is the underlying enrollment count?</li><li>Does the difference persist across multiple terms?</li><li>Would disaggregation help identify a question without implying a cause?</li></ul>
 <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-</section>
+</div></details>
 <div class="coach-cta">
 <h2>Want a Second Set of Eyes?</h2>
 <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+<p><a class="button button-secondary" href="coach.html">Ask the Coach</a></p>
 </div>
 </div>
-<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#report-heading">Best Data Mart Report</a></li><li><a href="#setup-heading">How to Set It Up</a></li><li><a href="#definitions-heading">What the Counts Mean</a></li><li><a href="#compare-heading">Before Comparing Rates</a></li></ul></nav>
-<div class="side-card"><h2>Quick Summary</h2><ul><li><strong>Report:</strong> Enrollment Retention and Success Rate</li><li><strong>Always inspect:</strong> rates + underlying counts</li><li><strong>Main risk:</strong> interpreting percentages without denominator context</li></ul></div>
-<div class="side-card"><h2>Related</h2><p><a href="understand-data.html">Know your denominator</a></p><p><a href="compare-colleges.html">Compare colleges carefully</a></p></div>
-</aside>
 </div>
 </section>
 </main>

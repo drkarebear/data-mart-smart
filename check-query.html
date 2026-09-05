@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Check My Query | Data Mart Smart</title>
 <meta content="An accessible self-audit checklist for checking a CCC Data Mart setup before interpreting or comparing results." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,7 +19,7 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
@@ -55,37 +57,7 @@
 </noscript>
 </div>
 </section>
-<script>
-      const form = document.getElementById('audit-form');
-      const checkButton = document.getElementById('check-button');
-      const resetButton = document.getElementById('reset-button');
-      const result = document.getElementById('audit-result');
-
-      function renderResult() {
-        const boxes = [...form.querySelectorAll('input[name="audit"]')];
-        const checked = boxes.filter(box => box.checked).length;
-        const total = boxes.length;
-        let message = "";
-
-        if (checked === total) {
-          message = "<strong>All " + total + " checks are complete.</strong> Your setup is ready for interpretation, assuming the underlying report definitions support your choices. Save your method before you publish the result.";
-        } else if (checked >= 6) {
-          message = "<strong>You completed " + checked + " of " + total + " checks.</strong> You are close. Review the unchecked items before calculating, ranking, or drawing conclusions.";
-        } else {
-          message = "<strong>You completed " + checked + " of " + total + " checks.</strong> Several methodological questions are still open. Resolve those first; they could materially change the result.";
-        }
-
-        result.innerHTML = message;
-        result.hidden = false;
-        result.focus();
-      }
-
-      checkButton.addEventListener('click', renderResult);
-      resetButton.addEventListener('click', () => {
-        result.hidden = true;
-        result.innerHTML = "";
-      });
-    </script>
+<script defer="" src="check-query.js"></script>
 </main>
 <footer class="site-footer">
 <div class="container footer-grid">

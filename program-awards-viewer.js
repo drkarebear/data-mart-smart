@@ -78,11 +78,7 @@ async function loadWorkbookFile(file) {
 
   setStatus(`Reading ${file.name} in your browser…`, "neutral");
   try {
-    const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, {type: "array", cellDates: false});
-    if (!workbook.SheetNames.length) throw new Error("No worksheets found.");
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, {header: 1, raw: true, defval: null});
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:false, defval:null});
     const parsed = parseProgramAwards(rows);
 
     if (parsed.records.length === 0) {
@@ -337,10 +333,7 @@ function downloadCsv() {
   setStatus("Comparison CSV downloaded.", "success");
 }
 
-function csvCell(value) {
-  const s = String(value);
-  return `"${s.replace(/"/g,'""')}"`;
-}
+function csvCell(value) { return DataMartFileSecurity.csvCell(value); }
 
 function resetViewer() {
   state.records = [];
@@ -353,6 +346,7 @@ function resetViewer() {
   els.programSearch.value = "";
   setStatus("Reset. Choose the included demo or drop a CCCCO Program Awards Excel export.", "neutral");
   window.scrollTo({top:0, behavior:preferredScrollBehavior()});
+  els.browseButton.focus();
 }
 
 function escapeHtml(value) {

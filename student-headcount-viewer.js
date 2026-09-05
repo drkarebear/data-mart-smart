@@ -61,10 +61,7 @@ async function loadHeadcountPageFile(file) {
 
   setHeadcountPageStatus(`Reading ${file.name} in your browser...`, "neutral");
   try {
-    const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, {type:"array", cellDates:false});
-    if (!workbook.SheetNames.length) throw new Error("No worksheets were found in this file.");
-    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header:1,raw:true,defval:null});
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:true, defval:null});
     const detected = DataMartParsers.detectReport(rows);
     if (detected.kind !== "student-headcount") throw new Error(`This looks like ${detected.label}, not a Student Headcount Summary export.`);
     const parsed = DataMartParsers.parseStudentHeadcount(rows);
@@ -261,10 +258,7 @@ function downloadHeadcountPageCsvFile(filename,rows) {
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a"); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
-function headcountPageCsvCell(value) {
-  const text=String(value ?? "");
-  return /[",\r\n]/.test(text)?`"${text.replace(/"/g,'""')}"`:text;
-}
+function headcountPageCsvCell(value) { return DataMartFileSecurity.csvCell(value); }
 function resetHeadcountPage() {
   headcountPageState.sourceName="";
   headcountPageState.parsed=null;
@@ -274,6 +268,7 @@ function resetHeadcountPage() {
   headcountPageEls.headcountPageResultsBody.innerHTML="";
   setHeadcountPageStatus("Ready. Choose another Student Headcount export, or try the LA Mission sample.","neutral");
   headcountPageEls.headcountPageDropZone.scrollIntoView({behavior:headcountPageScrollBehavior(),block:"center"});
+  headcountPageEls.headcountPageBrowseButton.focus();
 }
 function setHeadcountPageStatus(message,kind="neutral") {
   headcountPageEls.headcountPageStatus.textContent=message;

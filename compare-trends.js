@@ -46,10 +46,7 @@
   }
 
   async function readFile(file) {
-    const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, { type: "array" });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "" });
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:true, defval:""});
     const detection = DataMartParsers.detectReport(rows);
     const parsed = detection.supported ? parseRows(rows, detection.kind) : null;
     return { file, fileName: file.name, rows, detection, parsed };
@@ -553,10 +550,7 @@
     method.textContent = lines.join("\n");
   }
 
-  function csvEscape(value) {
-    const s = String(value ?? "");
-    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  }
+  function csvEscape(value) { return DataMartFileSecurity.csvCell(value); }
 
   function downloadCsv() {
     const info = metricInfo();

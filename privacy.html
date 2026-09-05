@@ -4,8 +4,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Privacy | Data Mart Smart</title>
-<meta content="Privacy information for the static Data Mart Smart website and future CCC Data Mart Coach integration." name="description"/>
+<meta content="Privacy information for the static Data Mart Smart website, browser-based data viewers, and the embedded CCC Data Mart Coach hosted by Playlab." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
 </head>
@@ -17,7 +19,7 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
@@ -25,33 +27,31 @@
 <div class="container page-hero-inner">
 <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Privacy</p>
 <p class="eyebrow">Simple by design</p>
-<h1 id="page-title">Privacy</h1>
-<p>The core Data Mart Smart website is designed as a static educational site and does not require an account to read its guides.</p>
+<h1 id="page-title">Privacy and Data Safety</h1>
+<p>Data Mart Smart is a static educational website. It does not require an account and does not have a site database, analytics code, advertising trackers, or a server-side file upload feature.</p>
 </div>
 </section>
 <section>
 <div class="container content-narrow bf-readable">
 <span class="policy-meta">Last reviewed: September 2026</span>
-<h2>Information Collected by This Site</h2>
-<p>As currently designed, the core static website does not include account registration, a contact form, or a database that stores visitor-submitted information.</p>
-<h2>Interactive Checklist</h2>
-<p>The “Check My Query” checklist runs in the visitor's browser. The current version does not submit checklist responses to a server.</p>
-<h2>External Links</h2>
-<p>The site links to the official CCC Data Mart, CCCCO resources, and may link to other external services. Those services have their own privacy practices, which are outside this project's control.</p>
+<div class="viewer-privacy" role="note"><strong>Spreadsheet files are processed in your browser.</strong> Data Mart Smart does not send the contents of a selected spreadsheet to its own server. Use official aggregate Data Mart exports and do not select files containing personally identifiable or confidential records.</div>
+<h2>What the site stores</h2>
+<p>The current site has no account registration, contact form, application database, cookies, local storage, session storage, or analytics code. The Check My Query checklist also runs only in the browser and does not submit responses to Data Mart Smart.</p>
+<h2>Excel and CSV viewers</h2>
+<p>When you use a viewer, your selected file is read locally by browser-side JavaScript. Excel-reading pages load SheetJS Community Edition 0.20.3 from the official SheetJS CDN. That CDN can receive ordinary request metadata such as an IP address and browser information, but Data Mart Smart does not send your spreadsheet contents to the CDN. Requests use a no-referrer policy.</p>
+<p>For security, the viewers accept only expected Excel or CSV file types, reject files larger than 10 MB, limit worksheet size, and disable unneeded spreadsheet features where the parser permits. Use files from trusted sources, preferably official CCCCO exports.</p>
 <h2>CCC Data Mart Coach</h2>
-<p>The conversational coach is hosted through a separate service. Before the coach is embedded or linked publicly, this page should be updated with a clear description of that service's applicable privacy terms and what users should avoid sharing.</p>
+<p>The Coach is hosted by Playlab. The embedded Coach does not connect to Playlab until you choose the Load button on the Coach page. If you use it, information you type, upload, or otherwise provide is handled through Playlab rather than the static Data Mart Smart site.</p>
 <div class="caution-box">
-<h3>Do Not Share Sensitive Student Information</h3>
-<p>Do not upload personally identifiable student records, protected educational records, credentials, passwords, or other confidential institutional information to the coach or public site.</p>
+<h3>Do not share sensitive student or institutional information</h3>
+<p>Do not submit personally identifiable student records, protected educational records, credentials, passwords, confidential personnel information, or other restricted institutional information to the Coach or to a public website.</p>
 </div>
-<h2>Future Changes</h2>
-<p>If analytics, forms, accounts, embedded tools, or other data-collecting features are added later, this notice should be revised before those features are made public.</p>
+<h2>Hosting and external links</h2>
+<p>The hosting provider, such as GitHub Pages, can receive standard web-server request information needed to deliver the site. Links to CCCCO, Data Mart, Playlab, and other external services are governed by those services' own privacy practices. Data Mart Smart uses a site-wide no-referrer policy so external destinations are not sent the page URL as a referrer.</p>
+<h2>Future changes</h2>
+<p>If analytics, forms, accounts, server-side uploads, or other data-collecting features are added later, this notice should be reviewed before those features are made public.</p>
 </div>
 </section>
-<section><div class="container content-narrow">
-<h2>Explore Data and Browser-Based Viewers</h2>
-<p>Explore Data and the legacy Program Awards Smart Viewer read a spreadsheet or CSV file you select using browser-side JavaScript. The selected file is not submitted to a Data Mart Smart server. These pages currently load the open-source SheetJS Community Edition library from jsDelivr so the browser can read Excel files.</p><p>Use these tools with public, aggregate Data Mart exports. Do not use them as a place to process student-level records, protected educational information, credentials, or other confidential institutional data.</p>
-</div></section>
 </main>
 <footer class="site-footer">
 <div class="container footer-grid">

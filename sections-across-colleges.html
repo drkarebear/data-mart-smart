@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Compare Course Sections Across Colleges | Data Mart Smart</title>
 <meta content="A step-by-step guide to comparing reported course sections across California Community Colleges using CCC Data Mart." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,19 +19,19 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
 <section aria-labelledby="page-title" class="page-hero">
 <div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Compare Course Sections</p>
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">Guides &amp; Tasks</a> <span aria-hidden="true">/</span> Compare Course Sections</p>
 <p class="eyebrow">Data recipe: course offerings</p>
 <h1 id="page-title">Compare Course Sections Across Colleges</h1>
 <p>Use this recipe when your question sounds like: “How many English sections did each college offer in Fall 2026?”</p>
 <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
 </div>
-</section>
+</section><section aria-labelledby="guide-route-heading" class="guide-route-section"><div class="container content-narrow"><h2 id="guide-route-heading">What do you need?</h2><div class="explore-choice-grid two-choice-grid"><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📊</span> I already have the export</h3><p>Open the file first. The interpretation and cautions will stay with the result.</p><a class="button button-primary" href="explore-data.html">Open my export</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">🧭</span> I need to get the export</h3><p>Go straight to the report choice and setup.</p><a class="button button-secondary" href="#get-export">Show the setup</a></article></div></div></section>
 <section>
 <div class="container recipe-layout">
 <div class="recipe-main">
@@ -42,20 +44,20 @@
 <dt>Watch for</dt><dd>linked lecture/lab/co-requisite sections can make reported sections differ from informal 'class' counts</dd>
 <dt>Typical setup</dt><dd>about 5 minutes</dd>
 </dl>
-<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Courses/Course_Details.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a><a class="button button-secondary" href="explore-data.html">Visualize an export</a></nav>
-<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
+<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Courses/Course_Details.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="coach.html">Ask the Coach</a><a class="button button-secondary" href="explore-data.html">Visualize an export</a></nav>
+<details class="guide-details"><summary><span class="details-heading" id="use-this-for">Why Might I Use This?</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <ul class="use-cases"><li>Scheduling</li><li>Program review</li><li>Department planning</li><li>College comparisons</li></ul>
-</section>
-<section aria-labelledby="measure-heading" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="measure-heading">What You Are Trying to Measure</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="measure-heading">What You Are Trying to Measure</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <p>You are comparing the number of <strong>reported sections</strong> that meet the same course-selection criteria across multiple colleges during the same term.</p>
 <div class="caution-box">
 <h3>Data Caution</h3>
 <p>“Sections” and “actual classes” are not always identical concepts. Lecture/lab combinations, linked support structures, co-requisites, or other local scheduling relationships may create related section records that need review before you collapse them into a count of instructional classes.</p>
 </div>
-</section>
-<section aria-labelledby="report-heading" class="bf-panel bf-action">
+</div></details>
+<section aria-labelledby="report-heading" class="bf-panel bf-action" id="get-export">
 <p class="section-kicker">Do this</p><h2 id="report-heading">Best Data Mart Report</h2>
 <p><strong>Use Course Details</strong> when you need to identify specific courses and see fields such as Course ID, Course Title, Course Control Number, TOP Code, units, and Sections Count.</p>
 <p>If your goal is a broader aggregate by TOP code or another classification rather than identifiable courses, <strong>Credit Courses/Sections</strong> may be a better fit.</p>
@@ -67,7 +69,6 @@
 <p>Explore Data can now read Course Details exports and summary-level Credit Courses/Sections exports. Search courses, inspect TOP codes, filter transfer and SAM status, and visualize reported section counts.</p>
 <p><a class="button button-primary" href="explore-data.html">Open Explore Data</a></p>
 </section>
-
 <section aria-labelledby="before-start-heading" class="bf-panel bf-caution">
 <p class="section-kicker">Watch for</p><h2 id="before-start-heading">Before You Start</h2>
 <p>Decide these four things before you run the report:</p>
@@ -111,8 +112,7 @@
 </li>
 </ol>
 </section>
-<section aria-labelledby="fields-heading">
-<h2 id="fields-heading">Fields Worth Checking</h2>
+<details class="guide-details"><summary><span class="details-heading" id="fields-heading">Fields Worth Checking</span></summary><div class="guide-details-body">
 <div aria-label="Common fields in a course-section comparison" class="table-scroll" role="region" tabindex="0"><table class="field-table">
 <caption>Common fields in a course-section comparison</caption>
 <thead>
@@ -144,13 +144,13 @@
 </tr>
 </tbody>
 </table></div>
-</section>
-<section aria-labelledby="result-heading" class="bf-panel bf-meaning">
-<p class="section-kicker">What it means</p><h2 id="result-heading">What the Result Will Mean</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="result-heading">What the Result Will Mean</span></summary><div class="guide-details-body">
+<p class="section-kicker">What it means</p>
 <p>A result such as <strong>42 sections</strong> means 42 reported section records meeting your selected Data Mart criteria. It does not automatically mean 42 instructors, 42 different courses, 42 course preparations, or 42 completely independent instructional experiences.</p>
-</section>
-<section aria-labelledby="method-heading" class="bf-panel bf-method">
-<p class="section-kicker">Save this</p><h2 id="method-heading">Save a Reproducible Method</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="method-heading">Save a Reproducible Method</span></summary><div class="guide-details-body">
+<p class="section-kicker">Save this</p>
 <div class="method-box">
 <dl>
 <dt>Question</dt><dd>How many English sections did each selected college report?</dd>
@@ -163,41 +163,18 @@
 <dt>Special handling</dt><dd>[Document review of linked lecture/lab or related records]</dd>
 </dl>
 </div>
-</section>
-<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
-<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="what-next-heading">You Found a Result. What Should You Ask Next?</span></summary><div class="guide-details-body">
+<p class="section-kicker">What next</p>
 <ul><li>Are linked sections inflating the count relative to the concept of one class?</li><li>Would enrollment or FTES add useful context?</li><li>Is the difference persistent across several comparable terms?</li></ul>
 <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-</section>
+</div></details>
 <div class="coach-cta">
 <h2>Want a Second Set of Eyes?</h2>
 <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+<p><a class="button button-secondary" href="coach.html">Ask the Coach</a></p>
 </div>
 </div>
-<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#report-heading">Best Data Mart Report</a></li><li><a href="#setup-heading">How to Set It Up</a></li><li><a href="#result-heading">What the Result Will Mean</a></li></ul></nav>
-<div class="side-card">
-<h2>Quick Summary</h2>
-<ul>
-<li><strong>Question:</strong> sections offered</li>
-<li><strong>Report:</strong> Course Details</li>
-<li><strong>Measure:</strong> Sections Count</li>
-<li><strong>Time:</strong> same term</li>
-<li><strong>Main risk:</strong> course definition and linked section records</li>
-</ul>
-</div>
-<div class="side-card">
-<h2>Need Help?</h2>
-<p>If your course list or section structure is messy, use CCC Data Mart Coach to check the setup or inspect an export.</p>
-<p><a href="index.html#coach">Ask the Coach <span aria-hidden="true">→</span></a></p>
-</div>
-<div class="side-card">
-<h2>Related Tips</h2>
-<p><a href="understand-data.html">Sections are not always classes</a></p>
-<p><a href="understand-data.html">TOP code ≠ local prefix</a></p>
-<p><a href="understand-data.html">Compare like with like</a></p>
-</div>
-</aside>
 </div>
 </section>
 </main>

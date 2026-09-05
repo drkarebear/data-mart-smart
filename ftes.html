@@ -4,6 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="no-referrer"/>
 <title>Understand and Use FTES | Data Mart Smart</title>
 <meta content="A practical guide to CCC Data Mart FTES and the important distinction from CCFS-320 fiscal/apportionment FTES." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
@@ -17,19 +19,19 @@
 <img alt="" src="favicon8.png"/>
 <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
 </a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
 </div>
 </header>
 <main id="main-content">
 <section aria-labelledby="page-title" class="page-hero">
 <div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> FTES</p>
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">Guides &amp; Tasks</a> <span aria-hidden="true">/</span> FTES</p>
 <p class="eyebrow">Data recipe: instructional activity</p>
 <h1 id="page-title">Understand and Use FTES</h1>
 <p>Use this recipe when your question is about the amount of instructional activity represented by Full-Time Equivalent Students rather than a simple count of people or enrollments.</p>
 <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
 </div>
-</section><section aria-labelledby="explore-export-heading" class="soft-section"><div class="container content-narrow"><div class="feature-panel cat-purple"><p class="eyebrow">Have an export already?</p><h2 id="explore-export-heading"><span aria-hidden="true">📈</span> Visualize an FTES Export</h2><p>Open an Excel or CSV export and chart the numeric measures it contains. Credit Courses/Sections exports already receive dedicated section, enrollment, and FTES handling.</p><p><a class="button button-primary" href="explore-data.html">Open the export in Explore Data</a></p><p class="small-note">If Data Mart Smart recognizes the report, it uses dedicated report logic. Otherwise, the Flexible Explorer lets you choose a label column and numeric measure without inventing report-specific definitions.</p></div></div></section>
+</section><section aria-labelledby="guide-route-heading" class="guide-route-section"><div class="container content-narrow"><h2 id="guide-route-heading">What do you need?</h2><div class="explore-choice-grid two-choice-grid"><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📊</span> I already have the export</h3><p>Open the file first. The interpretation and cautions will stay with the result.</p><a class="button button-primary" href="explore-data.html">Open my export</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">🧭</span> I need to get the export</h3><p>Go straight to the report choice and setup.</p><a class="button button-secondary" href="#get-export">Show the setup</a></article></div></div></section><section aria-labelledby="explore-export-heading" class="soft-section"><div class="container content-narrow"><div class="feature-panel cat-purple"><p class="eyebrow">Have an export already?</p><h2 id="explore-export-heading"><span aria-hidden="true">📈</span> Visualize an FTES Export</h2><p>Open an Excel or CSV export and chart the numeric measures it contains. Credit Courses/Sections exports already receive dedicated section, enrollment, and FTES handling.</p><p><a class="button button-primary" href="explore-data.html">Open the export in Explore Data</a></p><p class="small-note">If Data Mart Smart recognizes the report, it uses report-specific support. Otherwise, the basic table view lets you choose a label column and numeric measure without inventing report-specific definitions.</p></div></div></section>
 <section>
 <div class="container recipe-layout">
 <div class="recipe-main">
@@ -42,23 +44,22 @@
 <dt>Watch for</dt><dd>Data Mart FTES is not the same methodology as CCFS-320 FTES</dd>
 <dt>Typical setup</dt><dd>about 4 minutes</dd>
 </dl>
-<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Students/FTES_Summary.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a></nav>
-<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
+<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Students/FTES_Summary.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="coach.html">Ask the Coach</a></nav>
+<details class="guide-details"><summary><span class="details-heading" id="use-this-for">Why Might I Use This?</span></summary><div class="guide-details-body">
+<p class="section-kicker">Why it matters</p>
 <ul class="use-cases"><li>Enrollment management</li><li>Program review</li><li>Instructional planning</li><li>Workload context</li></ul>
-</section>
+</div></details>
 <section aria-labelledby="meaning-heading" class="bf-panel bf-meaning">
 <p class="section-kicker">What it means</p><h2 id="meaning-heading">What FTES Is and Is Not</h2>
 <p>FTES is an instructional-activity measure. It is not headcount, Enrollment Count, faculty FTE, or a count of full-time students.</p>
 <div class="caution-box"><h3>Data Mart FTES Is Not the Same Methodology as CCFS-320 FTES</h3><p>The Data Mart FTES Summary uses a derived-hours methodology and explicitly warns that it is not the same as the CCFS-320 fiscal/apportionment methodology. Do not substitute one for the other without confirming the purpose.</p></div>
 </section>
-<section aria-labelledby="report-heading" class="bf-panel bf-action">
+<section aria-labelledby="report-heading" class="bf-panel bf-action" id="get-export">
 <p class="section-kicker">Do this</p><h2 id="report-heading">Best Starting Reports</h2>
 <p>Use <strong>Full-Time Equivalent Students (FTES)</strong> for credit, noncredit, and total FTES. Use <strong>Distance Education FTES</strong> when the question specifically concerns distance education versus non-distance education.</p>
 <p><a class="button button-secondary" href="https://datamart.cccco.edu/Students/FTES_Summary.aspx">Open the official FTES Summary</a></p>
 </section>
-<section aria-labelledby="formula-heading">
-<h2 id="formula-heading">How Data Mart FTES Is Derived</h2>
+<details class="guide-details"><summary><span class="details-heading" id="formula-heading">How Data Mart FTES Is Derived</span></summary><div class="guide-details-body">
 <p>The current Data Mart FTES Summary sums derived Total Hours for eligible enrollment records and divides by 525. Records without derivable Total Hours are excluded.</p>
 <div class="method-box">
 <dl>
@@ -67,7 +68,7 @@
 <dt>Do not assume</dt><dd>That it equals CCFS-320 fiscal/apportionment FTES</dd>
 </dl>
 </div>
-</section>
+</div></details>
 <section aria-labelledby="setup-heading" class="bf-panel bf-action">
 <p class="section-kicker">Do this</p><h2 id="setup-heading">How to Use FTES Carefully</h2>
 <ol class="step-list">
@@ -78,26 +79,22 @@
 <li><h3>State the methodology when FTES is consequential</h3><p>Especially in planning or resource contexts, name that the figure comes from Data Mart rather than a fiscal apportionment report.</p></li>
 </ol>
 </section>
-<section aria-labelledby="interpret-heading" class="bf-panel bf-meaning">
-<p class="section-kicker">What it means</p><h2 id="interpret-heading">A Better Interpretation</h2>
+<details class="guide-details"><summary><span class="details-heading" id="interpret-heading">A Better Interpretation</span></summary><div class="guide-details-body">
+<p class="section-kicker">What it means</p>
 <p>Prefer: <strong>“Data Mart reports X FTES for the selected population and period.”</strong></p>
 <p>Avoid presenting that number as though it were automatically the official fiscal/apportionment FTES used for every institutional purpose.</p>
-</section>
-<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
-<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+</div></details>
+<details class="guide-details"><summary><span class="details-heading" id="what-next-heading">You Found a Result. What Should You Ask Next?</span></summary><div class="guide-details-body">
+<p class="section-kicker">What next</p>
 <ul><li>Would headcount or enrollment count better answer part of the question?</li><li>Are credit and noncredit being compared appropriately?</li><li>Does the institutional decision require fiscal/apportionment FTES instead?</li></ul>
 <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-</section>
+</div></details>
 <div class="coach-cta">
 <h2>Want a Second Set of Eyes?</h2>
 <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+<p><a class="button button-secondary" href="coach.html">Ask the Coach</a></p>
 </div>
 </div>
-<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#meaning-heading">What FTES Is and Is Not</a></li></ul></nav>
-<div class="side-card"><h2>Quick Summary</h2><ul><li><strong>Measure:</strong> instructional activity</li><li><strong>Formula basis:</strong> derived hours ÷ 525</li><li><strong>Main risk:</strong> confusing Data Mart FTES with CCFS-320 FTES</li></ul></div>
-<div class="side-card"><h2>Related</h2><p><a href="student-headcount.html">Student headcount</a></p><p><a href="enrollment-trends.html">Build a trend</a></p></div>
-</aside>
 </div>
 </section>
 </main>
