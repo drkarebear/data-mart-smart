@@ -24,7 +24,7 @@
       return { kind: "retention-success", label: "Enrollment Retention and Success Rate", supported: true };
     }
     if (/Student Headcount Summary Report/i.test(sample)) return { kind: "student-headcount", label: "Student Headcount Summary Report", supported: false };
-    if (/Grades Distribution Summary Report/i.test(sample) || /Grade Distribution Summary Report/i.test(sample)) return { kind: "grade-distribution", label: "Grade Distribution Summary Report", supported: false };
+    if (/Grades Distribution Summary Report/i.test(sample) || /Grade Distribution Summary Report/i.test(sample)) return { kind: "grade-distribution", label: "Grade Distribution Summary Report", supported: true };
     if (/Course Details Report/i.test(sample)) return { kind: "course-details", label: "Course Details Report", supported: false };
     if (/Credit Sections Count/i.test(sample) && /Credit Sections FTES/i.test(sample) && /Enrollment Count/i.test(sample)) {
       return { kind: "credit-course-sections", label: "Credit Courses/Sections", supported: false };
@@ -218,11 +218,91 @@
     };
   }
 
+
+  function parseGradeDistribution(rows) {
+    const metricRowIndex = rows.findIndex(row => {
+      const vals = (row || []).map(clean);
+      return vals.includes("Credit Grade Count") && vals.includes("Credit Grade Count (%)");
+    });
+    if (metricRowIndex < 0) {
+      return { kind: "grade-distribution", records: [], error: "Grade count header row not found." };
+    }
+
+    const header = rows[metricRowIndex] || [];
+    const countCol = header.findIndex(cell => clean(cell) === "Credit Grade Count");
+    const percentCol = header.findIndex(cell => clean(cell) === "Credit Grade Count (%)");
+    let reportTitle = "Grades Distribution Summary Report";
+    let period = firstMatch(rows.slice(0, metricRowIndex + 1), /(?:Fall|Spring|Summer|Winter)\s+\d{4}/i);
+    let college = "";
+    let collegeTotal = null;
+    let currentProgram = null;
+    const records = [];
+
+    for (const row of rows.slice(0, metricRowIndex + 1)) {
+      for (const cell of row || []) {
+        const text = clean(cell);
+        if (/Grades? Distribution Summary Report/i.test(text)) reportTitle = text;
+      }
+    }
+
+    for (let i = metricRowIndex + 1; i < rows.length; i += 1) {
+      const row = rows[i] || [];
+      const a = clean(row[0]);
+      const b = clean(row[1]);
+      const c = clean(row[2]);
+      const count = numberValue(row[countCol]);
+      const percent = percentCol >= 0 ? numberValue(row[percentCol]) : null;
+
+      if (a && /\sTotal$/i.test(a)) {
+        college = a.replace(/\s+Total$/i, "").trim();
+        collegeTotal = count;
+        currentProgram = null;
+        continue;
+      }
+
+      if (b) {
+        const match = b.match(/^(.*)-(\d{6})\s+Total$/i);
+        if (match) {
+          currentProgram = {
+            program: match[1].trim(),
+            top: match[2],
+            total: count
+          };
+          continue;
+        }
+      }
+
+      if (currentProgram && count !== null && !a && !b) {
+        const grade = c || "Unlabeled / blank category";
+        records.push({
+          college,
+          period,
+          program: currentProgram.program,
+          top: currentProgram.top,
+          programTotal: currentProgram.total,
+          grade,
+          count,
+          percent: percent !== null ? percent : (currentProgram.total ? count / currentProgram.total : null)
+        });
+      }
+    }
+
+    return {
+      kind: "grade-distribution",
+      records,
+      college,
+      collegeTotal,
+      period,
+      reportTitle
+    };
+  }
+
   return {
     clean,
     numberValue,
     detectReport,
     parseProgramAwards,
-    parseRetentionSuccess
+    parseRetentionSuccess,
+    parseGradeDistribution
   };
 });

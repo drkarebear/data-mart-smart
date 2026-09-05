@@ -2612,3 +2612,21 @@ html { scroll-behavior: auto; }
   .explorer-bar-row .bar-track { grid-column:1 / -1; grid-row:2; }
   .explorer-bar-row .bar-value { grid-column:2; grid-row:1; }
 }
+
+
+/* v15 Grade Distribution visualizer */
+.grade-tool-section {
+  padding: clamp(2.25rem, 5vw, 4rem) 0 1rem;
+  background: linear-gradient(180deg, var(--cat-purple-soft) 0, #fff 48%);
+  border-bottom: 1px solid #e6deef;
+}
+.grade-tool-section .section-heading { text-align:center; }
+.grade-tool-section .section-heading p:last-child { max-width:48rem; margin-inline:auto; }
+.grade-tool-section .upload-zone { background:#fff; }
+.grade-tool-section .viewer-privacy { max-width:850px; margin-inline:auto; }
+.grade-tool-section .viewer-status { max-width:850px; margin-inline:auto; }
+.grade-tool-section .viewer-layout { padding-top:.4rem; }
+.grade-tool-section .module-label { color:var(--cat-purple); }
+.grade-tool-section .bar-fill { background:linear-gradient(90deg,var(--cat-purple),var(--cat-blue)); }
+.grade-tool-section .viewer-table td.numeric,
+.grade-tool-section .viewer-table th.numeric { text-align:right; font-variant-numeric:tabular-nums; }

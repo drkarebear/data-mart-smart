@@ -25,7 +25,6 @@
 <li><a href="index.html">Home</a></li>
 <li><a href="start-here.html">Start Here</a></li>
 <li><a href="uses.html">Use Data</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li>
-
 <li><a href="query-guide.html">Find a Report</a></li>
 <li><a href="reports.html">How-To Guides</a></li>
 <li><a href="understand-data.html">Data Tips</a></li>
@@ -56,12 +55,12 @@
 <div class="upload-zone" id="exploreDropZone">
 <div aria-hidden="true" class="upload-icon">⇧</div>
 <h2 id="upload-heading">Choose a Data Mart export</h2>
-<p>Current working modules: <strong>Program Awards</strong> and <strong>Enrollment Retention and Success Rate</strong>.</p>
+<p>Current working modules: <strong>Program Awards</strong>, <strong>Enrollment Retention and Success Rate</strong>, and <strong>Grade Distribution</strong>.</p>
 <div class="viewer-actions">
 <button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button>
 <button class="button button-secondary" id="demoSuccessButton" type="button">Try Success &amp; Retention demo</button>
 <button class="button button-secondary" id="demoAwardsButton" type="button">Try Program Awards demo</button>
-</div>
+<button class="button button-secondary" id="demoGradeButton" type="button">Try Grade Distribution demo</button></div>
 <input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/>
 </div>
 <p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p>
@@ -180,7 +179,33 @@
 </div>
 </div>
 </div>
-<div hidden="" id="unsupportedModule">
+<div hidden="" id="gradeModule">
+<div class="container">
+<div aria-label="Loaded Grade Distribution file summary" class="viewer-stats" id="exploreGradeFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="explore-grade-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">📊</span> Grade Distribution</p>
+<h2 id="explore-grade-filter-heading">Choose what to explore</h2>
+<label for="exploreGradeProgramSearch">Program or TOP code</label>
+<input autocomplete="off" id="exploreGradeProgramSearch" list="exploreGradeProgramOptions" placeholder="Try English or 150100" type="search"/>
+<datalist id="exploreGradeProgramOptions"></datalist>
+<p class="field-help">Select a six-digit TOP area from the export.</p>
+<label for="exploreGradeMeasure">Chart display</label>
+<select id="exploreGradeMeasure"><option value="percent">Percent of selected grade records</option><option value="count">Grade count</option></select>
+<div class="viewer-control-actions"><button class="button button-secondary" id="exploreGradeDownloadCsv" type="button">Download cleaned CSV</button><button class="text-button explore-reset" type="button">Choose another file</button></div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current result</p><h2 id="exploreGradeResultsTitle">Grade Distribution</h2><p class="viewer-result-meta" id="exploreGradeResultMeta"></p>
+<div aria-label="Selected grade distribution summary" class="viewer-stats result-kpis" id="exploreGradeKpis"></div>
+<div class="data-caution-box"><strong>This is grade composition, not the CCCCO success rate.</strong> Use the Enrollment Retention and Success Rate report when you need the Chancellor's Office success or retention measures.</div>
+<div class="small-n-warning" hidden="" id="exploreGradeWarning"></div>
+<h3 id="exploreGradeChartHeading">Reported grade categories</h3><div aria-labelledby="exploreGradeChartHeading" class="bar-chart rate-chart" id="exploreGradeBarChart"></div>
+<div class="table-scroll"><table class="viewer-table outcome-table"><caption>Selected grade distribution</caption><thead><tr><th scope="col">Grade category</th><th scope="col">Count</th><th scope="col">Percent</th></tr></thead><tbody id="exploreGradeResultsBody"></tbody></table></div>
+<section aria-labelledby="explore-grade-method-heading" class="method-box"><h2 id="explore-grade-method-heading">Save the Method, Not Just the Chart</h2><pre class="method-text" id="exploreGradeMethodText"></pre><button class="button button-secondary" id="exploreGradeCopyMethod" type="button">Copy method</button></section>
+</div>
+</div>
+</div>
+</div><div hidden="" id="unsupportedModule">
 <div class="container content-narrow">
 <div class="feature-panel cat-purple unsupported-report-panel">
 <p class="eyebrow">Report recognized</p>
@@ -203,7 +228,7 @@
 <article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Working now.</strong> Filter a program and award type, compare colleges, download a cleaned table, and save the method.</p></article>
 <article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Working now.</strong> Explore counts and rates by six-digit TOP, course population, and instructional modality.</p></article>
 <article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p>Recognized. Demographic exploration is planned next.</p></article>
-<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p>Recognized. Grade composition and denominator connections are planned next.</p></article>
+<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p><strong>Working now.</strong> Choose a six-digit TOP area, view counts or percentages, preserve blank categories, download a clean table, and save the method.</p></article>
 <article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p>Recognized. Course search, TOP filters, transferability, and section counts are planned.</p></article>
 <article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p>Recognized. Sections, enrollments, FTES, and TOP comparisons are planned.</p></article>
 </div>

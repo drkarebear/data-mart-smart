@@ -28,11 +28,31 @@ const SUCCESS_DEMO = {
   ]
 };
 
+
+
+const EXPLORE_GRADE_DEMO = {
+  kind:"grade-distribution", college:"LA Mission", collegeTotal:22747, period:"Fall 2025", reportTitle:"Grades Distribution Summary Report",
+  records:[
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Excused Withdrawal",count:10,percent:10/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Grade A",count:543,percent:543/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Grade B",count:359,percent:359/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Grade C",count:264,percent:264/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Grade D",count:137,percent:137/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Grade F",count:451,percent:451/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Pass",count:14,percent:14/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Withdrew",count:274,percent:274/2053},
+    {college:"LA Mission",period:"Fall 2025",program:"English",top:"150100",programTotal:2053,grade:"Unlabeled / blank category",count:1,percent:1/2053}
+  ]
+};
+
+const EXPLORE_GRADE_ORDER = ["Grade A","Grade B","Grade C","Grade D","Grade F","Pass","Withdrew","Excused Withdrawal","Unlabeled / blank category"];
+
 const state = {
   sourceName:"",
   kind:"",
   awards:null,
   success:null,
+  grade:null,
   selectedColleges:new Set()
 };
 
@@ -40,13 +60,14 @@ const els = {};
 
 document.addEventListener("DOMContentLoaded", () => {
   [
-    "exploreFileInput","exploreDropZone","exploreBrowseButton","demoSuccessButton","demoAwardsButton","exploreStatus",
-    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","unsupportedModule",
+    "exploreFileInput","exploreDropZone","exploreBrowseButton","demoSuccessButton","demoAwardsButton","demoGradeButton","exploreStatus",
+    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","gradeModule","unsupportedModule",
     "unsupportedTitle","unsupportedText","unsupportedGuideLink",
     "awardsFileSummary","awardsProgramSearch","awardsProgramOptions","awardsType","awardsCollegeFilters","awardsResultsTitle",
     "awardsResultMeta","awardsResultsBody","awardsBarChart","awardsMethodText","awardsCopyMethod","awardsDownloadCsv",
     "successFileSummary","successProgramSearch","successProgramOptions","successPopulation","successChartMeasure","successResultsTitle",
-    "successResultMeta","successKpis","successSmallN","successBarChart","successResultsBody","successMethodText","successCopyMethod","successDownloadCsv"
+    "successResultMeta","successKpis","successSmallN","successBarChart","successResultsBody","successMethodText","successCopyMethod","successDownloadCsv",
+    "exploreGradeFileSummary","exploreGradeProgramSearch","exploreGradeProgramOptions","exploreGradeMeasure","exploreGradeResultsTitle","exploreGradeResultMeta","exploreGradeKpis","exploreGradeWarning","exploreGradeBarChart","exploreGradeResultsBody","exploreGradeMethodText","exploreGradeCopyMethod","exploreGradeDownloadCsv"
   ].forEach(id => els[id] = document.getElementById(id));
 
   els.exploreBrowseButton.addEventListener("click", () => els.exploreFileInput.click());
@@ -69,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   els.demoAwardsButton.addEventListener("click", loadAwardsDemo);
   els.demoSuccessButton.addEventListener("click", loadSuccessDemo);
+  els.demoGradeButton.addEventListener("click", loadGradeDemo);
   document.querySelectorAll(".explore-reset").forEach(button => button.addEventListener("click", resetExplorer));
 
   els.awardsProgramSearch.addEventListener("input", renderAwards);
@@ -81,6 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
   els.successChartMeasure.addEventListener("change", renderSuccess);
   els.successCopyMethod.addEventListener("click", () => copyText(els.successMethodText.textContent));
   els.successDownloadCsv.addEventListener("click", downloadSuccessCsv);
+
+  els.exploreGradeProgramSearch.addEventListener("input", renderExploreGrade);
+  els.exploreGradeMeasure.addEventListener("change", renderExploreGrade);
+  els.exploreGradeCopyMethod.addEventListener("click", () => copyText(els.exploreGradeMethodText.textContent));
+  els.exploreGradeDownloadCsv.addEventListener("click", downloadExploreGradeCsv);
 
   setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
 });
@@ -145,6 +172,16 @@ async function loadFile(file) {
       return;
     }
 
+    if (detected.kind === "grade-distribution") {
+      const parsed = DataMartParsers.parseGradeDistribution(rows);
+      if (!parsed.records.length) throw new Error("The report was recognized, but no six-digit TOP grade rows could be read from the current layout.");
+      state.grade = parsed;
+      showDetected("Grade Distribution detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The grade composition module is ready.`, true);
+      initExploreGrade();
+      setStatus(`Loaded ${parsed.records.length.toLocaleString()} grade-category rows from ${file.name}. The file stayed in this browser tab.`, "success");
+      return;
+    }
+
     showDetected(`${detected.label} detected`, "The report is recognized, but its visualization module is not built yet.", false);
     showUnsupported(detected.kind, detected.label);
     setStatus(`Recognized ${detected.label}. This report is in the next phase of Explore Data.`, "success");
@@ -180,10 +217,21 @@ function loadSuccessDemo() {
   setStatus("Success & Retention demo loaded. The demo uses English TOP 150100 records from the supplied LA Mission Fall 2025 export.", "success");
 }
 
+function loadGradeDemo() {
+  state.sourceName = "Included English Grade Distribution demo";
+  state.kind = "grade-distribution";
+  state.grade = JSON.parse(JSON.stringify(EXPLORE_GRADE_DEMO));
+  hideModules();
+  showDetected("Grade Distribution demo loaded", "LA Mission, Fall 2025. The grade composition module is ready.", true);
+  initExploreGrade();
+  setStatus("Grade Distribution demo loaded. The demo uses English TOP 150100 records from the supplied LA Mission Fall 2025 export.", "success");
+}
+
 function hideModules() {
   els.exploreWorkspace.hidden = true;
   els.awardsModule.hidden = true;
   els.successModule.hidden = true;
+  els.gradeModule.hidden = true;
   els.unsupportedModule.hidden = true;
 }
 
@@ -464,12 +512,110 @@ function renderBarRows(container, rows, options={}) {
   });
 }
 
+
+function initExploreGrade() {
+  els.exploreWorkspace.hidden = false;
+  els.gradeModule.hidden = false;
+  const parsed = state.grade;
+  fillSummary(els.exploreGradeFileSummary, [
+    ["Report", parsed.reportTitle || "Grades Distribution Summary Report"],
+    ["Term", parsed.period || "Not detected"],
+    ["College", parsed.college || "Not detected"],
+    ["TOP areas", exploreGradePrograms().length.toLocaleString()]
+  ]);
+  els.exploreGradeProgramOptions.innerHTML = "";
+  const programs = exploreGradePrograms();
+  programs.forEach(p => {
+    const option = document.createElement("option");
+    option.value = `${p.program} · TOP ${p.top}`;
+    els.exploreGradeProgramOptions.appendChild(option);
+  });
+  const english = programs.find(p => p.top === "150100" || p.program.toLowerCase() === "english");
+  els.exploreGradeProgramSearch.value = english ? `${english.program} · TOP ${english.top}` : (programs[0] ? `${programs[0].program} · TOP ${programs[0].top}` : "");
+  els.exploreGradeMeasure.value = "percent";
+  renderExploreGrade();
+  scrollWorkspace();
+}
+
+function exploreGradePrograms() {
+  const map = new Map();
+  (state.grade?.records || []).forEach(r => map.set(`${r.program}|${r.top}`, {program:r.program, top:r.top}));
+  return [...map.values()].sort((a,b) => a.program.localeCompare(b.program) || a.top.localeCompare(b.top));
+}
+
+function exploreGradeProgramQuery() {
+  const text = els.exploreGradeProgramSearch.value.trim();
+  const topMatch = text.match(/\bTOP\s+(\d{6})\b/i);
+  return {text, top:topMatch ? topMatch[1] : "", q:text.replace(/\s+·\s+TOP\s+\d{6}\s*$/i, "").trim().toLowerCase()};
+}
+
+function aggregateExploreGrade() {
+  const {text, top, q} = exploreGradeProgramQuery();
+  const records = (state.grade?.records || []).filter(r => !text || (top ? r.top === top : r.program.toLowerCase().includes(q) || r.top.includes(q)));
+  const grouped = new Map();
+  records.forEach(record => grouped.set(record.grade, (grouped.get(record.grade) || 0) + Number(record.count || 0)));
+  const total = [...grouped.values()].reduce((sum,n) => sum + n, 0);
+  const orderIndex = label => {
+    const i = EXPLORE_GRADE_ORDER.indexOf(label);
+    return i >= 0 ? i : EXPLORE_GRADE_ORDER.length;
+  };
+  const rows = [...grouped.entries()].map(([grade,count]) => ({grade,count,percent:total ? count/total : null})).sort((a,b) => orderIndex(a.grade)-orderIndex(b.grade) || a.grade.localeCompare(b.grade));
+  return {records,rows,total};
+}
+
+function renderExploreGrade() {
+  if (!state.grade) return;
+  const {records,rows,total} = aggregateExploreGrade();
+  const query = exploreGradeProgramQuery();
+  const label = query.text || "All six-digit TOP areas";
+  els.exploreGradeResultsTitle.textContent = label;
+  els.exploreGradeResultMeta.textContent = `${state.grade.college || "College not detected"} · ${state.grade.period || "Term not detected"} · ${formatInteger(total)} reported grade records`;
+  const byName = Object.fromEntries(rows.map(r => [r.grade,r.count]));
+  const blankCount = byName["Unlabeled / blank category"] || 0;
+  fillSummary(els.exploreGradeKpis, [["Grade records",formatInteger(total)],["Categories",rows.length.toLocaleString()],["Withdrew",formatInteger(byName["Withdrew"]||0)],["Excused withdrawal",formatInteger(byName["Excused Withdrawal"]||0)]]);
+  if (blankCount) {
+    els.exploreGradeWarning.hidden = false;
+    els.exploreGradeWarning.innerHTML = `<strong>Blank grade label preserved.</strong> ${formatInteger(blankCount)} selected record${blankCount === 1 ? "" : "s"} had no visible grade-category label in the export. Data Mart Smart keeps ${blankCount === 1 ? "it" : "them"} instead of silently dropping ${blankCount === 1 ? "it" : "them"}.`;
+  } else {
+    els.exploreGradeWarning.hidden = true;
+    els.exploreGradeWarning.textContent = "";
+  }
+  const measure = els.exploreGradeMeasure.value;
+  renderBarRows(els.exploreGradeBarChart, rows.map(r => ({label:r.grade,value:measure === "percent" ? r.percent : r.count})), {format:measure === "percent" ? "percent" : "integer", fixedMax:measure === "percent" ? 1 : null});
+  els.exploreGradeResultsBody.innerHTML = "";
+  if (!rows.length) els.exploreGradeResultsBody.innerHTML = '<tr><td colspan="3">No matching grade rows. Try a program name or TOP code from the suggestions.</td></tr>';
+  else rows.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<th scope="row">${escapeHtml(row.grade)}</th><td class="numeric">${formatInteger(row.count)}</td><td class="numeric">${formatPercent(row.percent)}</td>`;
+    els.exploreGradeResultsBody.appendChild(tr);
+  });
+  const selectedPrograms = [...new Map(records.map(r => [`${r.program}|${r.top}`, {program:r.program,top:r.top}])).values()];
+  const topNote = selectedPrograms.length === 1 ? `TOP ${selectedPrograms[0].top}` : `${selectedPrograms.length} matching six-digit TOP areas`;
+  els.exploreGradeMethodText.textContent = [
+    "Source: California Community Colleges Chancellor's Office Data Mart: Grades Distribution Summary Report",
+    `File: ${state.sourceName}`,
+    `Term: ${state.grade.period || "Not detected"}`,
+    `College: ${state.grade.college || "Not detected"}`,
+    `Program filter: ${label} (${topNote})`,
+    "Measure: Credit Grade Count and share of selected grade records",
+    `Selected grade records: ${formatInteger(total)}`,
+    blankCount ? `Data quality note: ${formatInteger(blankCount)} selected record${blankCount === 1 ? "" : "s"} had a blank grade-category label and ${blankCount === 1 ? "was" : "were"} preserved as Unlabeled / blank category.` : "Data quality note: No blank grade-category labels were present in the selected rows.",
+    "Caution: Grade Distribution shows grade composition. Use the CCCCO Enrollment Retention and Success Rate report when you need the Chancellor's Office success or retention measures."
+  ].join("\n");
+}
+
+function downloadExploreGradeCsv() {
+  const {rows,total} = aggregateExploreGrade();
+  if (!rows.length) return setStatus("There are no matching grade rows to download.", "error");
+  downloadCsvFile("data-mart-smart-grade-distribution.csv", [["Grade Category","Count","Percent"], ...rows.map(r => [r.grade,r.count,decimalPercent(r.percent)]), ["Total",total,"100.00%"]]);
+  setStatus("Grade Distribution CSV downloaded.", "success");
+}
+
 function showUnsupported(kind, label) {
   els.exploreWorkspace.hidden = false;
   els.unsupportedModule.hidden = false;
   const info = {
     "student-headcount": {title:"Student Headcount is recognized", text:"The file structure is recognized. The next module will turn the nested headcount, gender, age, ethnicity, and status hierarchy into clearer demographic views.", href:"student-headcount.html", link:"Open the Student Headcount guide"},
-    "grade-distribution": {title:"Grade Distribution is recognized", text:"The file structure is recognized. The planned module will show grade composition, counts, percentages, and connections to the CCCCO success denominator.", href:"grade-distribution.html", link:"Open the Grade Distribution guide"},
     "course-details": {title:"Course Details is recognized", text:"The file structure is recognized. The planned module will support course search, six-digit TOP, transferability, credit status, units, and reported section counts.", href:"reports.html", link:"Browse the course guides"},
     "credit-course-sections": {title:"Credit Courses/Sections is recognized", text:"The file structure is recognized. The planned module will visualize sections, enrollments, FTES, TOP areas, and college or term comparisons when those dimensions are present in the export.", href:"sections-across-colleges.html", link:"Open the section comparison guide"},
     "unknown": {title:"This export was not recognized yet", text:"The file does not match one of the Data Mart layouts currently known to Explore Data. Keep the original export and use the report guides to confirm which report produced it.", href:"reports.html", link:"Browse How-To Guides"}
