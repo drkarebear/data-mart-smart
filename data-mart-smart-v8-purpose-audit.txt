@@ -1,6 +1,0 @@
-Data Mart Smart v8 purpose-first audit
-September 4, 2026
-
-HTML pages checked: 33
-Issues found: 0
-No structural issues found in H1, duplicate-ID, or local-link checks.
