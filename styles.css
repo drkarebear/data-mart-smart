@@ -2691,3 +2691,92 @@ html { scroll-behavior: auto; }
 .generic-module .viewer-results { min-width:0; }
 .generic-module .bar-chart { margin-top:.75rem; }
 @media (max-width: 700px) { .coverage-status { font-size:.76rem; } }
+
+/* v18: multi-file compare and trend explorer */
+.compare-principles {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.8rem;
+  margin-top:1rem;
+}
+.compare-principles > div {
+  border:1px solid var(--line);
+  border-radius:.85rem;
+  padding:.85rem 1rem;
+  background:#fff;
+}
+.compare-principles strong,
+.compare-principles span { display:block; }
+.compare-principles strong { color:var(--navy-dark); margin-bottom:.2rem; }
+.compare-principles span { color:var(--muted); font-size:.9rem; line-height:1.45; }
+.compare-file-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+.compare-file-heading h2 { margin:0; }
+.compare-file-list { display:grid; gap:.65rem; margin:.75rem 0 2rem; }
+.compare-file-card {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  border:1px solid var(--line);
+  border-radius:.85rem;
+  padding:.8rem 1rem;
+  background:#fff;
+}
+.compare-file-card div { min-width:0; }
+.compare-file-card strong,
+.compare-file-card span { display:block; overflow-wrap:anywhere; }
+.compare-file-card strong { color:var(--navy-dark); }
+.compare-file-card span { color:var(--muted); font-size:.88rem; margin-top:.15rem; }
+.comparison-cautions { display:grid; gap:.65rem; margin:1rem 0; }
+.comparison-caution,
+.comparison-ok {
+  border-radius:.8rem;
+  padding:.85rem 1rem;
+}
+.comparison-caution { border:1px solid #e4c66f; background:var(--gold-soft); }
+.comparison-caution strong { color:#6e4c00; }
+.comparison-caution p { margin:.2rem 0 0; }
+.comparison-ok { border:1px solid #a9d5bc; background:#eef9f3; color:#245e46; }
+.compare-chart { margin:1.1rem 0 1.4rem; }
+.trend-chart-scroll { overflow-x:auto; padding:.25rem 0 .5rem; }
+.trend-chart { display:block; width:100%; min-width:680px; height:auto; }
+.trend-grid { stroke:#dce5ec; stroke-width:1; }
+.trend-line { fill:none; stroke:var(--teal); stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+.trend-point { fill:var(--blue); stroke:#fff; stroke-width:2; }
+.trend-axis-label,
+.trend-x-label { fill:var(--muted); font-size:12px; }
+.trend-value-label { fill:var(--navy-dark); font-size:12px; font-weight:800; }
+.compare-table td.numeric,
+.compare-table th.numeric { text-align:right; font-variant-numeric:tabular-nums; }
+.compare-table td { vertical-align:top; }
+.explore-choice-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  margin:1rem 0 0;
+}
+.explore-choice-card {
+  border:1px solid var(--line);
+  border-radius:1rem;
+  padding:1.1rem 1.2rem;
+  background:#fff;
+}
+.explore-choice-card h3 { margin:.15rem 0 .35rem; }
+.explore-choice-card p { margin:.25rem 0 .8rem; }
+.compact-purpose-grid { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+@media (max-width:760px) {
+  .compare-principles,
+  .explore-choice-grid { grid-template-columns:1fr; }
+  .compare-file-card { align-items:flex-start; }
+}
+
+
+/* v19: program review dashboard */
+.program-review-principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin-top:1rem}.program-review-principles>div{border:1px solid var(--line);border-radius:.85rem;padding:.9rem 1rem;background:#fff}.program-review-principles strong,.program-review-principles span{display:block}.program-review-principles strong{color:var(--navy-dark);margin-bottom:.2rem}.program-review-principles span{color:var(--muted);font-size:.9rem;line-height:1.45}.program-review-layout{align-items:start}.program-review-readiness{margin:1rem 0 1.2rem}.program-review-readiness>h3{margin-bottom:.6rem}.readiness-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65rem}.readiness-item{border:1px solid var(--line);border-radius:.8rem;padding:.75rem;background:#fff;display:grid;grid-template-columns:auto 1fr;column-gap:.5rem;align-items:start}.readiness-item>span{font-weight:900}.readiness-item strong,.readiness-item small{display:block}.readiness-item small{grid-column:2;color:var(--muted);margin-top:.1rem}.readiness-item.is-ready{border-color:#a9d5bc;background:#f1f9f4}.readiness-item.is-ready>span{color:#2b7d58}.readiness-item.is-missing>span{color:#946200}.program-review-kpis .viewer-stat small{display:block;color:var(--muted);font-size:.78rem;margin-top:.15rem}.program-review-section{border-top:1px solid var(--line);padding-top:1.3rem;margin-top:1.6rem}.program-review-section>h3{font-size:1.35rem;color:var(--navy-dark);margin-bottom:.85rem}.program-review-section h4{margin:1rem 0 .45rem;color:var(--navy-dark)}.program-review-two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.single-evidence,.empty-evidence{border:1px solid var(--line);border-radius:.85rem;padding:1rem;background:var(--surface-soft)}.single-evidence strong,.single-evidence span{display:block}.single-evidence strong{font-size:1.65rem;color:var(--navy-dark)}.single-evidence span,.empty-evidence p{color:var(--muted);margin:.2rem 0 0}.program-review-chart{min-width:620px;height:auto}.program-review-table td.numeric,.program-review-table th.numeric{text-align:right;font-variant-numeric:tabular-nums}.context-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem}.context-card{border:1px solid var(--line);border-radius:.85rem;padding:1rem;background:#fff}.context-card strong,.context-card span,.context-card small{display:block}.context-card strong{font-size:1.5rem;color:var(--navy-dark)}.context-card span{font-weight:800;margin-top:.2rem}.context-card small{color:var(--muted);margin-top:.2rem}@media(max-width:850px){.program-review-principles,.readiness-grid,.program-review-two-col{grid-template-columns:1fr 1fr}}@media(max-width:600px){.program-review-principles,.readiness-grid,.program-review-two-col{grid-template-columns:1fr}.program-review-chart{min-width:560px}}

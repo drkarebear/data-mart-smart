@@ -24,3 +24,13 @@ Selected spreadsheets are processed locally in the browser. Data Mart Smart is a
 - Added a generic Flexible Explorer fallback for tabular Excel/CSV exports that do not yet have dedicated report parsers.
 - Added Explore Data callouts to FTES, Faculty & Staff, Student Services, Transfer, and Wage Tracker guide pages.
 - Flexible Explorer does not infer denominators, overlap, suppression, or report-specific definitions.
+
+
+## Compare & Trends
+
+`compare-trends.html` supports multi-file comparison for the six tested export families: Student Headcount, Course Details, Credit Courses/Sections, Success & Retention, Grade Distribution, and Program Awards. It checks report consistency, distinguishes clean time trends from same-period institution comparisons, preserves missing values as unavailable, and produces an accessible table plus a reproducible method note.
+
+
+## Program Review Dashboard
+
+`program-review-dashboard.html` accepts mixed supported Data Mart exports for one program. It uses six-digit TOP where available, keeps measures and periods separate, recalculates success and retention rates from counts, treats college headcount and unmatched course-section totals as context, and produces a reusable method record and evidence CSV.

@@ -889,10 +889,20 @@ function initCourseDetails() {
 }
 
 function matchingCourseDetails() {
-  const q = els.courseSearch.value.trim().toLowerCase();
+  const rawQ = els.courseSearch.value.trim();
+  const q = rawQ.toLowerCase();
   return (state.courseDetails?.records || []).filter(r => {
-    const haystack = [r.courseId,r.title,r.topName,r.top,r.controlNumber].join(" ").toLowerCase();
-    return (!q || haystack.includes(q)) &&
+    const courseId = String(r.courseId || "").toLowerCase();
+    let queryMatches = true;
+    if (q) {
+      if (/^\d{6}$/.test(rawQ)) queryMatches = String(r.top || "") === rawQ;
+      else if (/^[A-Za-z]{2,10}$/.test(rawQ)) queryMatches = courseId.startsWith(q);
+      else {
+        const haystack = [r.courseId,r.title,r.topName,r.top,r.controlNumber].join(" ").toLowerCase();
+        queryMatches = haystack.includes(q);
+      }
+    }
+    return queryMatches &&
       (!els.courseCreditFilter.value || r.creditStatus === els.courseCreditFilter.value) &&
       (!els.courseTransferFilter.value || r.transferStatus === els.courseTransferFilter.value) &&
       (!els.courseSamFilter.value || r.samStatus === els.courseSamFilter.value);

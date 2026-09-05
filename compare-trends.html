@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Compare &amp; Trends | Data Mart Smart</title>
+<meta content="Open several comparable California Community Colleges Data Mart exports and build safer college comparisons or multi-period trends in your browser." name="description"/>
+<link href="favicon8.png" rel="icon" type="image/png"/>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" src="data-mart-parsers.js"></script>
+<script defer="" src="compare-trends.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="container header-inner">
+<a aria-label="Data Mart Smart home" class="brand" href="index.html">
+<img alt="" src="favicon8.png"/>
+<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+</a>
+<nav aria-label="Primary navigation" class="site-nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="start-here.html">Start Here</a></li>
+<li><a href="uses.html">Use Data</a></li>
+<li><a aria-current="page" href="explore-data.html">Explore Data</a></li>
+<li><a href="query-guide.html">Find a Report</a></li>
+<li><a href="reports.html">How-To Guides</a></li>
+<li><a href="understand-data.html">Data Tips</a></li>
+<li><a href="index.html#coach">Ask the Coach</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="page-title" class="page-hero viewer-hero">
+<div class="container page-hero-inner">
+<p class="eyebrow">Compare several exports</p>
+<h1 id="page-title">Compare Colleges or Build a Trend</h1>
+<p>Open two or more exports from the same Data Mart report. Data Mart Smart checks whether they are comparable, then helps you chart one consistent measure across colleges or time periods.</p>
+</div>
+</section>
+<section aria-labelledby="compare-purpose-heading" class="section-cool">
+<div class="container content-narrow">
+<div class="feature-panel cat-purple">
+<h2 id="compare-purpose-heading"><span aria-hidden="true" class="emoji-icon">📈</span> One Measure, Several Comparable Files</h2>
+<p>This tool is deliberately stricter than the one-file Explorer. It will not combine different report types, and it does not silently turn missing values into zero.</p>
+<div aria-label="Comparison safeguards" class="compare-principles">
+<div><strong>Same report</strong><span>Use the same Data Mart report for every file.</span></div>
+<div><strong>Same definition</strong><span>Keep the population, TOP or course definition, and measure consistent.</span></div>
+<div><strong>One thing changes</strong><span>For the cleanest trend, vary time while holding the institution constant. For a college comparison, hold the period constant.</span></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="upload-heading">
+<div class="container content-narrow">
+<div class="viewer-privacy" role="note">
+<strong>Your spreadsheets stay in this browser tab.</strong>
+Data Mart Smart reads the selected files locally with JavaScript. The spreadsheets themselves are not uploaded to Data Mart Smart.
+</div>
+<div class="upload-zone" id="compareDropZone">
+<div aria-hidden="true" class="upload-icon">⇧</div>
+<h2 id="upload-heading">Choose two or more comparable exports</h2>
+<p>Select up to 20 Excel or CSV files from the same Data Mart report. For example, choose the same Course Details setup for Fall 2022, Fall 2023, Fall 2024, and Fall 2025.</p>
+<div class="viewer-actions">
+<button class="button button-primary" id="compareBrowseButton" type="button">Choose files</button>
+<a class="button button-secondary" href="explore-data.html">Explore one file instead</a>
+</div>
+<input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="compareFileInput" multiple="" type="file"/>
+</div>
+<p aria-live="polite" class="viewer-status" id="compareStatus" role="status"></p>
+<div hidden="" id="compareFileArea">
+<div class="compare-file-heading">
+<h2>Files in this comparison</h2>
+<button class="text-button" id="clearCompareFiles" type="button">Clear files</button>
+</div>
+<div class="compare-file-list" id="compareFileList"></div>
+</div>
+</div>
+</section>
+<section hidden="" id="compareWorkspace">
+<div class="container">
+<div class="viewer-layout">
+<aside aria-labelledby="compare-controls-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">🔎</span> Comparison setup</p>
+<h2 id="compare-controls-heading">Keep the measure consistent</h2>
+<div id="compareDynamicControls"></div>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="downloadCompareCsv" type="button">Download comparison CSV</button>
+<button class="text-button" id="resetCompare" type="button">Choose another set of files</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow" id="compareModeLabel">Current comparison</p>
+<h2 id="compareResultsTitle">Comparison</h2>
+<p class="viewer-result-meta" id="compareResultMeta"></p>
+<div class="viewer-stats" id="compareStats"></div>
+<div aria-live="polite" class="comparison-cautions" id="compareCautions"></div>
+<div aria-label="Comparison chart" class="compare-chart" id="compareChart"></div>
+<div aria-label="Comparable Data Mart values" class="table-scroll" tabindex="0">
+<table class="viewer-table compare-table">
+<caption id="compareTableCaption">Comparable Data Mart values</caption>
+<thead><tr><th scope="col">Source</th><th scope="col">Institution</th><th scope="col">Period</th><th scope="col">Value</th><th scope="col">Context</th></tr></thead>
+<tbody id="compareResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="compare-method-heading" class="method-box">
+<h2 id="compare-method-heading">Save the Method, Not Just the Chart</h2>
+<pre class="method-text" id="compareMethodText"></pre>
+<button class="button button-secondary" id="copyCompareMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="supported-heading" class="soft-section">
+<div class="container content-narrow">
+<h2 id="supported-heading">Reports Supported for Multi-File Comparison</h2>
+<div class="purpose-grid compact-purpose-grid">
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true" class="heading-emoji">👥</span> Student Headcount</h3><p>Compare the same demographic category across colleges or periods.</p></article>
+<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true" class="heading-emoji">📚</span> Course Details</h3><p>Compare reported section counts for the same course, prefix, title, or TOP area.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true" class="heading-emoji">📈</span> Credit Courses/Sections</h3><p>Compare the same displayed row using Section Count, Enrollment Count, or FTES.</p></article>
+<article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true" class="heading-emoji">🎯</span> Success &amp; Retention</h3><p>Compare counts or rates. Rates are recalculated from the underlying counts.</p></article>
+<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true" class="heading-emoji">📊</span> Grade Distribution</h3><p>Compare the same grade category as a count or share of a selected TOP area.</p></article>
+<article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true" class="heading-emoji">🎓</span> Program Awards</h3><p>Compare the same program and award type without treating awards as unique graduates.</p></article>
+</div>
+<p class="small-note"><strong>Why not every export?</strong> The Flexible Explorer can visualize many one-file tables, but multi-file comparison has a higher risk of mixing totals, subtotals, populations, or incompatible definitions. Data Mart Smart only enables comparison logic where we have tested the report structure.</p>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-grid">
+<div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div>
+<p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p>
+<ul aria-label="Project links" class="footer-links">
+<li><a href="about.html">About this project</a></li>
+<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+<li><a href="accessibility.html">Accessibility</a></li>
+<li><a href="sources.html">Sources and methods</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>

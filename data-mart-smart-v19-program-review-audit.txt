@@ -1,0 +1,22 @@
+Data Mart Smart v19 audit
+HTML pages: 44
+Static issues: 0
+Em dash files: 0
+JavaScript syntax errors: 0
+320px horizontal overflow pages: 0
+
+Program Review demo:
+{
+  "status": "English program review example loaded from the supplied public CCCCO exports.",
+  "program": "150100",
+  "institution": "LA Mission",
+  "title": "English Program Review Picture",
+  "kpis": "REPORTED SECTIONS\n59\nFall 2025\nCourse Details\nSUCCESS RATE\n57.8%\nFall 2025\nOutcome enrollments\nRETENTION RATE\n86.6%\nFall 2025\nOutcome enrollments\nREPORTED AWARDS\n12\nAnnual 2025-2026\nAll loaded award types",
+  "errors": [],
+  "mobile_width": {
+    "inner": 320,
+    "scroll": 320
+  }
+}
+
+No static structural/link/form/table-wrapper issues found.

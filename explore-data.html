@@ -40,7 +40,7 @@
 <h1 id="page-title">Explore a Data Mart Export</h1>
 <p>Open a report you downloaded from CCC Data Mart. Data Mart Smart identifies the report and turns supported exports into clearer filters, charts, accessible tables, cautions, and reusable method notes.</p>
 </div>
-</section>
+</section><section aria-labelledby="one-or-several-heading" class="section-cool"><div class="container content-narrow"><h2 id="one-or-several-heading">Do You Have One Export or Several?</h2><p>Use the one-file Explorer to understand a single report. Use Compare &amp; Trends when you downloaded the same report for several colleges or periods.</p><div class="explore-choice-grid"><article class="explore-choice-card cat-teal"><h3><span aria-hidden="true" class="heading-emoji">📄</span> One export</h3><p>Filter and visualize one Data Mart file, with report-specific cautions where available.</p><a class="button button-secondary" href="#upload-heading">Explore one export</a></article><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true" class="heading-emoji">📈</span> Several comparable exports</h3><p>Compare colleges in the same period or build a multi-period trend using one consistent measure.</p><a class="button button-primary" href="compare-trends.html">Compare files or build a trend</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true" class="heading-emoji">📋</span> Program review evidence</h3><p>Combine different report families for one program while keeping unlike measures separate.</p><a class="button button-primary" href="program-review-dashboard.html">Build a program review picture</a></article></div></div></section>
 <section aria-labelledby="major-categories-heading" class="section-cool">
 <div class="container">
 <div class="section-heading"><p class="eyebrow">The major CCC Data Mart areas</p><h2 id="major-categories-heading">Start With the Kind of Data You Have</h2><p>The state Data Mart is organized into five major areas. Data Mart Smart keeps those areas recognizable, but gives you one place to open and visualize exports.</p></div>
@@ -109,7 +109,7 @@
             One student may receive more than one award.
           </div>
 <div aria-label="Award count comparison chart" class="bar-chart" id="awardsBarChart"></div>
-<div class="table-scroll">
+<div aria-label="Selected program awards by college" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption>Selected program awards by college</caption>
 <thead><tr><th scope="col">College</th><th scope="col">Award count</th></tr></thead>
@@ -161,7 +161,7 @@
 <div class="small-n-warning" hidden="" id="successSmallN"></div>
 <h3 id="successChartHeading">By instructional modality</h3>
 <div aria-labelledby="successChartHeading" class="bar-chart rate-chart" id="successBarChart"></div>
-<div class="table-scroll">
+<div aria-label="Selected success and retention results by instructional modality" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Selected success and retention results by instructional modality</caption>
 <thead>
@@ -207,7 +207,7 @@
 <div class="data-caution-box"><strong>This is grade composition, not the CCCCO success rate.</strong> Use the Enrollment Retention and Success Rate report when you need the Chancellor's Office success or retention measures.</div>
 <div class="small-n-warning" hidden="" id="exploreGradeWarning"></div>
 <h3 id="exploreGradeChartHeading">Reported grade categories</h3><div aria-labelledby="exploreGradeChartHeading" class="bar-chart rate-chart" id="exploreGradeBarChart"></div>
-<div class="table-scroll"><table class="viewer-table outcome-table"><caption>Selected grade distribution</caption><thead><tr><th scope="col">Grade category</th><th scope="col">Count</th><th scope="col">Percent</th></tr></thead><tbody id="exploreGradeResultsBody"></tbody></table></div>
+<div aria-label="Selected grade distribution" class="table-scroll" tabindex="0"><table class="viewer-table outcome-table"><caption>Selected grade distribution</caption><thead><tr><th scope="col">Grade category</th><th scope="col">Count</th><th scope="col">Percent</th></tr></thead><tbody id="exploreGradeResultsBody"></tbody></table></div>
 <section aria-labelledby="explore-grade-method-heading" class="method-box"><h2 id="explore-grade-method-heading">Save the Method, Not Just the Chart</h2><pre class="method-text" id="exploreGradeMethodText"></pre><button class="button button-secondary" id="exploreGradeCopyMethod" type="button">Copy method</button></section>
 </div>
 </div>
@@ -248,7 +248,7 @@
 <div class="small-n-warning" hidden="" id="headcountWarning"></div>
 <h3 id="headcountChartHeading">Student distribution</h3>
 <div aria-labelledby="headcountChartHeading" class="bar-chart rate-chart" id="headcountBarChart"></div>
-<div class="table-scroll">
+<div aria-label="Selected student headcount distribution" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Selected student headcount distribution</caption>
 <thead><tr><th id="headcountCategoryHeader" scope="col">Category</th><th scope="col">Student count</th><th scope="col">Percent</th></tr></thead>
@@ -292,7 +292,7 @@
 <h3 id="courseChartHeading">Courses with the most reported sections</h3>
 <div aria-labelledby="courseChartHeading" class="bar-chart" id="courseBarChart"></div>
 <p class="small-note" id="courseChartNote"></p>
-<div class="table-scroll">
+<div aria-label="Matching Course Details rows" class="table-scroll" tabindex="0">
 <table class="viewer-table course-detail-table">
 <caption>Matching Course Details rows</caption>
 <thead><tr><th scope="col">Course</th><th scope="col">Title</th><th scope="col">TOP</th><th scope="col">Sections</th><th scope="col">Credit status</th><th scope="col">Transfer status</th></tr></thead>
@@ -331,7 +331,7 @@
 <div class="small-n-warning" hidden="" id="creditSectionsWarning"></div>
 <h3 id="creditSectionsChartHeading">Reported activity</h3>
 <div aria-labelledby="creditSectionsChartHeading" class="bar-chart" id="creditSectionsBarChart"></div>
-<div class="table-scroll">
+<div aria-label="Credit Courses and Sections export rows" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Credit Courses and Sections export rows</caption>
 <thead><tr><th scope="col">Row</th><th scope="col">Sections</th><th scope="col">Enrollment</th><th scope="col">FTES</th></tr></thead>
@@ -365,7 +365,7 @@
 <div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> Data Mart Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
 <div class="small-n-warning" hidden="" id="genericWarning"></div>
 <h3 id="genericChartHeading">Selected measure</h3><div aria-labelledby="genericChartHeading" class="bar-chart" id="genericBarChart"></div>
-<div class="table-scroll"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
+<div aria-label="Selected columns from the uploaded export" class="table-scroll" tabindex="0"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
 <section aria-labelledby="generic-method-heading" class="method-box"><h2 id="generic-method-heading">Save What You Selected</h2><pre class="method-text" id="genericMethodText"></pre><button class="button button-secondary" id="genericCopyMethod" type="button">Copy method</button></section>
 </div></div></div></div><div hidden="" id="unsupportedModule">
 <div class="container content-narrow">
