@@ -1,144 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Build an Enrollment Trend | Data Mart Smart</title>
-  <meta name="description" content="A practical guide to building consistent multi-year enrollment or section trends with CCC Data Mart.">
-  <link rel="icon" type="image/png" href="favicon8.png">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Build an Enrollment Trend | Data Mart Smart</title>
+<meta content="A practical guide to building consistent multi-year enrollment or section trends with CCC Data Mart." name="description"/>
+<link href="favicon8.png" rel="icon" type="image/png"/>
+<link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="Data Mart Smart home">
-        <img src="favicon8.png" alt="">
-        <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-      </a>
-      <nav class="site-nav" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="query-guide.html">Find the Right Report</a></li><li><a href="reports.html" aria-current="page">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="examples.html">Examples</a></li><li><a href="index.html#coach">Ask the Coach</a></li><li><a href="about.html">About</a></li></ul></nav>
-    </div>
-  </header>
-  <main id="main-content">
-
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container page-hero-inner">
-        <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Enrollment Trends</p>
-        <p class="eyebrow">Data recipe: change over time</p>
-        <h1 id="page-title">Build an Enrollment Trend</h1>
-        <p>Use this recipe when you want to know whether participation is growing, declining, or staying relatively stable across several consistent periods.</p>
-        <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container recipe-layout">
-        <div class="recipe-main">
-        <div class="quick-path" aria-labelledby="quick-title">
-          <h2 id="quick-title">In a Hurry?</h2>
-          <dl>
-            <dt>Report</dt><dd>Depends on the measure you are trending</dd>
-            <dt>Measure</dt><dd>One consistent measure across time</dd>
-            <dt>Choose</dt><dd>same population + same interval + several periods</dd>
-            <dt>Watch for</dt><dd>course renumbering, TOP changes, and inconsistent time periods</dd>
-            <dt>Typical setup</dt><dd>about 5–10 minutes</dd>
-          </dl>
-        </div>
-        <section aria-labelledby="use-this-for">
-          <h2 id="use-this-for">Why Might I Use This?</h2>
-          <ul class="use-cases"><li>Program review</li><li>Enrollment management</li><li>Scheduling</li><li>Department planning</li></ul>
-        </section>
-
-          <section aria-labelledby="first-heading">
-            <h2 id="first-heading">First Define What “Enrollment” Means</h2>
-            <p>Before you build a trend, decide whether your question is about <strong>distinct students</strong> or <strong>course enrollments</strong>. These are not the same measure.</p>
-            <div class="info-box"><h3>Choose the Measure First</h3><p>Use Annual/Term Student Count for distinct students. Use a course/enrollment report when the question is about course enrollments or activity within a discipline.</p></div>
-          </section>
-
-          <section aria-labelledby="clean-heading">
-            <h2 id="clean-heading">Build a Clean Comparison</h2>
-            <ol class="step-list">
-              <li><h3>Choose one measure</h3><p>Do not switch between Student Count, Enrollment Count, and FTES across years.</p></li>
-              <li><h3>Use consistent intervals</h3><p>Fall-to-Fall is often cleaner than comparing one Fall term with a full academic year.</p></li>
-              <li><h3>Keep the population stable</h3><p>Use the same college, discipline, TOP code, course list, student group, or other filters for every period.</p></li>
-              <li><h3>Check for course or classification changes</h3><p>Course renumbering, prefix changes, common course numbering, curriculum changes, or TOP-code changes can create a false appearance of growth or decline.</p></li>
-              <li><h3>Use several periods</h3><p>One unusual year is not a trend. Look across enough periods to see whether the pattern persists.</p></li>
-              <li><h3>Calculate changes transparently</h3><p>Show both the raw difference and the percentage change when useful.</p></li>
-            </ol>
-          </section>
-
-          <section aria-labelledby="calc-heading">
-            <h2 id="calc-heading">Example Calculation</h2>
-            <p>If a department reported 115 sections in Fall 2022 and 92 in Fall 2026:</p>
-            <div class="method-box">
-              <dl>
-                <dt>Raw change</dt><dd>92 − 115 = −23 sections</dd>
-                <dt>Percentage change</dt><dd>−23 ÷ 115 × 100 = −20.0%</dd>
-              </dl>
-            </div>
-            <p>The defensible statement is descriptive: <strong>reported section count declined 20.0% between the two selected Fall terms.</strong> The trend alone does not explain why.</p>
-          </section>
-
-          <section aria-labelledby="why-heading">
-            <h2 id="why-heading">A Trend Does Not Explain the Cause</h2>
-            <p>A decline could reflect scheduling, demand, staffing, curriculum changes, local policy, demographic shifts, modality, competition among courses, or many other factors. Data Mart can identify a pattern worth investigating; additional evidence is usually needed to explain it.</p>
-          </section>
-
-          <section aria-labelledby="method-heading">
-            <h2 id="method-heading">Save the Method</h2>
-            <div class="method-box">
-              <dl>
-                <dt>Measure</dt><dd>[Student Count / Enrollment Count / Sections Count / FTES]</dd>
-                <dt>Intervals</dt><dd>[Fall-to-Fall / academic-year-to-academic-year]</dd>
-                <dt>Periods</dt><dd>[List years/terms]</dd>
-                <dt>Population</dt><dd>[College / course / TOP / group]</dd>
-                <dt>Crosswalk checks</dt><dd>[Renumbering, prefixes, TOP changes, etc.]</dd>
-              </dl>
-            </div>
-          </section>
-          <section class="next-questions" aria-labelledby="what-next-heading">
-            <h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
-            <ul><li>Does the pattern persist beyond one unusual year?</li><li>Did curriculum, scheduling, modality, or classification change?</li><li>What local context could help explain the trend?</li></ul>
-            <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-          </section>
-
-          <div class="coach-cta">
-            <h2>Want a Second Set of Eyes?</h2>
-            <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-            <p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
-          </div>
-
-        </div>
-
-        <aside class="recipe-sidebar" aria-label="Guide summary">
-          <div class="side-card"><h2>Trend Rule</h2><p>Same measure. Same population. Same interval. Several periods.</p></div>
-          <div class="side-card"><h2>Related</h2><p><a href="student-headcount.html">Find student headcount</a></p><p><a href="sections-across-colleges.html">Compare sections</a></p></div>
-        </aside>
-      </div>
-    </section>
-
-  </main>
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="favicon8.png" alt="">
-          <span>Data Mart Smart</span>
-        </div>
-      </div>
-      <p class="footer-copy">
-        <strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="container header-inner">
+<a aria-label="Data Mart Smart home" class="brand" href="index.html">
+<img alt="" src="favicon8.png"/>
+<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+</a>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="page-title" class="page-hero">
+<div class="container page-hero-inner">
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Enrollment Trends</p>
+<p class="eyebrow">Data recipe: change over time</p>
+<h1 id="page-title">Build an Enrollment Trend</h1>
+<p>Use this recipe when you want to know whether participation is growing, declining, or staying relatively stable across several consistent periods.</p>
+<p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
+</div>
+</section>
+<section>
+<div class="container recipe-layout">
+<div class="recipe-main">
+<div aria-labelledby="quick-title" class="quick-path">
+<h2 id="quick-title">In a Hurry?</h2>
+<dl>
+<dt>Report</dt><dd>Depends on the measure you are trending</dd>
+<dt>Measure</dt><dd>One consistent measure across time</dd>
+<dt>Choose</dt><dd>same population + same interval + several periods</dd>
+<dt>Watch for</dt><dd>course renumbering, TOP changes, and inconsistent time periods</dd>
+<dt>Typical setup</dt><dd>about 5–10 minutes</dd>
+</dl>
+<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="query-guide.html">Find the right report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a></nav>
+<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
+<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
+<ul class="use-cases"><li>Program review</li><li>Enrollment management</li><li>Scheduling</li><li>Department planning</li></ul>
+</section>
+<section aria-labelledby="first-heading" class="bf-panel bf-purpose">
+<p class="section-kicker">Why it matters</p><h2 id="first-heading">First Define What “Enrollment” Means</h2>
+<p>Before you build a trend, decide whether your question is about <strong>distinct students</strong> or <strong>course enrollments</strong>. These are not the same measure.</p>
+<div class="info-box"><h3>Choose the Measure First</h3><p>Use Annual/Term Student Count for distinct students. Use a course/enrollment report when the question is about course enrollments or activity within a discipline.</p></div>
+</section>
+<section aria-labelledby="clean-heading" class="bf-panel bf-action">
+<p class="section-kicker">Do this</p><h2 id="clean-heading">Build a Clean Comparison</h2>
+<ol class="step-list">
+<li><h3>Choose one measure</h3><p>Do not switch between Student Count, Enrollment Count, and FTES across years.</p></li>
+<li><h3>Use consistent intervals</h3><p>Fall-to-Fall is often cleaner than comparing one Fall term with a full academic year.</p></li>
+<li><h3>Keep the population stable</h3><p>Use the same college, discipline, TOP code, course list, student group, or other filters for every period.</p></li>
+<li><h3>Check for course or classification changes</h3><p>Course renumbering, prefix changes, common course numbering, curriculum changes, or TOP-code changes can create a false appearance of growth or decline.</p></li>
+<li><h3>Use several periods</h3><p>One unusual year is not a trend. Look across enough periods to see whether the pattern persists.</p></li>
+<li><h3>Calculate changes transparently</h3><p>Show both the raw difference and the percentage change when useful.</p></li>
+</ol>
+</section>
+<section aria-labelledby="calc-heading">
+<h2 id="calc-heading">Example Calculation</h2>
+<p>If a department reported 115 sections in Fall 2022 and 92 in Fall 2026:</p>
+<div class="method-box">
+<dl>
+<dt>Raw change</dt><dd>92 − 115 = −23 sections</dd>
+<dt>Percentage change</dt><dd>−23 ÷ 115 × 100 = −20.0%</dd>
+</dl>
+</div>
+<p>The defensible statement is descriptive: <strong>reported section count declined 20.0% between the two selected Fall terms.</strong> The trend alone does not explain why.</p>
+</section>
+<section aria-labelledby="why-heading">
+<h2 id="why-heading">A Trend Does Not Explain the Cause</h2>
+<p>A decline could reflect scheduling, demand, staffing, curriculum changes, local policy, demographic shifts, modality, competition among courses, or many other factors. Data Mart can identify a pattern worth investigating; additional evidence is usually needed to explain it.</p>
+</section>
+<section aria-labelledby="method-heading" class="bf-panel bf-method">
+<p class="section-kicker">Save this</p><h2 id="method-heading">Save the Method</h2>
+<div class="method-box">
+<dl>
+<dt>Measure</dt><dd>[Student Count / Enrollment Count / Sections Count / FTES]</dd>
+<dt>Intervals</dt><dd>[Fall-to-Fall / academic-year-to-academic-year]</dd>
+<dt>Periods</dt><dd>[List years/terms]</dd>
+<dt>Population</dt><dd>[College / course / TOP / group]</dd>
+<dt>Crosswalk checks</dt><dd>[Renumbering, prefixes, TOP changes, etc.]</dd>
+</dl>
+</div>
+</section>
+<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
+<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+<ul><li>Does the pattern persist beyond one unusual year?</li><li>Did curriculum, scheduling, modality, or classification change?</li><li>What local context could help explain the trend?</li></ul>
+<p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
+</section>
+<div class="coach-cta">
+<h2>Want a Second Set of Eyes?</h2>
+<p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
+<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+</div>
+</div>
+<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#method-heading">Save the Method</a></li></ul></nav>
+<div class="side-card"><h2>Trend Rule</h2><p>Same measure. Same population. Same interval. Several periods.</p></div>
+<div class="side-card"><h2>Related</h2><p><a href="student-headcount.html">Find student headcount</a></p><p><a href="sections-across-colleges.html">Compare sections</a></p></div>
+</aside>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-grid">
+<div>
+<div class="footer-brand">
+<img alt="" src="favicon8.png"/>
+<span>Data Mart Smart</span>
+</div>
+</div>
+<p class="footer-copy">
+<strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
         It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities.
         Guidance may contain errors or become outdated as Data Mart changes. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.
       </p>
-      <ul class="footer-links" aria-label="Project links">
-        <li><a href="about.html">About this project</a></li>
-        <li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-        <li><a href="accessibility.html">Accessibility</a></li>
-        <li><a href="sources.html">Sources and methods</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-      </ul>
-    </div>
-  </footer>
+<ul aria-label="Project links" class="footer-links">
+<li><a href="about.html">About this project</a></li><li><a href="examples.html">Examples</a></li>
+<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+<li><a href="accessibility.html">Accessibility</a></li>
+<li><a href="sources.html">Sources and methods</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</div>
+</footer>
 </body>
 </html>
