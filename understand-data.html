@@ -1,126 +1,142 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Data Tips | Data Mart Smart</title>
-<meta content="Short, practical data-literacy tips for using California Community Colleges Data Mart more carefully." name="description"/>
-<link href="favicon8.png" rel="icon" type="image/png"/>
-<link href="styles.css" rel="stylesheet"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Tips | Data Mart Smart</title>
+  <meta name="description" content="Short, practical data-literacy tips for using California Community Colleges Data Mart more carefully.">
+  <link rel="icon" type="image/png" href="favicon8.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header">
-<div class="container header-inner">
-<a aria-label="Data Mart Smart home" class="brand" href="index.html">
-<img alt="" src="favicon8.png"/>
-<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-</a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a aria-current="page" href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
-</div>
-</header>
-<main id="main-content">
-<section aria-labelledby="page-title" class="page-hero">
-<div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Data Tips</p>
-<p class="eyebrow">Small habits. Better interpretation.</p>
-<h1 id="page-title"><span aria-hidden="true" class="emoji-icon heading-emoji">💡</span> Data Mart Smart Tips</h1>
-<p>These are the practical moves that keep a useful number from becoming a misleading one.</p>
-</div>
-</section>
-<section aria-labelledby="tips-heading">
-<div class="container">
-<div class="section-heading">
-<h2 id="tips-heading">Start With These Eight</h2>
-<p>You do not need to be an institutional researcher to use data thoughtfully.</p>
-</div>
-<div class="tip-grid">
-<article class="tip-card">
-<h3>Students Are Not Enrollments</h3>
-<p>One student can generate several course enrollments. Decide whether your question is about people or course-taking activity before choosing a measure.</p>
-<div class="example"><strong>Example:</strong> One student taking four courses may count as one student but four enrollments.</div>
-</article>
-<article class="tip-card">
-<h3>Sections Are Not Always Classes</h3>
-<p>A reported section record may be part of a linked lecture/lab, support, co-requisite, or other local structure.</p>
-<div class="example"><strong>Ask:</strong> Am I counting reported section records or trying to estimate distinct instructional classes?</div>
-</article>
-<article class="tip-card">
-<h3>Know Your Denominator</h3>
-<p>A percentage is incomplete without the population underneath it. Compare both the rate and the underlying N.</p>
-<div class="example"><strong>Example:</strong> 90% of 20 enrollments and 90% of 2,000 enrollments deserve different context.</div>
-</article>
-<article class="tip-card">
-<h3>Compare Like With Like</h3>
-<p>Use the same report, measure, time period, population, and definitions before interpreting differences across colleges or years.</p>
-<div class="example"><strong>Check:</strong> same measure + same period + same population + same definition.</div>
-</article>
-<article class="tip-card">
-<h3>Do Not Double Count</h3>
-<p>Totals, subtotals, overlapping categories, and district totals can quietly inflate a result.</p>
-<div class="example"><strong>Example:</strong> Do not add a district total to the individual colleges that already make up that district total.</div>
-</article>
-<article class="tip-card">
-<h3>TOP Code ≠ Department Prefix</h3>
-<p>A TOP code classifies an instructional area. A local prefix is a college's course identifier. They can overlap, but they are not the same thing.</p>
-<div class="example"><strong>Example:</strong> “English” could mean ENGL courses, ENGLISH courses, or an English-related TOP code.</div>
-</article>
-<article class="tip-card">
-<h3>A Difference Is Not a Cause</h3>
-<p>Data Mart can show that two colleges or years differ. It usually cannot establish why the difference occurred.</p>
-<div class="example"><strong>Prefer:</strong> “College A reported more awards.” Avoid: “College A has a stronger program.”</div>
-</article>
-<article class="tip-card">
-<h3>Blank Does Not Automatically Mean Zero</h3>
-<p>A blank cell could be unavailable, suppressed, not reported, or something else. Do not turn it into zero unless the documentation says that is correct.</p>
-<div class="example"><strong>Rule:</strong> Name missingness accurately before calculating.</div>
-</article>
-<article class="tip-card">
-<h3>One Year Is Not a Trend</h3>
-<p>A single term can be unusual. Use consistent intervals over several periods before declaring growth or decline.</p>
-<div class="example"><strong>Better:</strong> Fall-to-Fall for several years rather than Fall 2025 versus the full 2025–26 academic year.</div>
-</article>
-<article class="tip-card">
-<h3>Save Your Method</h3>
-<p>Record the report, filters, measure, time period, institutions, and retrieval date. If special handling was needed, document that too.</p>
-<div class="example"><strong>Goal:</strong> Another person should be able to reproduce your result.</div>
-</article>
-</div>
-<p style="margin-top:1.5rem;"><a class="button button-primary" href="check-query.html">Check my Data Mart setup</a> <a class="button button-secondary" href="compare-colleges.html">Check a college comparison</a></p>
-<div class="info-box" style="margin-top: 1.4rem;">
-<h2>The Bigger Idea</h2>
-<p>Data can tell you that something is happening. They do not always tell you why. The strongest use of Data Mart often combines quantitative patterns with local knowledge, student experience, curriculum context, and other evidence.</p>
-</div>
-</div>
-</section>
-<section aria-labelledby="conversation-tip-heading" class="info-box">
-<h2 id="conversation-tip-heading">Found Something Interesting?</h2>
-<p>Finding the number is not the end of the work. Use a simple inquiry process to describe the pattern, check what the data support, add local context, and decide what to ask next.</p>
-<p><a href="from-data-to-conversation.html">Go from data to a conversation <span aria-hidden="true">→</span></a></p>
-</section>
-</main>
-<footer class="site-footer">
-<div class="container footer-grid">
-<div>
-<div class="footer-brand">
-<img alt="" src="favicon8.png"/>
-<span>Data Mart Smart</span>
-</div>
-</div>
-<p class="footer-copy">
-<strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Data Mart Smart home">
+        <img src="favicon8.png" alt="">
+        <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="query-guide.html">Find the Right Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html" aria-current="page">Data Tips</a></li><li><a href="examples.html">Examples</a></li><li><a href="index.html#coach">Ask the Coach</a></li><li><a href="about.html">About</a></li></ul></nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container page-hero-inner">
+        <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Data Tips</p>
+        <p class="eyebrow">Small habits. Better interpretation.</p>
+        <h1 id="page-title">Data Mart Smart Tips</h1>
+        <p>These are the practical moves that keep a useful number from becoming a misleading one.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="tips-heading">
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="tips-heading">Start With These Eight</h2>
+          <p>You do not need to be an institutional researcher to use data thoughtfully.</p>
+        </div>
+
+        <div class="tip-grid">
+          <article class="tip-card">
+            <h3>Students Are Not Enrollments</h3>
+            <p>One student can generate several course enrollments. Decide whether your question is about people or course-taking activity before choosing a measure.</p>
+            <div class="example"><strong>Example:</strong> One student taking four courses may count as one student but four enrollments.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Sections Are Not Always Classes</h3>
+            <p>A reported section record may be part of a linked lecture/lab, support, co-requisite, or other local structure.</p>
+            <div class="example"><strong>Ask:</strong> Am I counting reported section records or trying to estimate distinct instructional classes?</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Know Your Denominator</h3>
+            <p>A percentage is incomplete without the population underneath it. Compare both the rate and the underlying N.</p>
+            <div class="example"><strong>Example:</strong> 90% of 20 enrollments and 90% of 2,000 enrollments deserve different context.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Compare Like With Like</h3>
+            <p>Use the same report, measure, time period, population, and definitions before interpreting differences across colleges or years.</p>
+            <div class="example"><strong>Check:</strong> same measure + same period + same population + same definition.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Do Not Double Count</h3>
+            <p>Totals, subtotals, overlapping categories, and district totals can quietly inflate a result.</p>
+            <div class="example"><strong>Example:</strong> Do not add a district total to the individual colleges that already make up that district total.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>TOP Code ≠ Department Prefix</h3>
+            <p>A TOP code classifies an instructional area. A local prefix is a college's course identifier. They can overlap, but they are not the same thing.</p>
+            <div class="example"><strong>Example:</strong> “English” could mean ENGL courses, ENGLISH courses, or an English-related TOP code.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>A Difference Is Not a Cause</h3>
+            <p>Data Mart can show that two colleges or years differ. It usually cannot establish why the difference occurred.</p>
+            <div class="example"><strong>Prefer:</strong> “College A reported more awards.” Avoid: “College A has a stronger program.”</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Blank Does Not Automatically Mean Zero</h3>
+            <p>A blank cell could be unavailable, suppressed, not reported, or something else. Do not turn it into zero unless the documentation says that is correct.</p>
+            <div class="example"><strong>Rule:</strong> Name missingness accurately before calculating.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>One Year Is Not a Trend</h3>
+            <p>A single term can be unusual. Use consistent intervals over several periods before declaring growth or decline.</p>
+            <div class="example"><strong>Better:</strong> Fall-to-Fall for several years rather than Fall 2025 versus the full 2025–26 academic year.</div>
+          </article>
+
+          <article class="tip-card">
+            <h3>Save Your Method</h3>
+            <p>Record the report, filters, measure, time period, institutions, and retrieval date. If special handling was needed, document that too.</p>
+            <div class="example"><strong>Goal:</strong> Another person should be able to reproduce your result.</div>
+          </article>
+        </div>
+
+        <p style="margin-top:1.5rem;"><a class="button button-primary" href="check-query.html">Check my Data Mart setup</a> <a class="button button-secondary" href="compare-colleges.html">Check a college comparison</a></p>
+
+        <div class="info-box" style="margin-top: 1.4rem;">
+          <h2>The Bigger Idea</h2>
+          <p>Data can tell you that something is happening. They do not always tell you why. The strongest use of Data Mart often combines quantitative patterns with local knowledge, student experience, curriculum context, and other evidence.</p>
+        </div>
+      </div>
+    </section>
+  
+        <section class="info-box" aria-labelledby="conversation-tip-heading">
+          <h2 id="conversation-tip-heading">Found Something Interesting?</h2>
+          <p>Finding the number is not the end of the work. Use a simple inquiry process to describe the pattern, check what the data support, add local context, and decide what to ask next.</p>
+          <p><a href="from-data-to-conversation.html">Go from data to a conversation <span aria-hidden="true">→</span></a></p>
+        </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="favicon8.png" alt="">
+          <span>Data Mart Smart</span>
+        </div>
+      </div>
+      <p class="footer-copy">
+        <strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
         It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities.
         Guidance may contain errors or become outdated as Data Mart changes. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.
       </p>
-<ul aria-label="Project links" class="footer-links">
-<li><a href="about.html">About this project</a></li><li><a href="examples.html">Examples</a></li>
-<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-<li><a href="accessibility.html">Accessibility</a></li>
-<li><a href="sources.html">Sources and methods</a></li>
-<li><a href="privacy.html">Privacy</a></li>
-</ul>
-</div>
-</footer>
+      <ul class="footer-links" aria-label="Project links">
+        <li><a href="about.html">About this project</a></li>
+        <li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="sources.html">Sources and methods</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </footer>
+
 </body>
 </html>

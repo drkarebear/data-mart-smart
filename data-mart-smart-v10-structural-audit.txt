@@ -1,0 +1,4 @@
+Data Mart Smart v10 structural audit
+HTML pages checked: 40
+Issues found: 0
+No H1, duplicate-ID, or local-link issues found.

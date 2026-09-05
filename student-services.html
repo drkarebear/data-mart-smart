@@ -1,129 +1,139 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Use Student Services Reports | Data Mart Smart</title>
-<meta content="A practical guide to choosing and interpreting CCC Data Mart Student Services reports." name="description"/>
-<link href="favicon8.png" rel="icon" type="image/png"/>
-<link href="styles.css" rel="stylesheet"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Use Student Services Reports | Data Mart Smart</title>
+  <meta name="description" content="A practical guide to choosing and interpreting CCC Data Mart Student Services reports.">
+  <link rel="icon" type="image/png" href="favicon8.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header">
-<div class="container header-inner">
-<a aria-label="Data Mart Smart home" class="brand" href="index.html">
-<img alt="" src="favicon8.png"/>
-<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-</a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a aria-current="page" href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
-</div>
-</header>
-<main id="main-content">
-<section aria-labelledby="page-title" class="page-hero">
-<div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Student Services</p>
-<p class="eyebrow">Data recipe: service participation</p>
-<h1 id="page-title">Use Student Services Reports</h1>
-<p>Student Services is not one report. Choose the report that matches the specific service or population you want to examine.</p>
-<p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
-</div>
-</section>
-<section>
-<div class="container recipe-layout">
-<div class="recipe-main">
-<div aria-labelledby="quick-title" class="quick-path">
-<h2 id="quick-title">In a Hurry?</h2>
-<dl>
-<dt>Report</dt><dd>Choose the report for the specific service</dd>
-<dt>Measure</dt><dd>Report-specific service participation/count</dd>
-<dt>Choose</dt><dd>service + geography + period + relevant population</dd>
-<dt>Watch for</dt><dd>service reports can use different headcount rules</dd>
-<dt>Typical setup</dt><dd>about 3–5 minutes</dd>
-</dl>
-<p class="quick-note">Start with this summary. Use the detailed sections below only when you need the setup, interpretation, or caveats.</p></div><nav aria-label="Quick actions" class="quick-actions"><a class="button button-primary" href="https://datamart.cccco.edu/Services/Services_main.aspx">Open the report</a><a class="button button-secondary" href="check-query.html">Check my setup</a><a class="button button-quiet" href="index.html#coach">Ask the Coach</a></nav>
-<section aria-labelledby="use-this-for" class="bf-panel bf-purpose">
-<p class="section-kicker">Why it matters</p><h2 id="use-this-for">Why Might I Use This?</h2>
-<ul class="use-cases"><li>Student services review</li><li>Equity inquiry</li><li>Program planning</li><li>Resource discussions</li></ul>
-</section>
-<section aria-labelledby="choose-heading" class="bf-panel bf-action">
-<p class="section-kicker">Do this</p><h2 id="choose-heading">Choose by Service</h2>
-<div aria-label="Common Student Services reports" class="table-scroll" role="region" tabindex="0"><table class="field-table">
-<caption>Common Student Services reports</caption>
-<thead><tr><th scope="col">Question</th><th scope="col">Best starting report</th></tr></thead>
-<tbody>
-<tr><td>How many students participated in CalWORKs?</td><td>CalWORKs</td></tr>
-<tr><td>How many students were reported in DSPS?</td><td>Disabled Students Programs &amp; Services (DSPS)</td></tr>
-<tr><td>How many students were reported in EOPS?</td><td>Extended Opportunity Programs &amp; Services (EOPS)</td></tr>
-<tr><td>How many students received financial aid, and how much?</td><td>Financial Aid</td></tr>
-<tr><td>How many students received orientation, assessment, counseling, or education-planning services?</td><td>Student Success Services Student Count</td></tr>
-<tr><td>How many students are in a special population, and what are their enrollments/FTES?</td><td>Special Population/Group Counts (FTES, Enrollment, etc.)</td></tr>
-</tbody>
-</table></div>
-</section>
-<section aria-labelledby="legacy-heading" class="bf-panel bf-caution">
-<p class="section-kicker">Watch for</p><h2 id="legacy-heading">Watch for Legacy Reports</h2>
-<div class="caution-box">
-<h3>Matriculation Is Historical</h3>
-<p>The live Matriculation report currently ends at Spring 2014. For newer student-success-service activity, begin with <strong>Student Success Services Student Count</strong> rather than assuming Matriculation is current.</p>
-</div>
-</section>
-<section aria-labelledby="defs-heading">
-<h2 id="defs-heading">Report-Specific Definitions Matter</h2>
-<p>Do not assume every Student Services report uses the same headcount rules. Some service reports have their own notes, annual-unduplicated logic, or population definitions.</p>
-<p>For example, the Special Population/Group Counts report currently states a different STD7 headcount-status set than the general Annual/Term Student Count report. Follow the note for the report you are actually using.</p>
-</section>
-<section aria-labelledby="steps-heading" class="bf-panel bf-action">
-<p class="section-kicker">Do this</p><h2 id="steps-heading">A Good Student Services Workflow</h2>
-<ol class="step-list">
-<li><h3>Name the service or population</h3><p>Do not begin with the generic Student Services menu alone.</p></li>
-<li><h3>Open the matching report</h3><p>Use the report whose population definition best matches the question.</p></li>
-<li><h3>Choose term or annual period carefully</h3><p>Some reports label annual counts as unduplicated.</p></li>
-<li><h3>Read the live report notes</h3><p>Definitions can differ from the general student headcount logic.</p></li>
-<li><h3>Use demographic breakouts only when they support the question</h3><p>Avoid adding every available field.</p></li>
-</ol>
-</section>
-<p><a class="button button-secondary" href="https://datamart.cccco.edu/Services/Services_main.aspx">Browse official Student Services reports</a></p>
-<section aria-labelledby="what-next-heading" class="next-questions bf-panel bf-next">
-<p class="section-kicker">What next</p><h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
-<ul><li>Is the report's headcount definition the one you intended?</li><li>Would a rate require a separate denominator?</li><li>What local service-access information is needed to interpret the count?</li></ul>
-<p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
-</section>
-<div class="coach-cta">
-<h2>Want a Second Set of Eyes?</h2>
-<p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
-<p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
-</div>
-</div>
-<aside aria-label="Guide summary" class="recipe-sidebar"><nav aria-label="On this page" class="page-jump-nav"><p class="side-title">Jump to</p><ul><li><a href="#steps-heading">A Good Student Services Workflow</a></li></ul></nav>
-<div class="side-card"><h2>Quick Summary</h2><ul><li><strong>Rule:</strong> choose by service</li><li><strong>Main risk:</strong> assuming all service reports share one headcount definition</li><li><strong>Legacy caution:</strong> Matriculation ends at Spring 2014</li></ul></div>
-<div class="side-card"><h2>Related</h2><p><a href="current-data.html">Check current vs. legacy reports</a></p><p><a href="student-headcount.html">Understand general headcount</a></p></div>
-</aside>
-</div>
-</section>
-</main>
-<footer class="site-footer">
-<div class="container footer-grid">
-<div>
-<div class="footer-brand">
-<img alt="" src="favicon8.png"/>
-<span>Data Mart Smart</span>
-</div>
-</div>
-<p class="footer-copy">
-<strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Data Mart Smart home">
+        <img src="favicon8.png" alt="">
+        <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="query-guide.html">Find the Right Report</a></li><li><a href="reports.html" aria-current="page">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="examples.html">Examples</a></li><li><a href="index.html#coach">Ask the Coach</a></li><li><a href="about.html">About</a></li></ul></nav>
+    </div>
+  </header>
+  <main id="main-content">
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container page-hero-inner">
+        <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="reports.html">How-To Guides</a> <span aria-hidden="true">/</span> Student Services</p>
+        <p class="eyebrow">Data recipe: service participation</p>
+        <h1 id="page-title">Use Student Services Reports</h1>
+        <p>Student Services is not one report. Choose the report that matches the specific service or population you want to examine.</p>
+        <p class="guide-meta"><strong>Guide reviewed:</strong> September 4, 2026 · Verify the live report before consequential use.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container recipe-layout">
+        <div class="recipe-main">
+        <div class="quick-path" aria-labelledby="quick-title">
+          <h2 id="quick-title">In a Hurry?</h2>
+          <dl>
+            <dt>Report</dt><dd>Choose the report for the specific service</dd>
+            <dt>Measure</dt><dd>Report-specific service participation/count</dd>
+            <dt>Choose</dt><dd>service + geography + period + relevant population</dd>
+            <dt>Watch for</dt><dd>service reports can use different headcount rules</dd>
+            <dt>Typical setup</dt><dd>about 3–5 minutes</dd>
+          </dl>
+        </div>
+        <section aria-labelledby="use-this-for">
+          <h2 id="use-this-for">Why Might I Use This?</h2>
+          <ul class="use-cases"><li>Student services review</li><li>Equity inquiry</li><li>Program planning</li><li>Resource discussions</li></ul>
+        </section>
+
+          <section aria-labelledby="choose-heading">
+            <h2 id="choose-heading">Choose by Service</h2>
+            <table class="field-table">
+              <caption>Common Student Services reports</caption>
+              <thead><tr><th scope="col">Question</th><th scope="col">Best starting report</th></tr></thead>
+              <tbody>
+                <tr><td>How many students participated in CalWORKs?</td><td>CalWORKs</td></tr>
+                <tr><td>How many students were reported in DSPS?</td><td>Disabled Students Programs & Services (DSPS)</td></tr>
+                <tr><td>How many students were reported in EOPS?</td><td>Extended Opportunity Programs & Services (EOPS)</td></tr>
+                <tr><td>How many students received financial aid, and how much?</td><td>Financial Aid</td></tr>
+                <tr><td>How many students received orientation, assessment, counseling, or education-planning services?</td><td>Student Success Services Student Count</td></tr>
+                <tr><td>How many students are in a special population, and what are their enrollments/FTES?</td><td>Special Population/Group Counts (FTES, Enrollment, etc.)</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-labelledby="legacy-heading">
+            <h2 id="legacy-heading">Watch for Legacy Reports</h2>
+            <div class="caution-box">
+              <h3>Matriculation Is Historical</h3>
+              <p>The live Matriculation report currently ends at Spring 2014. For newer student-success-service activity, begin with <strong>Student Success Services Student Count</strong> rather than assuming Matriculation is current.</p>
+            </div>
+          </section>
+
+          <section aria-labelledby="defs-heading">
+            <h2 id="defs-heading">Report-Specific Definitions Matter</h2>
+            <p>Do not assume every Student Services report uses the same headcount rules. Some service reports have their own notes, annual-unduplicated logic, or population definitions.</p>
+            <p>For example, the Special Population/Group Counts report currently states a different STD7 headcount-status set than the general Annual/Term Student Count report. Follow the note for the report you are actually using.</p>
+          </section>
+
+          <section aria-labelledby="steps-heading">
+            <h2 id="steps-heading">A Good Student Services Workflow</h2>
+            <ol class="step-list">
+              <li><h3>Name the service or population</h3><p>Do not begin with the generic Student Services menu alone.</p></li>
+              <li><h3>Open the matching report</h3><p>Use the report whose population definition best matches the question.</p></li>
+              <li><h3>Choose term or annual period carefully</h3><p>Some reports label annual counts as unduplicated.</p></li>
+              <li><h3>Read the live report notes</h3><p>Definitions can differ from the general student headcount logic.</p></li>
+              <li><h3>Use demographic breakouts only when they support the question</h3><p>Avoid adding every available field.</p></li>
+            </ol>
+          </section>
+
+          <p><a class="button button-secondary" href="https://datamart.cccco.edu/Services/Services_main.aspx">Browse official Student Services reports</a></p>
+          <section class="next-questions" aria-labelledby="what-next-heading">
+            <h2 id="what-next-heading">You Found a Result. What Should You Ask Next?</h2>
+            <ul><li>Is the report&#x27;s headcount definition the one you intended?</li><li>Would a rate require a separate denominator?</li><li>What local service-access information is needed to interpret the count?</li></ul>
+            <p><a href="from-data-to-conversation.html">Turn the result into a responsible data conversation <span aria-hidden="true">→</span></a></p>
+          </section>
+
+          <div class="coach-cta">
+            <h2>Want a Second Set of Eyes?</h2>
+            <p>Use CCC Data Mart Coach to check your report choice, setup, interpretation, screenshot, or export.</p>
+            <p><a class="button button-secondary" href="index.html#coach">Ask the Coach</a></p>
+          </div>
+
+        </div>
+
+        <aside class="recipe-sidebar" aria-label="Guide summary">
+          <div class="side-card"><h2>Quick Summary</h2><ul><li><strong>Rule:</strong> choose by service</li><li><strong>Main risk:</strong> assuming all service reports share one headcount definition</li><li><strong>Legacy caution:</strong> Matriculation ends at Spring 2014</li></ul></div>
+          <div class="side-card"><h2>Related</h2><p><a href="current-data.html">Check current vs. legacy reports</a></p><p><a href="student-headcount.html">Understand general headcount</a></p></div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="favicon8.png" alt="">
+          <span>Data Mart Smart</span>
+        </div>
+      </div>
+      <p class="footer-copy">
+        <strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
         It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities.
         Guidance may contain errors or become outdated as Data Mart changes. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.
       </p>
-<ul aria-label="Project links" class="footer-links">
-<li><a href="about.html">About this project</a></li><li><a href="examples.html">Examples</a></li>
-<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-<li><a href="accessibility.html">Accessibility</a></li>
-<li><a href="sources.html">Sources and methods</a></li>
-<li><a href="privacy.html">Privacy</a></li>
-</ul>
-</div>
-</footer>
+      <ul class="footer-links" aria-label="Project links">
+        <li><a href="about.html">About this project</a></li>
+        <li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="sources.html">Sources and methods</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </footer>
 </body>
 </html>
