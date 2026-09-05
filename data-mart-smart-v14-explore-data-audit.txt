@@ -1,0 +1,19 @@
+Data Mart Smart v14 Explore Data audit
+HTML pages checked: 42
+Structural/local-link issues: 0
+Files containing em dashes: 0
+JavaScript files checked: 3
+
+No structural, local-link, alt-text, duplicate-ID, H1, or JavaScript syntax issues found.
+No em dashes found in HTML, CSS, JavaScript, or Markdown.
+
+Parser validation against supplied LA Mission Fall 2025 Retention/Success workbook:
+Detected report: Credit Course Retention/Success Rate Summary Report
+Parsed six-digit TOP rows: 151
+English TOP 150100 modality rows: 3
+English combined Credit enrollments: 2,043
+English combined retained enrollments: 1,769 (86.6%)
+English combined successful enrollments: 1,180 (57.8%)
+Rates are recalculated from combined counts, not averaged from percentages.
+
+Detection checks passed for supplied Student Headcount, Grade Distribution, Course Details, and Credit Courses/Sections samples.

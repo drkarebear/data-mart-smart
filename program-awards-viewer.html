@@ -1,157 +1,140 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Program Awards Smart Viewer | Data Mart Smart</title>
-<meta name="description" content="Turn a CCCCO Data Mart Program Awards Excel export into a clean, filterable college comparison in your browser.">
-<link rel="icon" type="image/png" href="favicon8.png">
-<link rel="stylesheet" href="styles.css">
-<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script defer src="program-awards-viewer.js"></script>
+<meta content="Turn a CCCCO Data Mart Program Awards Excel export into a clean, filterable college comparison in your browser." name="description"/>
+<link href="favicon8.png" rel="icon" type="image/png"/>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" src="program-awards-viewer.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="Data Mart Smart home">
-      <img src="favicon8.png" alt="">
-      <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-    </a>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="start-here.html">Start Here</a></li>
-        <li><a href="uses.html">What Can I Use Data For?</a></li>
-        <li><a href="query-guide.html">Find the Right Report</a></li>
-        <li><a href="reports.html">How-To Guides</a></li>
-        <li><a href="understand-data.html">Data Tips</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </nav>
-  </div>
+<div class="container header-inner">
+<a aria-label="Data Mart Smart home" class="brand" href="index.html">
+<img alt="" src="favicon8.png"/>
+<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+</a>
+<nav aria-label="Primary navigation" class="site-nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="start-here.html">Start Here</a></li>
+<li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="explore-data.html">Explore Data</a></li>
+<li><a href="query-guide.html">Find the Right Report</a></li>
+<li><a href="reports.html">How-To Guides</a></li>
+<li><a href="understand-data.html">Data Tips</a></li>
+<li><a href="about.html">About</a></li>
+</ul>
+</nav>
+</div>
 </header>
-
 <main id="main-content">
-<section class="page-hero viewer-hero" aria-labelledby="page-title">
-  <div class="container page-hero-inner">
-    <p class="eyebrow">Experimental tool · browser-only file processing</p>
-    <h1 id="page-title">Program Awards Smart Viewer</h1>
-    <p>Drop the Excel file you downloaded from CCC Data Mart. The viewer turns the state report into a clean college comparison without sending your spreadsheet to a server.</p>
-  </div>
+<section aria-labelledby="page-title" class="page-hero viewer-hero">
+<div class="container page-hero-inner">
+<p class="eyebrow">Experimental tool · browser-only file processing</p>
+<h1 id="page-title">Program Awards Smart Viewer</h1>
+<p>Drop the Excel file you downloaded from CCC Data Mart. The viewer turns the state report into a clean college comparison without sending your spreadsheet to a server.</p>
+<p><a href="explore-data.html">Prefer the new unified Explore Data page? Open it here.</a></p></div>
 </section>
-
 <section>
 <div class="container content-narrow">
-  <div class="viewer-privacy" role="note">
-    <strong>Your spreadsheet stays in this browser tab.</strong>
+<div class="viewer-privacy" role="note">
+<strong>Your spreadsheet stays in this browser tab.</strong>
     Data Mart Smart reads the file locally with JavaScript. The spreadsheet itself is not uploaded to Data Mart Smart.
   </div>
-
-  <div class="upload-zone" id="dropZone">
-    <div aria-hidden="true" class="upload-icon">⇧</div>
-    <h2>Drop a Program Awards Excel export here</h2>
-    <p>Works with the current CCCCO <strong>Program Awards Summary Report</strong> Excel layout.</p>
-    <div class="viewer-actions">
-      <button class="button button-primary" id="browseButton" type="button">Choose Excel file</button>
-      <button class="button button-secondary" id="demoButton" type="button">Try the English demo</button>
-    </div>
-    <input id="fileInput" type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden>
-  </div>
-
-  <p id="status" class="viewer-status" role="status" aria-live="polite"></p>
+<div class="upload-zone" id="dropZone">
+<div aria-hidden="true" class="upload-icon">⇧</div>
+<h2>Drop a Program Awards Excel export here</h2>
+<p>Works with the current CCCCO <strong>Program Awards Summary Report</strong> Excel layout.</p>
+<div class="viewer-actions">
+<button class="button button-primary" id="browseButton" type="button">Choose Excel file</button>
+<button class="button button-secondary" id="demoButton" type="button">Try the English demo</button>
+</div>
+<input accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="fileInput" type="file"/>
+</div>
+<p aria-live="polite" class="viewer-status" id="status" role="status"></p>
 </div>
 </section>
-
-<section id="workspace" hidden>
+<section hidden="" id="workspace">
 <div class="container">
-  <div id="fileSummary" class="viewer-stats" aria-label="Loaded file summary"></div>
-
-  <div class="viewer-layout">
-    <aside class="viewer-controls" aria-labelledby="filter-heading">
-      <h2 id="filter-heading">Choose what to compare</h2>
-
-      <label for="programSearch">Program or TOP code</label>
-      <input id="programSearch" list="programOptions" type="search" placeholder="Try English or 150100" autocomplete="off">
-      <datalist id="programOptions"></datalist>
-      <p class="field-help">Start typing a program name, or enter a six-digit TOP code.</p>
-
-      <label for="awardType">Award type</label>
-      <select id="awardType"><option value="">All award types</option></select>
-
-      <fieldset>
-        <legend>Colleges</legend>
-        <div id="collegeFilters" class="check-chip-group"></div>
-      </fieldset>
-
-      <div class="viewer-control-actions">
-        <button id="downloadCsv" class="button button-secondary" type="button">Download comparison CSV</button>
-        <button id="resetButton" class="text-button" type="button">Start over</button>
-      </div>
-    </aside>
-
-    <div class="viewer-results">
-      <p class="eyebrow">Current comparison</p>
-      <h2 id="resultsTitle">Results</h2>
-      <p id="resultMeta" class="viewer-result-meta"></p>
-
-      <div class="award-warning">
-        <strong>Award count is not graduate headcount.</strong>
+<div aria-label="Loaded file summary" class="viewer-stats" id="fileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="filter-heading" class="viewer-controls">
+<h2 id="filter-heading">Choose what to compare</h2>
+<label for="programSearch">Program or TOP code</label>
+<input autocomplete="off" id="programSearch" list="programOptions" placeholder="Try English or 150100" type="search"/>
+<datalist id="programOptions"></datalist>
+<p class="field-help">Start typing a program name, or enter a six-digit TOP code.</p>
+<label for="awardType">Award type</label>
+<select id="awardType"><option value="">All award types</option></select>
+<fieldset>
+<legend>Colleges</legend>
+<div class="check-chip-group" id="collegeFilters"></div>
+</fieldset>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="downloadCsv" type="button">Download comparison CSV</button>
+<button class="text-button" id="resetButton" type="button">Start over</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current comparison</p>
+<h2 id="resultsTitle">Results</h2>
+<p class="viewer-result-meta" id="resultMeta"></p>
+<div class="award-warning">
+<strong>Award count is not graduate headcount.</strong>
         One student may receive more than one award.
       </div>
-
-      <div id="barChart" class="bar-chart" aria-label="Award count comparison chart"></div>
-
-      <div class="table-scroll">
-        <table class="viewer-table">
-          <caption>Selected program awards by college</caption>
-          <thead><tr><th scope="col">College</th><th scope="col">Award count</th></tr></thead>
-          <tbody id="resultsBody"></tbody>
-        </table>
-      </div>
-
-      <section class="method-box" aria-labelledby="method-heading">
-        <h2 id="method-heading">Save the Method, Not Just the Number</h2>
-        <pre id="methodText" class="method-text"></pre>
-        <button id="copyMethod" class="button button-secondary" type="button">Copy method</button>
-      </section>
-
-      <div class="next-questions">
-        <h2>What should I ask next?</h2>
-        <ul>
-          <li>Are the colleges using comparable award structures?</li>
-          <li>Would a multi-year trend tell a different story than one year?</li>
-          <li>Does program size or enrollment provide important context?</li>
-          <li>Do I mean awards, or do I actually need unique graduates?</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div aria-label="Award count comparison chart" class="bar-chart" id="barChart"></div>
+<div class="table-scroll">
+<table class="viewer-table">
+<caption>Selected program awards by college</caption>
+<thead><tr><th scope="col">College</th><th scope="col">Award count</th></tr></thead>
+<tbody id="resultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="method-heading" class="method-box">
+<h2 id="method-heading">Save the Method, Not Just the Number</h2>
+<pre class="method-text" id="methodText"></pre>
+<button class="button button-secondary" id="copyMethod" type="button">Copy method</button>
+</section>
+<div class="next-questions">
+<h2>What should I ask next?</h2>
+<ul>
+<li>Are the colleges using comparable award structures?</li>
+<li>Would a multi-year trend tell a different story than one year?</li>
+<li>Does program size or enrollment provide important context?</li>
+<li>Do I mean awards, or do I actually need unique graduates?</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </section>
-
 <section class="soft-section">
 <div class="container content-narrow">
-  <h2>What This Prototype Is Doing</h2>
-  <p>The CCCCO export is hierarchical: district totals, college totals, award-type totals, then individual TOP-coded program rows. The viewer reconstructs that hierarchy and turns the program rows into a filterable dataset.</p>
-  <p><strong>Current scope:</strong> Program Awards Summary Excel exports. If this works well, the same approach can be extended to course sections, student headcount, success/retention, and other Data Mart exports.</p>
-  <p class="small-note">Spreadsheet parsing uses SheetJS Community Edition 0.18.5 (Apache-2.0), loaded from jsDelivr. Your selected workbook is processed in the browser.</p>
+<h2>What This Prototype Is Doing</h2>
+<p>The CCCCO export is hierarchical: district totals, college totals, award-type totals, then individual TOP-coded program rows. The viewer reconstructs that hierarchy and turns the program rows into a filterable dataset.</p>
+<p><strong>Current scope:</strong> Program Awards Summary Excel exports. If this works well, the same approach can be extended to course sections, student headcount, success/retention, and other Data Mart exports.</p>
+<p class="small-note">Spreadsheet parsing uses SheetJS Community Edition 0.18.5 (Apache-2.0), loaded from jsDelivr. Your selected workbook is processed in the browser.</p>
 </div>
 </section>
 </main>
-
 <footer class="site-footer">
-  <div class="container footer-grid">
-    <div><div class="footer-brand"><img src="favicon8.png" alt=""><span>Data Mart Smart</span></div></div>
-    <p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p>
-    <ul class="footer-links" aria-label="Project links">
-      <li><a href="about.html">About this project</a></li>
-      <li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-      <li><a href="accessibility.html">Accessibility</a></li>
-      <li><a href="sources.html">Sources and methods</a></li>
-      <li><a href="privacy.html">Privacy</a></li>
-    </ul>
-  </div>
+<div class="container footer-grid">
+<div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div>
+<p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p>
+<ul aria-label="Project links" class="footer-links">
+<li><a href="about.html">About this project</a></li>
+<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+<li><a href="accessibility.html">Accessibility</a></li>
+<li><a href="sources.html">Sources and methods</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</div>
 </footer>
 </body>
 </html>

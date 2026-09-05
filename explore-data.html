@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Explore Data | Data Mart Smart</title>
+<meta content="Open a California Community Colleges Data Mart export in your browser and turn it into clearer filters, comparisons, charts, tables, cautions, and method notes." name="description"/>
+<link href="favicon8.png" rel="icon" type="image/png"/>
+<link href="styles.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer="" src="data-mart-parsers.js"></script>
+<script defer="" src="explore-data.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="container header-inner">
+<a aria-label="Data Mart Smart home" class="brand" href="index.html">
+<img alt="" src="favicon8.png"/>
+<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+</a>
+<nav aria-label="Primary navigation" class="site-nav">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="start-here.html">Start Here</a></li>
+<li><a href="uses.html">Use Data</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li>
+
+<li><a href="query-guide.html">Find a Report</a></li>
+<li><a href="reports.html">How-To Guides</a></li>
+<li><a href="understand-data.html">Data Tips</a></li>
+<li><a href="index.html#coach">Ask the Coach</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="page-title" class="page-hero viewer-hero">
+<div class="container page-hero-inner">
+<p class="eyebrow">Experimental tool · browser-only file processing</p>
+<h1 id="page-title">Explore a Data Mart Export</h1>
+<p>Open a report you downloaded from CCC Data Mart. Data Mart Smart identifies the report and turns supported exports into clearer filters, charts, accessible tables, cautions, and reusable method notes.</p>
+</div>
+</section>
+<section aria-labelledby="upload-heading">
+<div class="container content-narrow">
+<div class="viewer-privacy" role="note">
+<strong>Your spreadsheet stays in this browser tab.</strong>
+    Data Mart Smart reads the selected file locally with JavaScript. The spreadsheet itself is not uploaded to Data Mart Smart.
+  </div>
+<div aria-label="How Explore Data works" class="viewer-steps">
+<div class="viewer-step"><strong>1. Download</strong><span>Export an Excel or CSV report from CCC Data Mart.</span></div>
+<div class="viewer-step"><strong>2. Open</strong><span>Choose the file here. The report type is detected automatically.</span></div>
+<div class="viewer-step"><strong>3. Explore</strong><span>Filter, visualize, check the denominator, and save your method.</span></div>
+</div>
+<div class="upload-zone" id="exploreDropZone">
+<div aria-hidden="true" class="upload-icon">⇧</div>
+<h2 id="upload-heading">Choose a Data Mart export</h2>
+<p>Current working modules: <strong>Program Awards</strong> and <strong>Enrollment Retention and Success Rate</strong>.</p>
+<div class="viewer-actions">
+<button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button>
+<button class="button button-secondary" id="demoSuccessButton" type="button">Try Success &amp; Retention demo</button>
+<button class="button button-secondary" id="demoAwardsButton" type="button">Try Program Awards demo</button>
+</div>
+<input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/>
+</div>
+<p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p>
+<div class="detected-report" hidden="" id="detectedReport">
+<span aria-hidden="true" class="detected-report-icon">✅</span>
+<div><strong id="detectedReportName">Report detected</strong><span id="detectedReportNote"></span></div>
+</div>
+</div>
+</section>
+<section hidden="" id="exploreWorkspace">
+<div hidden="" id="awardsModule">
+<div class="container">
+<div aria-label="Loaded Program Awards file summary" class="viewer-stats" id="awardsFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="awards-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">🎓</span> Program Awards</p>
+<h2 id="awards-filter-heading">Choose what to compare</h2>
+<label for="awardsProgramSearch">Program or TOP code</label>
+<input autocomplete="off" id="awardsProgramSearch" list="awardsProgramOptions" placeholder="Try English or 150100" type="search"/>
+<datalist id="awardsProgramOptions"></datalist>
+<p class="field-help">Start typing a program name, or enter a six-digit TOP code.</p>
+<label for="awardsType">Award type</label>
+<select id="awardsType"><option value="">All award types</option></select>
+<fieldset>
+<legend>Colleges</legend>
+<div class="check-chip-group" id="awardsCollegeFilters"></div>
+</fieldset>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="awardsDownloadCsv" type="button">Download comparison CSV</button>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current comparison</p>
+<h2 id="awardsResultsTitle">Program Awards</h2>
+<p class="viewer-result-meta" id="awardsResultMeta"></p>
+<div class="award-warning">
+<strong>Award count is not graduate headcount.</strong>
+            One student may receive more than one award.
+          </div>
+<div aria-label="Award count comparison chart" class="bar-chart" id="awardsBarChart"></div>
+<div class="table-scroll">
+<table class="viewer-table">
+<caption>Selected program awards by college</caption>
+<thead><tr><th scope="col">College</th><th scope="col">Award count</th></tr></thead>
+<tbody id="awardsResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="awards-method-heading" class="method-box">
+<h2 id="awards-method-heading">Save the Method, Not Just the Number</h2>
+<pre class="method-text" id="awardsMethodText"></pre>
+<button class="button button-secondary" id="awardsCopyMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</div>
+<div hidden="" id="successModule">
+<div class="container">
+<div aria-label="Loaded Retention and Success file summary" class="viewer-stats" id="successFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="success-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">🎯</span> Success &amp; Retention</p>
+<h2 id="success-filter-heading">Choose what to explore</h2>
+<label for="successProgramSearch">Program or TOP code</label>
+<input autocomplete="off" id="successProgramSearch" list="successProgramOptions" placeholder="Try English or 150100" type="search"/>
+<datalist id="successProgramOptions"></datalist>
+<p class="field-help">The tool recalculates rates from the underlying counts when several modality rows are combined.</p>
+<label for="successPopulation">Course population</label>
+<select id="successPopulation"></select>
+<label for="successChartMeasure">Chart</label>
+<select id="successChartMeasure">
+<option value="successRate">Success rate</option>
+<option value="retentionRate">Retention rate</option>
+<option value="enrollment">Enrollment count</option>
+</select>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="successDownloadCsv" type="button">Download selected CSV</button>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current result</p>
+<h2 id="successResultsTitle">Success &amp; Retention</h2>
+<p class="viewer-result-meta" id="successResultMeta"></p>
+<div aria-label="Selected outcome summary" class="viewer-stats result-kpis" id="successKpis"></div>
+<div class="data-caution-box">
+<strong>These are enrollment outcomes, not unique students.</strong>
+            Success and retention are defined from reported grades in the CCCCO report. A student can contribute more than one enrollment.
+          </div>
+<div class="small-n-warning" hidden="" id="successSmallN"></div>
+<h3 id="successChartHeading">By instructional modality</h3>
+<div aria-labelledby="successChartHeading" class="bar-chart rate-chart" id="successBarChart"></div>
+<div class="table-scroll">
+<table class="viewer-table outcome-table">
+<caption>Selected success and retention results by instructional modality</caption>
+<thead>
+<tr>
+<th scope="col">Modality</th>
+<th scope="col">Enrollments</th>
+<th scope="col">Retained</th>
+<th scope="col">Retention rate</th>
+<th scope="col">Successful</th>
+<th scope="col">Success rate</th>
+</tr>
+</thead>
+<tbody id="successResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="success-method-heading" class="method-box">
+<h2 id="success-method-heading">Save the Method, Not Just the Number</h2>
+<pre class="method-text" id="successMethodText"></pre>
+<button class="button button-secondary" id="successCopyMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</div>
+<div hidden="" id="unsupportedModule">
+<div class="container content-narrow">
+<div class="feature-panel cat-purple unsupported-report-panel">
+<p class="eyebrow">Report recognized</p>
+<h2 id="unsupportedTitle">This report is next in the build queue</h2>
+<p id="unsupportedText"></p>
+<p><a class="button button-secondary" href="reports.html" id="unsupportedGuideLink">Open the related guide</a></p>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="supported-heading" class="soft-section">
+<div class="container">
+<div class="section-heading">
+<p class="eyebrow">One front door, different report logic</p>
+<h2 id="supported-heading">What Explore Data Can Recognize</h2>
+<p>Different Data Mart exports have different structures. The page identifies the report first, then applies rules appropriate to that report.</p>
+</div>
+<div class="purpose-grid explorer-report-grid">
+<article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Working now.</strong> Filter a program and award type, compare colleges, download a cleaned table, and save the method.</p></article>
+<article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Working now.</strong> Explore counts and rates by six-digit TOP, course population, and instructional modality.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p>Recognized. Demographic exploration is planned next.</p></article>
+<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p>Recognized. Grade composition and denominator connections are planned next.</p></article>
+<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p>Recognized. Course search, TOP filters, transferability, and section counts are planned.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p>Recognized. Sections, enrollments, FTES, and TOP comparisons are planned.</p></article>
+</div>
+</div>
+</section>
+<section aria-labelledby="scope-heading">
+<div class="container content-narrow bf-readable">
+<h2 id="scope-heading">What This Tool Does, and Does Not Do</h2>
+<p>Explore Data makes an official Data Mart export easier to work with. It does not change the source data, create new official measures, or replace CCCCO documentation. The tool should help you see the measure, population, time period, grouping, and caution that belong with the number.</p>
+<div class="info-box">
+<h3>Keep the official source in the research trail</h3>
+<p>For consequential planning, reporting, accreditation, hiring, curriculum, or resource decisions, verify the result against the current Data Mart report, its Notes &amp; Links information, and appropriate local institutional sources.</p>
+</div>
+<p class="small-note">Spreadsheet parsing uses SheetJS Community Edition 0.18.5 (Apache-2.0), loaded from jsDelivr.</p>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-grid">
+<div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div>
+<p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p>
+<ul aria-label="Project links" class="footer-links">
+<li><a href="about.html">About this project</a></li>
+<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+<li><a href="accessibility.html">Accessibility</a></li>
+<li><a href="sources.html">Sources and methods</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>
