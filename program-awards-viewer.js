@@ -61,7 +61,7 @@ function loadDemo() {
   state.reportTitle = "Program Awards Summary Report";
   state.period = "Annual 2025-2026";
   state.district = "Los Angeles CCD";
-  initializeWorkspace("English — TOP 150100");
+  initializeWorkspace("English · TOP 150100");
   setStatus("Demo loaded. These are English award records from the supplied Annual 2025-2026 LACCD export.", "success");
 }
 
@@ -96,7 +96,7 @@ async function loadWorkbookFile(file) {
     state.district = parsed.district || "District not detected";
 
     const english = uniquePrograms().find(p => p.top === "150100" || p.program.toLowerCase() === "english");
-    initializeWorkspace(english ? `${english.program} — TOP ${english.top}` : "");
+    initializeWorkspace(english ? `${english.program} · TOP ${english.top}` : "");
     setStatus(`Loaded ${state.records.length.toLocaleString()} program-award rows from ${file.name}. The file stayed in this browser tab.`, "success");
   } catch (err) {
     console.error(err);
@@ -189,7 +189,7 @@ function populatePrograms() {
   els.programOptions.innerHTML = "";
   uniquePrograms().forEach(p => {
     const option = document.createElement("option");
-    option.value = `${p.program} — TOP ${p.top}`;
+    option.value = `${p.program} · TOP ${p.top}`;
     els.programOptions.appendChild(option);
   });
 }
@@ -233,7 +233,7 @@ function programQuery() {
 
 function matchingRecords() {
   const {text, top} = programQuery();
-  let q = text.replace(/\s+—\s+TOP\s+\d{6}\s*$/i, "").trim().toLowerCase();
+  let q = text.replace(/\s+·\s+TOP\s+\d{6}\s*$/i, "").trim().toLowerCase();
   const award = els.awardType.value;
 
   return state.records.filter(r => {
@@ -292,7 +292,7 @@ function updateMethod(records, rows, label, total) {
   const types = els.awardType.value || "All award types";
   const measure = "Award Count (not unique graduates)";
   const method = [
-    `Source: California Community Colleges Chancellor's Office Data Mart — Program Awards Summary Report`,
+    `Source: California Community Colleges Chancellor's Office Data Mart: Program Awards Summary Report`,
     `File: ${state.sourceName}`,
     `Period: ${state.period}`,
     `Geography: ${state.district}; ${rows.length} selected college${rows.length === 1 ? "" : "s"}`,
