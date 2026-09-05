@@ -1,4 +1,0 @@
-Data Mart Smart v11 Smart Viewer audit
-HTML pages checked: 41
-Structural issues found: 0
-No H1, duplicate-ID, or local-link issues found.
