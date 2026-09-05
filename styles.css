@@ -1140,3 +1140,272 @@ main section {
     margin-bottom: 0.6rem;
   }
 }
+
+
+/* ---------- Remaining site pages ---------- */
+
+.content-narrow {
+  width: min(100%, 820px);
+}
+
+.content-narrow h2,
+.content-narrow h3 {
+  color: var(--navy-dark);
+}
+
+.content-narrow h2 {
+  margin: 2rem 0 0.65rem;
+  font-size: 1.65rem;
+}
+
+.content-narrow h3 {
+  margin: 1.4rem 0 0.45rem;
+  font-size: 1.15rem;
+}
+
+.content-narrow p,
+.content-narrow li {
+  color: #3b556c;
+}
+
+.callout-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.callout-card {
+  padding: 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fff;
+}
+
+.callout-card h3 {
+  margin: 0 0 0.5rem;
+  color: var(--navy-dark);
+}
+
+.callout-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.example-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.example-card {
+  padding: 1.45rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.example-card h2,
+.example-card h3 {
+  margin: 0 0 0.6rem;
+  color: var(--navy-dark);
+}
+
+.example-card p {
+  margin: 0.4rem 0;
+}
+
+.example-question {
+  font-weight: 850;
+  color: var(--navy);
+}
+
+.example-method {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 0.8rem;
+  margin-top: 0.9rem;
+}
+
+.example-method dt {
+  font-weight: 850;
+  color: var(--navy-dark);
+}
+
+.example-method dd {
+  margin: 0;
+  color: #425c72;
+}
+
+.compare-checklist {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-checklist li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.compare-checklist .check-symbol {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: #14633f;
+  font-weight: 900;
+}
+
+.export-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+  margin: 1.2rem 0;
+}
+
+.export-step {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface-soft);
+  text-align: center;
+  font-weight: 800;
+  color: var(--navy-dark);
+}
+
+.query-audit {
+  display: grid;
+  gap: 1rem;
+}
+
+.audit-item {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fff;
+}
+
+.audit-item label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  cursor: pointer;
+}
+
+.audit-item input[type="checkbox"] {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.12rem;
+  accent-color: var(--navy);
+}
+
+.audit-title {
+  display: block;
+  color: var(--navy-dark);
+  font-weight: 850;
+}
+
+.audit-help {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.audit-result {
+  margin-top: 1.2rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 13px;
+  border: 1px solid #b8d8ef;
+  background: #edf7ff;
+}
+
+.audit-result[hidden] {
+  display: none;
+}
+
+.audit-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1.1rem;
+}
+
+.plain-button {
+  appearance: none;
+  border: 2px solid var(--navy);
+  background: #fff;
+  color: var(--navy);
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.plain-button:hover {
+  background: var(--blue-soft);
+}
+
+.source-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.source-card {
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.source-card h3 {
+  margin: 0 0 0.45rem;
+  color: var(--navy-dark);
+}
+
+.source-card p {
+  margin: 0.35rem 0;
+}
+
+.policy-meta {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-weight: 750;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .callout-row {
+    grid-template-columns: 1fr;
+  }
+
+  .export-flow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .example-method {
+    grid-template-columns: 1fr;
+    gap: 0.05rem;
+  }
+
+  .example-method dd {
+    margin-bottom: 0.55rem;
+  }
+}
