@@ -41,7 +41,18 @@
 <p>Open a report you downloaded from CCC Data Mart. Data Mart Smart identifies the report and turns supported exports into clearer filters, charts, accessible tables, cautions, and reusable method notes.</p>
 </div>
 </section>
-<section aria-labelledby="major-categories-heading" class="section-cool"><div class="container"><div class="section-heading"><p class="eyebrow">Major Data Mart areas</p><h2 id="major-categories-heading">Choose the Kind of Question You Have</h2><p>Explore Data recognizes the report after you open the export, but these four areas show what the tools are designed to help you investigate.</p></div><div class="purpose-grid major-data-grid"><article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Students</h3><p><strong>Student Headcount</strong></p><p>Distinct students, gender, age, ethnicity, and headcount status.</p></article><article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Courses</h3><p><strong>Course Details + Credit Courses/Sections</strong></p><p>Courses, TOP areas, section counts, enrollment, FTES, transferability, and course characteristics.</p></article><article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">🎯</span> Outcomes</h3><p><strong>Success &amp; Retention + Grade Distribution</strong></p><p>Enrollment outcomes, rates, denominators, grade composition, and modality.</p></article><article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Awards</h3><p><strong>Program Awards</strong></p><p>Degrees and certificates by program, award type, college, and year.</p></article></div></div></section><section aria-labelledby="upload-heading">
+<section aria-labelledby="major-categories-heading" class="section-cool">
+<div class="container">
+<div class="section-heading"><p class="eyebrow">The major CCC Data Mart areas</p><h2 id="major-categories-heading">Start With the Kind of Data You Have</h2><p>The state Data Mart is organized into five major areas. Data Mart Smart keeps those areas recognizable, but gives you one place to open and visualize exports.</p></div>
+<div class="purpose-grid major-data-grid five-area-grid">
+<article class="purpose-card themed-card cat-blue"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">👥</span> Students</h3><p>Student Headcount, demographics, enrollment status, unit load, FTES, and special populations.</p><p class="small-note"><strong>Working now:</strong> Student Headcount. Other tabular exports can use the Flexible Explorer.</p></article>
+<article class="purpose-card themed-card cat-teal"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">📚</span> Courses / Calendar</h3><p>Course Details, credit sections, enrollments, FTES, TOP areas, and course characteristics.</p><p class="small-note"><strong>Working now:</strong> Course Details and Credit Courses/Sections.</p></article>
+<article class="purpose-card themed-card cat-green"><p class="coverage-status coverage-flex">Flexible Explorer</p><h3><span aria-hidden="true">🤝</span> Student Services</h3><p>Student Success Services, special populations, financial aid, DSPS, EOPS, CalWORKs, and related reports.</p><p class="small-note">Open a tabular export now. Dedicated report logic will be added as we collect representative exports.</p></article>
+<article class="purpose-card themed-card cat-purple"><p class="coverage-status coverage-live">Dedicated explorers</p><h3><span aria-hidden="true">🎯</span> Outcomes</h3><p>Success and retention, grades, program awards, transfer, and wage outcomes.</p><p class="small-note"><strong>Working now:</strong> Success &amp; Retention, Grade Distribution, and Program Awards. Transfer and wage exports can use the Flexible Explorer.</p></article>
+<article class="purpose-card themed-card cat-gold"><p class="coverage-status coverage-flex">Flexible Explorer</p><h3><span aria-hidden="true">👩‍🏫</span> Faculty &amp; Staff</h3><p>Employee counts, classifications, demographics, staffing FTE, occupational activity, and related reports.</p><p class="small-note">Open a tabular export now. Dedicated staffing logic will be added after we test representative staffing exports.</p></article>
+</div>
+</div>
+</section><section aria-labelledby="upload-heading">
 <div class="container content-narrow">
 <div class="viewer-privacy" role="note">
 <strong>Your spreadsheet stays in this browser tab.</strong>
@@ -55,7 +66,7 @@
 <div class="upload-zone" id="exploreDropZone">
 <div aria-hidden="true" class="upload-icon">⇧</div>
 <h2 id="upload-heading">Choose a Data Mart export</h2>
-<p>Working now: Student Headcount, Course Details, Success &amp; Retention, Grade Distribution, Program Awards, and summary-level Credit Courses/Sections.</p>
+<p>Dedicated explorers are available for six common reports. Other tabular Excel or CSV exports open in the Flexible Explorer so you can still choose a label, choose a measure, chart the data, and inspect the rows.</p>
 <div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div>
 <input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/>
 </div>
@@ -253,7 +264,6 @@
 </div>
 </div>
 </div>
-
 <div class="course-details-module" hidden="" id="courseDetailsModule">
 <div class="container">
 <div aria-label="Loaded Course Details file summary" class="viewer-stats" id="courseFileSummary"></div>
@@ -298,7 +308,6 @@
 </div>
 </div>
 </div>
-
 <div class="credit-sections-module" hidden="" id="creditSectionsModule">
 <div class="container">
 <div aria-label="Loaded Credit Courses and Sections file summary" class="viewer-stats" id="creditSectionsFileSummary"></div>
@@ -338,7 +347,27 @@
 </div>
 </div>
 </div>
-<div hidden="" id="unsupportedModule">
+<div class="generic-module" hidden="" id="genericModule">
+<div class="container">
+<div aria-label="Loaded flexible table summary" class="viewer-stats" id="genericFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="generic-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">🧰</span> Flexible Explorer</p>
+<h2 id="generic-filter-heading">Choose what to visualize</h2>
+<label for="genericLabelColumn">Category or label column</label><select id="genericLabelColumn"></select>
+<label for="genericMeasureColumn">Numeric measure</label><select id="genericMeasureColumn"></select>
+<label for="genericSort">Order</label><select id="genericSort"><option value="original">Keep export order</option><option value="desc">Largest to smallest</option><option value="asc">Smallest to largest</option></select>
+<label for="genericChartLimit">Rows in chart</label><select id="genericChartLimit"><option value="15">15</option><option selected="" value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+<div class="viewer-control-actions"><button class="button button-secondary" id="genericDownloadCsv" type="button">Download selected columns</button><button class="text-button explore-reset" type="button">Choose another file</button></div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Flexible table view</p><h2 id="genericResultsTitle">Visualize an export</h2><p class="viewer-result-meta" id="genericResultMeta"></p>
+<div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> Data Mart Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
+<div class="small-n-warning" hidden="" id="genericWarning"></div>
+<h3 id="genericChartHeading">Selected measure</h3><div aria-labelledby="genericChartHeading" class="bar-chart" id="genericBarChart"></div>
+<div class="table-scroll"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
+<section aria-labelledby="generic-method-heading" class="method-box"><h2 id="generic-method-heading">Save What You Selected</h2><pre class="method-text" id="genericMethodText"></pre><button class="button button-secondary" id="genericCopyMethod" type="button">Copy method</button></section>
+</div></div></div></div><div hidden="" id="unsupportedModule">
 <div class="container content-narrow">
 <div class="feature-panel cat-purple unsupported-report-panel">
 <p class="eyebrow">Report recognized</p>
@@ -352,21 +381,16 @@
 </section>
 <section aria-labelledby="supported-heading" class="soft-section">
 <div class="container">
-<div class="section-heading">
-<p class="eyebrow">One front door, different report logic</p>
-<h2 id="supported-heading">What Explore Data Can Recognize</h2>
-<p>Different Data Mart exports have different structures. The page identifies the report first, then applies rules appropriate to that report.</p>
-</div>
+<div class="section-heading"><p class="eyebrow">Two levels of help</p><h2 id="supported-heading">Dedicated Explorers When We Know the Report, Flexible Explorer When We Do Not</h2><p>Dedicated modules understand a specific Data Mart layout and can add report-specific cautions. The Flexible Explorer is a safe fallback for other tabular exports: it visualizes selected columns without pretending to know what the report means.</p></div>
 <div class="purpose-grid explorer-report-grid">
-<article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Working now.</strong> Filter a program and award type, compare colleges, download a cleaned table, and save the method.</p></article>
-<article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Working now.</strong> Explore counts and rates by six-digit TOP, course population, and instructional modality.</p></article>
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p><strong>Working now.</strong> Explore gender, age, ethnicity, and headcount status with filters, counts, and percentages.</p></article>
-<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p><strong>Working now.</strong> Choose a six-digit TOP area, view counts or percentages, preserve blank categories, download a clean table, and save the method.</p></article>
-<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p><strong>Working now.</strong> Search courses, filter course characteristics, inspect TOP codes, and visualize reported section counts.</p></article>
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p><strong>Working in summary mode.</strong> Visualize section count, enrollment count, and FTES. Rich TOP comparisons depend on the dimensions included in the export.</p></article>
-</div>
-</div>
-</section>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p><strong>Dedicated.</strong> Gender, age, ethnicity, and headcount status with counts and percentages.</p></article>
+<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p><strong>Dedicated.</strong> Course search, TOP codes, course characteristics, and reported section counts.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p><strong>Dedicated.</strong> Sections, enrollment, and FTES from the dimensions contained in the export.</p></article>
+<article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Dedicated.</strong> Counts, rates, denominator-aware aggregation, TOP, and modality.</p></article>
+<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p><strong>Dedicated.</strong> Grade composition by TOP with counts, percentages, and blank-category preservation.</p></article>
+<article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Dedicated.</strong> Program, TOP, award type, and college comparisons.</p></article>
+<article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">🧰</span> Other Tabular Exports</h3><p><strong>Flexible.</strong> Choose a category column and numeric measure, chart the rows, inspect values, and save a selection record without adding unsupported methodological claims.</p></article>
+</div></div></section>
 <section aria-labelledby="scope-heading">
 <div class="container content-narrow bf-readable">
 <h2 id="scope-heading">What This Tool Does, and Does Not Do</h2>

@@ -2681,3 +2681,13 @@ html { scroll-behavior: auto; }
   .demo-picker label { grid-column: auto; }
   .demo-picker .button { width: 100%; }
 }
+
+
+/* v17: state-aligned major areas and flexible explorer */
+.five-area-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.coverage-status { display:inline-flex; align-items:center; min-height:28px; padding:.25rem .6rem; border-radius:999px; font-size:.78rem; font-weight:800; letter-spacing:.01em; margin:0 0 .55rem; }
+.coverage-live { background:#e9f7ef; color:#1f6849; border:1px solid #a9d5bc; }
+.coverage-flex { background:#f7f3fc; color:#56388f; border:1px solid #cbbce7; }
+.generic-module .viewer-results { min-width:0; }
+.generic-module .bar-chart { margin-top:.75rem; }
+@media (max-width: 700px) { .coverage-status { font-size:.76rem; } }

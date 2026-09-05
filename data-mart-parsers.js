@@ -417,6 +417,91 @@
     };
   }
 
+
+  function flexibleNumberValue(value) {
+    if (value === null || value === undefined || value === "") return null;
+    if (typeof value === "number") return Number.isFinite(value) ? value : null;
+    let s = clean(value);
+    if (!s) return null;
+    const negative = /^\(.*\)$/.test(s);
+    s = s.replace(/[,$%]/g, "").replace(/^\(/, "").replace(/\)$/, "").trim();
+    const n = Number(s);
+    if (!Number.isFinite(n)) return null;
+    return negative ? -n : n;
+  }
+
+  function parseGenericTable(rows) {
+    const maxScan = Math.min(rows.length, 35);
+    const keywords = /(count|rate|total|name|college|district|top|gender|ethnicity|age|ftes|wage|transfer|award|section|enrollment|student|employee|classification|status|year|term|service|amount|percent|percentage)/i;
+    let best = null;
+
+    for (let i = 0; i < maxScan; i += 1) {
+      const row = Array.isArray(rows[i]) ? rows[i] : [];
+      const cleaned = row.map(clean);
+      const nonempty = cleaned.filter(Boolean);
+      if (nonempty.length < 2) continue;
+      let score = nonempty.length * 3;
+      score += nonempty.filter(v => keywords.test(v)).length * 4;
+      const lookahead = rows.slice(i + 1, Math.min(rows.length, i + 6));
+      const activeCols = new Set();
+      lookahead.forEach(r => (r || []).forEach((cell, col) => { if (clean(cell)) activeCols.add(col); }));
+      score += Math.min(activeCols.size, nonempty.length) * 2;
+      if (nonempty.length === 2 && nonempty.some(v => v.length > 70)) score -= 5;
+      if (!best || score > best.score) best = {index:i, score};
+    }
+
+    if (!best) return {kind:'generic-table', columns:[], rows:[], error:'No usable header row was detected.'};
+    const headerRow = Array.isArray(rows[best.index]) ? rows[best.index] : [];
+    const width = Math.max(headerRow.length, ...rows.slice(best.index + 1, best.index + 101).map(r => (r || []).length));
+    const seen = new Map();
+    const columns = [];
+    for (let col = 0; col < width; col += 1) {
+      let name = clean(headerRow[col]) || `Column ${col + 1}`;
+      const base = name;
+      const count = (seen.get(base) || 0) + 1;
+      seen.set(base, count);
+      if (count > 1) name = `${base} (${count})`;
+      columns.push({index:col, name});
+    }
+
+    const data = [];
+    for (let i = best.index + 1; i < rows.length; i += 1) {
+      const source = Array.isArray(rows[i]) ? rows[i] : [];
+      const cells = columns.map(c => source[c.index] ?? null);
+      if (!cells.some(v => clean(v))) continue;
+      data.push({rowNumber:i + 1, cells});
+    }
+
+    const numericColumns = [];
+    const labelColumns = [];
+    columns.forEach(col => {
+      const vals = data.slice(0, 500).map(r => r.cells[col.index]).filter(v => clean(v));
+      const nums = vals.map(flexibleNumberValue).filter(v => v !== null);
+      const numericRatio = vals.length ? nums.length / vals.length : 0;
+      const uniqueText = new Set(vals.map(clean)).size;
+      if (nums.length >= 2 && numericRatio >= 0.60) numericColumns.push({...col, numericRatio});
+      if (uniqueText >= 2) labelColumns.push(col);
+    });
+
+    let reportTitle = '';
+    for (const row of rows.slice(0, Math.min(best.index + 1, 15))) {
+      const vals = (row || []).map(clean).filter(Boolean);
+      if (vals.length === 1 && vals[0].length > reportTitle.length) reportTitle = vals[0];
+    }
+    const period = firstMatch(rows.slice(0, Math.min(best.index + 1, 20)), /(?:Fall|Spring|Summer|Winter)\s+\d{4}|(?:Annual\s+)?\d{4}-\d{4}/i);
+
+    return {
+      kind:'generic-table',
+      headerRowIndex:best.index,
+      reportTitle:reportTitle || 'Tabular Data Mart export',
+      period,
+      columns,
+      numericColumns,
+      labelColumns:labelColumns.length ? labelColumns : columns,
+      rows:data
+    };
+  }
+
   function parseGradeDistribution(rows) {
     const metricRowIndex = rows.findIndex(row => {
       const vals = (row || []).map(clean);
@@ -504,6 +589,8 @@
     parseStudentHeadcount,
     parseCourseDetails,
     parseCreditCourseSections,
+    parseGenericTable,
+    flexibleNumberValue,
     parseGradeDistribution
   };
 });

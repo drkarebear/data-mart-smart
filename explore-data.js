@@ -56,6 +56,7 @@ const state = {
   headcount:null,
   courseDetails:null,
   creditSections:null,
+  generic:null,
   selectedColleges:new Set()
 };
 
@@ -64,8 +65,9 @@ const els = {};
 document.addEventListener("DOMContentLoaded", () => {
   [
     "exploreFileInput","exploreDropZone","exploreBrowseButton","demoReportSelect","demoLoadButton","exploreStatus",
-    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","gradeModule","headcountModule","courseDetailsModule","creditSectionsModule","unsupportedModule",
+    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","gradeModule","headcountModule","courseDetailsModule","creditSectionsModule","genericModule","unsupportedModule",
     "unsupportedTitle","unsupportedText","unsupportedGuideLink",
+    "genericFileSummary","genericLabelColumn","genericMeasureColumn","genericSort","genericChartLimit","genericResultsTitle","genericResultMeta","genericWarning","genericBarChart","genericLabelHeader","genericMeasureHeader","genericResultsBody","genericMethodText","genericCopyMethod","genericDownloadCsv",
     "awardsFileSummary","awardsProgramSearch","awardsProgramOptions","awardsType","awardsCollegeFilters","awardsResultsTitle",
     "awardsResultMeta","awardsResultsBody","awardsBarChart","awardsMethodText","awardsCopyMethod","awardsDownloadCsv",
     "successFileSummary","successProgramSearch","successProgramOptions","successPopulation","successChartMeasure","successResultsTitle",
@@ -126,6 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
   els.creditSectionsMeasure.addEventListener("change", renderCreditSections);
   els.creditSectionsCopyMethod.addEventListener("click", () => copyText(els.creditSectionsMethodText.textContent));
   els.creditSectionsDownloadCsv.addEventListener("click", downloadCreditSectionsCsv);
+  [els.genericLabelColumn,els.genericMeasureColumn,els.genericSort,els.genericChartLimit].forEach(control => control.addEventListener("change", renderGeneric));
+  els.genericCopyMethod.addEventListener("click", () => copyText(els.genericMethodText.textContent));
+  els.genericDownloadCsv.addEventListener("click", downloadGenericCsv);
 
   setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
 });
@@ -230,9 +235,18 @@ async function loadFile(file) {
       return;
     }
 
-    showDetected(`${detected.label} detected`, "The report is recognized, but its visualization module is not built yet.", false);
-    showUnsupported(detected.kind, detected.label);
-    setStatus(`Recognized ${detected.label}. This report is in the next phase of Explore Data.`, "success");
+    const generic = DataMartParsers.parseGenericTable(rows);
+    if (generic.rows.length && generic.numericColumns.length) {
+      state.kind = "generic-table";
+      state.generic = generic;
+      showDetected("Flexible table view ready", `${generic.reportTitle || "Tabular export"}${generic.period ? `, ${generic.period}` : ""}. Choose the columns you want to visualize.`, true);
+      initGeneric();
+      setStatus(`Loaded ${generic.rows.length.toLocaleString()} table rows from ${file.name}. Report-specific definitions are not inferred in the Flexible Explorer.`, "success");
+      return;
+    }
+    showDetected("Export opened, but no chartable table was detected", "The file did not contain a usable tabular layout with a numeric measure that the Flexible Explorer could identify.", false);
+    showUnsupported("unknown", detected.label);
+    setStatus("The file opened, but a usable table could not be detected automatically.", "error");
   } catch (err) {
     console.error(err);
     setStatus(err.message || "I could not read this workbook.", "error");
@@ -320,6 +334,7 @@ function hideModules() {
   els.headcountModule.hidden = true;
   els.courseDetailsModule.hidden = true;
   els.creditSectionsModule.hidden = true;
+  els.genericModule.hidden = true;
   els.unsupportedModule.hidden = true;
 }
 
@@ -1008,6 +1023,101 @@ function downloadCreditSectionsCsv() {
   if (!records.length) return setStatus("There are no Credit Courses/Sections rows to download.", "error");
   downloadCsvFile("data-mart-smart-credit-course-sections.csv", [["Row","Credit Sections Count","Enrollment Count","Credit Sections FTES"], ...records.map(r => [r.label,r.sections,r.enrollment,r.ftes])]);
   setStatus("Credit Courses/Sections CSV downloaded.", "success");
+}
+
+
+function initGeneric() {
+  hideModules();
+  els.exploreWorkspace.hidden = false;
+  els.genericModule.hidden = false;
+  const data = state.generic;
+  fillSummary(els.genericFileSummary, [
+    ["Rows", data.rows.length.toLocaleString()],
+    ["Columns", data.columns.length.toLocaleString()],
+    ["Numeric fields", data.numericColumns.length.toLocaleString()],
+    ["Period", data.period || "Not detected"]
+  ]);
+  els.genericLabelColumn.innerHTML = "";
+  data.labelColumns.forEach(col => {
+    const opt = document.createElement("option"); opt.value = String(col.index); opt.textContent = col.name; els.genericLabelColumn.appendChild(opt);
+  });
+  els.genericMeasureColumn.innerHTML = "";
+  data.numericColumns.forEach(col => {
+    const opt = document.createElement("option"); opt.value = String(col.index); opt.textContent = col.name; els.genericMeasureColumn.appendChild(opt);
+  });
+  const preferredLabel = data.labelColumns.find(c => /name|college|district|program|top|classification|gender|ethnicity|age|status|service|year|term|category/i.test(c.name)) || data.labelColumns[0];
+  const preferredMeasure = data.numericColumns.find(c => /count|rate|ftes|wage|amount|total|enrollment|award|transfer|percent/i.test(c.name)) || data.numericColumns[0];
+  if (preferredLabel) els.genericLabelColumn.value = String(preferredLabel.index);
+  if (preferredMeasure) els.genericMeasureColumn.value = String(preferredMeasure.index);
+  renderGeneric();
+  scrollWorkspace();
+}
+
+function genericSelection() {
+  const data = state.generic;
+  if (!data) return {rows:[], labelCol:null, measureCol:null};
+  const labelIndex = Number(els.genericLabelColumn.value);
+  const measureIndex = Number(els.genericMeasureColumn.value);
+  const labelCol = data.columns.find(c => c.index === labelIndex);
+  const measureCol = data.columns.find(c => c.index === measureIndex);
+  let rows = data.rows.map(r => ({
+    rowNumber:r.rowNumber,
+    label:DataMartParsers.clean(r.cells[labelIndex]) || `(row ${r.rowNumber})`,
+    raw:r.cells[measureIndex],
+    value:DataMartParsers.flexibleNumberValue(r.cells[measureIndex])
+  })).filter(r => r.value !== null);
+  if (els.genericSort.value === "desc") rows.sort((a,b) => b.value - a.value || a.rowNumber - b.rowNumber);
+  if (els.genericSort.value === "asc") rows.sort((a,b) => a.value - b.value || a.rowNumber - b.rowNumber);
+  return {rows,labelCol,measureCol};
+}
+
+function formatFlexibleValue(value, header="") {
+  if (!Number.isFinite(value)) return "Not reported";
+  if (/rate|percent|percentage|%/i.test(header)) {
+    const pct = Math.abs(value) <= 1.000001 ? value * 100 : value;
+    return `${pct.toLocaleString(undefined,{maximumFractionDigits:1})}%`;
+  }
+  if (/wage|salary|amount|dollar|earn/i.test(header)) return value.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+  return Number.isInteger(value) ? value.toLocaleString() : value.toLocaleString(undefined,{maximumFractionDigits:2});
+}
+
+function renderGeneric() {
+  const {rows,labelCol,measureCol} = genericSelection();
+  if (!labelCol || !measureCol) return;
+  const limit = Math.max(1, Number(els.genericChartLimit.value) || 25);
+  const chartRows = rows.slice(0, limit);
+  els.genericResultsTitle.textContent = `${measureCol.name} by ${labelCol.name}`;
+  els.genericResultMeta.textContent = `${state.generic.reportTitle || "Tabular export"}${state.generic.period ? ` · ${state.generic.period}` : ""} · ${rows.length.toLocaleString()} numeric row${rows.length === 1 ? "" : "s"}`;
+  els.genericLabelHeader.textContent = labelCol.name;
+  els.genericMeasureHeader.textContent = measureCol.name;
+  els.genericWarning.hidden = rows.length <= limit;
+  if (rows.length > limit) els.genericWarning.innerHTML = `<strong>Chart limited to ${limit} rows.</strong> The table below still shows all ${rows.length.toLocaleString()} numeric rows for the selected measure.`;
+  renderBarRows(els.genericBarChart, chartRows.map(r => ({label:r.label,value:r.value})), {format:/rate|percent|percentage|%/i.test(measureCol.name) ? "percent-flex" : "decimal-flex"});
+  els.genericResultsBody.innerHTML = "";
+  rows.forEach(r => {
+    const tr = document.createElement("tr");
+    const th = document.createElement("th"); th.scope = "row"; th.textContent = r.label;
+    const td = document.createElement("td"); td.textContent = formatFlexibleValue(r.value, measureCol.name);
+    tr.append(th,td); els.genericResultsBody.appendChild(tr);
+  });
+  els.genericMethodText.textContent = [
+    "Source: California Community Colleges Chancellor's Office Data Mart export",
+    `File: ${state.sourceName}`,
+    `Detected title: ${state.generic.reportTitle || "Not detected"}`,
+    `Period: ${state.generic.period || "Not detected"}`,
+    `Label column: ${labelCol.name}`,
+    `Measure column: ${measureCol.name}`,
+    `Numeric rows displayed: ${rows.length.toLocaleString()}`,
+    "Method note: Flexible Explorer visualized the selected columns only. It did not determine whether rows are mutually exclusive, whether totals/subtotals overlap, how the denominator is defined, or whether suppressed/blank values have report-specific meaning.",
+    "Verification: Consult the official Data Mart report notes before adding rows, calculating rates, or using the result consequentially."
+  ].join("\n");
+}
+
+function downloadGenericCsv() {
+  const {rows,labelCol,measureCol} = genericSelection();
+  if (!rows.length || !labelCol || !measureCol) return setStatus("There are no selected numeric rows to download.", "error");
+  downloadCsvFile("data-mart-smart-flexible-view.csv", [[labelCol.name,measureCol.name], ...rows.map(r => [r.label,r.value])]);
+  setStatus("Flexible Explorer CSV downloaded.", "success");
 }
 
 function showUnsupported(kind, label) {
