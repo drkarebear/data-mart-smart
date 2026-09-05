@@ -1,66 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Check My Query | Data Mart Smart</title>
-  <meta name="description" content="An accessible self-audit checklist for checking a CCC Data Mart setup before interpreting or comparing results.">
-  <link rel="icon" type="image/png" href="favicon8.png">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Check My Query | Data Mart Smart</title>
+<meta content="An accessible self-audit checklist for checking a CCC Data Mart setup before interpreting or comparing results." name="description"/>
+<link href="favicon8.png" rel="icon" type="image/png"/>
+<link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="Data Mart Smart home">
-        <img src="favicon8.png" alt="">
-        <span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-      </a>
-      <nav class="site-nav" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">What Can I Use Data For?</a></li><li><a href="query-guide.html">Find the Right Report</a></li><li><a href="reports.html" aria-current="page">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="examples.html">Examples</a></li><li><a href="index.html#coach">Ask the Coach</a></li><li><a href="about.html">About</a></li></ul></nav>
-    </div>
-  </header>
-  <main id="main-content">
-
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container page-hero-inner">
-        <p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Check My Query</p>
-        <p class="eyebrow">A quick self-audit</p>
-        <h1 id="page-title">Is My Data Mart Setup Ready?</h1>
-        <p>Check the boxes you can confidently answer before interpreting or comparing the results. This tool runs entirely in your browser and does not submit your answers.</p>
-      </div>
-    </section>
-
-    <section>
-      <div class="container content-narrow">
-        <form id="audit-form" class="query-audit">
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">The report answers my actual question.</span><span class="audit-help">I chose it because its measure matches what I am trying to learn.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">I know exactly what is being counted.</span><span class="audit-help">Student, enrollment, section, course, award, FTES, rate, or another defined measure.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">The time period is consistent.</span><span class="audit-help">I am not mixing a term with an academic year or using mismatched periods across colleges.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">The intended institutions and population are selected.</span><span class="audit-help">I checked colleges, district/state totals, student groups, award types, course definitions, and other relevant filters.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">My course/program definition is explicit.</span><span class="audit-help">I am not silently treating a local prefix, department, TOP code, or course list as the same thing.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">If this is a rate, I checked the denominator and underlying N.</span><span class="audit-help">I know what population the percentage is based on.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">I checked for overlap, totals, subtotals, or double counting.</span><span class="audit-help">I will not add values unless the categories can validly be combined.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">I considered local section or curriculum structures.</span><span class="audit-help">Linked lecture/lab, support, co-requisite, renumbering, or crosswalk issues will not silently distort the result.</span></span></label></div>
-          <div class="audit-item"><label><input type="checkbox" name="audit"><span><span class="audit-title">I know what the data do not establish.</span><span class="audit-help">I will not turn a descriptive difference into a causal claim or an evaluation of program quality.</span></span></label></div>
-
-          <div class="audit-actions">
-            <button class="button button-primary" type="button" id="check-button">Check my setup</button>
-            <button class="plain-button" type="reset" id="reset-button">Reset</button>
-          </div>
-        </form>
-
-        <div class="audit-result" id="audit-result" role="status" aria-live="polite" hidden></div>
-
-        <noscript>
-          <div class="info-box" style="margin-top:1rem;">
-            <h2>JavaScript Is Off</h2>
-            <p>You can still use the checklist above manually. The score button simply counts how many checks you completed.</p>
-          </div>
-        </noscript>
-      </div>
-    </section>
-
-    <script>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-header">
+<div class="container header-inner">
+<a aria-label="Data Mart Smart home" class="brand" href="index.html">
+<img alt="" src="favicon8.png"/>
+<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
+</a>
+<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="uses.html">Use Data</a></li><li><a href="query-guide.html">Find a Report</a></li><li><a href="reports.html">How-To Guides</a></li><li><a href="understand-data.html">Data Tips</a></li><li><a href="index.html#coach">Ask the Coach</a></li></ul></nav>
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="page-title" class="page-hero">
+<div class="container page-hero-inner">
+<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Check My Query</p>
+<p class="eyebrow">A quick self-audit</p>
+<h1 id="page-title">Is My Data Mart Setup Ready?</h1>
+<p>Check the boxes you can confidently answer before interpreting or comparing the results. This tool runs entirely in your browser and does not submit your answers.</p>
+</div>
+</section>
+<section>
+<div class="container content-narrow bf-readable">
+<form class="query-audit" id="audit-form">
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">The report answers my actual question.</span><span class="audit-help">I chose it because its measure matches what I am trying to learn.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">I know exactly what is being counted.</span><span class="audit-help">Student, enrollment, section, course, award, FTES, rate, or another defined measure.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">The time period is consistent.</span><span class="audit-help">I am not mixing a term with an academic year or using mismatched periods across colleges.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">The intended institutions and population are selected.</span><span class="audit-help">I checked colleges, district/state totals, student groups, award types, course definitions, and other relevant filters.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">My course/program definition is explicit.</span><span class="audit-help">I am not silently treating a local prefix, department, TOP code, or course list as the same thing.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">If this is a rate, I checked the denominator and underlying N.</span><span class="audit-help">I know what population the percentage is based on.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">I checked for overlap, totals, subtotals, or double counting.</span><span class="audit-help">I will not add values unless the categories can validly be combined.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">I considered local section or curriculum structures.</span><span class="audit-help">Linked lecture/lab, support, co-requisite, renumbering, or crosswalk issues will not silently distort the result.</span></span></label></div>
+<div class="audit-item"><label><input name="audit" type="checkbox"/><span><span class="audit-title">I know what the data do not establish.</span><span class="audit-help">I will not turn a descriptive difference into a causal claim or an evaluation of program quality.</span></span></label></div>
+<div class="audit-actions">
+<button class="button button-primary" id="check-button" type="button">Check my setup</button>
+<button class="plain-button" id="reset-button" type="reset">Reset</button>
+</div>
+</form>
+<div aria-live="polite" class="audit-result" hidden="" id="audit-result" role="status"></div>
+<noscript>
+<div class="info-box" style="margin-top:1rem;">
+<h2>JavaScript Is Off</h2>
+<p>You can still use the checklist above manually. The score button simply counts how many checks you completed.</p>
+</div>
+</noscript>
+</div>
+</section>
+<script>
       const form = document.getElementById('audit-form');
       const checkButton = document.getElementById('check-button');
       const resetButton = document.getElementById('reset-button');
@@ -91,29 +86,28 @@
         result.innerHTML = "";
       });
     </script>
-
-  </main>
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="favicon8.png" alt="">
-          <span>Data Mart Smart</span>
-        </div>
-      </div>
-      <p class="footer-copy">
-        <strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
+</main>
+<footer class="site-footer">
+<div class="container footer-grid">
+<div>
+<div class="footer-brand">
+<img alt="" src="favicon8.png"/>
+<span>Data Mart Smart</span>
+</div>
+</div>
+<p class="footer-copy">
+<strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
         It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities.
         Guidance may contain errors or become outdated as Data Mart changes. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.
       </p>
-      <ul class="footer-links" aria-label="Project links">
-        <li><a href="about.html">About this project</a></li>
-        <li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-        <li><a href="accessibility.html">Accessibility</a></li>
-        <li><a href="sources.html">Sources and methods</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-      </ul>
-    </div>
-  </footer>
+<ul aria-label="Project links" class="footer-links">
+<li><a href="about.html">About this project</a></li><li><a href="examples.html">Examples</a></li>
+<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
+<li><a href="accessibility.html">Accessibility</a></li>
+<li><a href="sources.html">Sources and methods</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</div>
+</footer>
 </body>
 </html>
