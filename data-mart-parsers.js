@@ -23,11 +23,11 @@
     if (/Credit Course Retention\/Success Rate Summary Report/i.test(sample) || /Retention\/Success Rate Summary/i.test(sample)) {
       return { kind: "retention-success", label: "Enrollment Retention and Success Rate", supported: true };
     }
-    if (/Student Headcount Summary Report/i.test(sample)) return { kind: "student-headcount", label: "Student Headcount Summary Report", supported: false };
+    if (/Student Headcount Summary Report/i.test(sample)) return { kind: "student-headcount", label: "Student Headcount Summary Report", supported: true };
     if (/Grades Distribution Summary Report/i.test(sample) || /Grade Distribution Summary Report/i.test(sample)) return { kind: "grade-distribution", label: "Grade Distribution Summary Report", supported: true };
-    if (/Course Details Report/i.test(sample)) return { kind: "course-details", label: "Course Details Report", supported: false };
+    if (/Course Details Report/i.test(sample)) return { kind: "course-details", label: "Course Details Report", supported: true };
     if (/Credit Sections Count/i.test(sample) && /Credit Sections FTES/i.test(sample) && /Enrollment Count/i.test(sample)) {
-      return { kind: "credit-course-sections", label: "Credit Courses/Sections", supported: false };
+      return { kind: "credit-course-sections", label: "Credit Courses/Sections", supported: true };
     }
     return { kind: "unknown", label: "Unrecognized Data Mart export", supported: false };
   }
@@ -219,6 +219,204 @@
   }
 
 
+
+  function parseStudentHeadcount(rows) {
+    const headerRowIndex = rows.findIndex(row => {
+      const vals = (row || []).map(clean);
+      return vals.includes("Student Count") && vals.includes("Student Count (%)");
+    });
+    if (headerRowIndex < 0) {
+      return { kind: "student-headcount", records: [], error: "Student Count header row not found." };
+    }
+
+    const header = rows[headerRowIndex] || [];
+    const countCol = header.findIndex(cell => clean(cell) === "Student Count");
+    let reportTitle = "Student Headcount Summary Report";
+    let period = firstMatch(rows.slice(0, headerRowIndex + 1), /(?:Fall|Spring|Summer|Winter)\s+\d{4}/i);
+    let college = "";
+    let collegeTotal = null;
+    let status = "";
+    let gender = "";
+    let age = "";
+    const records = [];
+
+    for (const row of rows.slice(0, headerRowIndex + 1)) {
+      for (const cell of row || []) {
+        const value = clean(cell);
+        if (/Student Headcount Summary Report/i.test(value)) reportTitle = value;
+      }
+    }
+
+    for (let i = headerRowIndex + 1; i < rows.length; i += 1) {
+      const row = rows[i] || [];
+      const a = clean(row[0]);
+      const b = clean(row[1]);
+      const c = clean(row[2]);
+      const d = clean(row[3]);
+      const f = clean(row[5]);
+      const count = numberValue(row[countCol]);
+
+      if (a && /\sTotal$/i.test(a) && count !== null) {
+        college = a.replace(/\s+Total$/i, "").trim();
+        collegeTotal = count;
+        continue;
+      }
+      if (b && /\sTotal$/i.test(b)) {
+        status = b.replace(/\s+Total$/i, "").trim();
+        gender = "";
+        age = "";
+        continue;
+      }
+      if (c && /\sTotal$/i.test(c)) {
+        gender = c.replace(/\s+Total$/i, "").trim();
+        age = "";
+        continue;
+      }
+      if (d && /\sTotal$/i.test(d)) {
+        age = d.replace(/\s+Total$/i, "").trim();
+        continue;
+      }
+      if (f && count !== null) {
+        records.push({
+          college,
+          period,
+          status,
+          gender,
+          age,
+          ethnicity: f,
+          count
+        });
+      }
+    }
+
+    return {
+      kind: "student-headcount",
+      records,
+      college,
+      collegeTotal,
+      period,
+      reportTitle
+    };
+  }
+
+  function parseCourseDetails(rows) {
+    const headerRowIndex = rows.findIndex(row => {
+      const vals = (row || []).map(clean);
+      return vals.includes("Course ID") && vals.includes("Sections Count") && vals.includes("TOP Code");
+    });
+    if (headerRowIndex < 0) {
+      return { kind: "course-details", records: [], error: "Course Details header row not found." };
+    }
+
+    const header = rows[headerRowIndex] || [];
+    const col = name => header.findIndex(cell => clean(cell) === name);
+    const indexes = {
+      district: col("District"),
+      college: col("College"),
+      courseId: col("Course ID"),
+      controlNumber: col("Control Number"),
+      title: col("Course Title"),
+      sections: col("Sections Count"),
+      topCode: col("TOP Code"),
+      creditStatus: col("Credit Status"),
+      transferStatus: col("Transfer Status"),
+      maxUnits: col("Maximum Units"),
+      minUnits: col("Minimum Units"),
+      basicSkills: col("Basic Skills Status"),
+      samStatus: col("SAM Status"),
+      priorTransfer: col("Prior To Transfer Status"),
+      noncreditCategory: col("Non-Credit Category"),
+      geStatus: col("General Education Status"),
+      supportStatus: col("Support Status"),
+      term: col("Term")
+    };
+
+    let reportTitle = "Course Details Report";
+    const records = [];
+
+    for (const row of rows.slice(0, headerRowIndex + 1)) {
+      for (const cell of row || []) {
+        const value = clean(cell);
+        if (/Course Details Report/i.test(value)) reportTitle = value;
+      }
+    }
+
+    for (let i = headerRowIndex + 1; i < rows.length; i += 1) {
+      const row = rows[i] || [];
+      const courseId = indexes.courseId >= 0 ? clean(row[indexes.courseId]) : "";
+      if (!courseId) continue;
+      const topText = indexes.topCode >= 0 ? clean(row[indexes.topCode]) : "";
+      const topMatch = topText.match(/^(.*)-(\d{6})$/);
+      records.push({
+        district: indexes.district >= 0 ? clean(row[indexes.district]) : "",
+        college: indexes.college >= 0 ? clean(row[indexes.college]) : "",
+        courseId,
+        controlNumber: indexes.controlNumber >= 0 ? clean(row[indexes.controlNumber]) : "",
+        title: indexes.title >= 0 ? clean(row[indexes.title]) : "",
+        sections: indexes.sections >= 0 ? numberValue(row[indexes.sections]) : null,
+        topName: topMatch ? topMatch[1].trim() : topText,
+        top: topMatch ? topMatch[2] : "",
+        creditStatus: indexes.creditStatus >= 0 ? clean(row[indexes.creditStatus]) : "",
+        transferStatus: indexes.transferStatus >= 0 ? clean(row[indexes.transferStatus]) : "",
+        maxUnits: indexes.maxUnits >= 0 ? clean(row[indexes.maxUnits]) : "",
+        minUnits: indexes.minUnits >= 0 ? clean(row[indexes.minUnits]) : "",
+        basicSkills: indexes.basicSkills >= 0 ? clean(row[indexes.basicSkills]) : "",
+        samStatus: indexes.samStatus >= 0 ? clean(row[indexes.samStatus]) : "",
+        priorTransfer: indexes.priorTransfer >= 0 ? clean(row[indexes.priorTransfer]) : "",
+        noncreditCategory: indexes.noncreditCategory >= 0 ? clean(row[indexes.noncreditCategory]) : "",
+        geStatus: indexes.geStatus >= 0 ? clean(row[indexes.geStatus]) : "",
+        supportStatus: indexes.supportStatus >= 0 ? clean(row[indexes.supportStatus]) : "",
+        term: indexes.term >= 0 ? clean(row[indexes.term]) : ""
+      });
+    }
+
+    const first = records[0] || {};
+    return {
+      kind: "course-details",
+      records,
+      district: first.district || "",
+      college: first.college || "",
+      period: first.term || "",
+      reportTitle
+    };
+  }
+
+  function parseCreditCourseSections(rows) {
+    const metricRowIndex = rows.findIndex(row => {
+      const vals = (row || []).map(clean);
+      return vals.includes("Credit Sections Count") && vals.includes("Credit Sections FTES") && vals.includes("Enrollment Count");
+    });
+    if (metricRowIndex < 0) {
+      return { kind: "credit-course-sections", records: [], error: "Credit course metric row not found." };
+    }
+
+    const header = rows[metricRowIndex] || [];
+    const sectionCol = header.findIndex(cell => clean(cell) === "Credit Sections Count");
+    const ftesCol = header.findIndex(cell => clean(cell) === "Credit Sections FTES");
+    const enrollmentCol = header.findIndex(cell => clean(cell) === "Enrollment Count");
+    const firstMetricCol = Math.min(...[sectionCol, ftesCol, enrollmentCol].filter(i => i >= 0));
+    const period = firstMatch(rows.slice(0, metricRowIndex + 1), /(?:Fall|Spring|Summer|Winter)\s+\d{4}/i);
+    const records = [];
+
+    for (let i = metricRowIndex + 1; i < rows.length; i += 1) {
+      const row = rows[i] || [];
+      const path = row.slice(0, firstMetricCol).map(clean).filter(Boolean);
+      const label = path.length ? path[path.length - 1].replace(/\s+Total$/i, "").trim() : "";
+      const sections = numberValue(row[sectionCol]);
+      const ftes = numberValue(row[ftesCol]);
+      const enrollment = numberValue(row[enrollmentCol]);
+      if (!label || (sections === null && ftes === null && enrollment === null)) continue;
+      records.push({ label, path, sections, ftes, enrollment, period });
+    }
+
+    return {
+      kind: "credit-course-sections",
+      records,
+      period,
+      reportTitle: "Credit Courses/Sections"
+    };
+  }
+
   function parseGradeDistribution(rows) {
     const metricRowIndex = rows.findIndex(row => {
       const vals = (row || []).map(clean);
@@ -303,6 +501,9 @@
     detectReport,
     parseProgramAwards,
     parseRetentionSuccess,
+    parseStudentHeadcount,
+    parseCourseDetails,
+    parseCreditCourseSections,
     parseGradeDistribution
   };
 });

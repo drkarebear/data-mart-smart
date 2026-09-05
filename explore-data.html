@@ -10,7 +10,7 @@
 <link href="styles.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script defer="" src="data-mart-parsers.js"></script>
-<script defer="" src="explore-data.js"></script>
+<script defer="" src="explorer-demos.js"></script><script defer="" src="explore-data.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -41,7 +41,7 @@
 <p>Open a report you downloaded from CCC Data Mart. Data Mart Smart identifies the report and turns supported exports into clearer filters, charts, accessible tables, cautions, and reusable method notes.</p>
 </div>
 </section>
-<section aria-labelledby="upload-heading">
+<section aria-labelledby="major-categories-heading" class="section-cool"><div class="container"><div class="section-heading"><p class="eyebrow">Major Data Mart areas</p><h2 id="major-categories-heading">Choose the Kind of Question You Have</h2><p>Explore Data recognizes the report after you open the export, but these four areas show what the tools are designed to help you investigate.</p></div><div class="purpose-grid major-data-grid"><article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Students</h3><p><strong>Student Headcount</strong></p><p>Distinct students, gender, age, ethnicity, and headcount status.</p></article><article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Courses</h3><p><strong>Course Details + Credit Courses/Sections</strong></p><p>Courses, TOP areas, section counts, enrollment, FTES, transferability, and course characteristics.</p></article><article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">🎯</span> Outcomes</h3><p><strong>Success &amp; Retention + Grade Distribution</strong></p><p>Enrollment outcomes, rates, denominators, grade composition, and modality.</p></article><article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Awards</h3><p><strong>Program Awards</strong></p><p>Degrees and certificates by program, award type, college, and year.</p></article></div></div></section><section aria-labelledby="upload-heading">
 <div class="container content-narrow">
 <div class="viewer-privacy" role="note">
 <strong>Your spreadsheet stays in this browser tab.</strong>
@@ -55,12 +55,8 @@
 <div class="upload-zone" id="exploreDropZone">
 <div aria-hidden="true" class="upload-icon">⇧</div>
 <h2 id="upload-heading">Choose a Data Mart export</h2>
-<p>Current working modules: <strong>Program Awards</strong>, <strong>Enrollment Retention and Success Rate</strong>, and <strong>Grade Distribution</strong>.</p>
-<div class="viewer-actions">
-<button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button>
-<button class="button button-secondary" id="demoSuccessButton" type="button">Try Success &amp; Retention demo</button>
-<button class="button button-secondary" id="demoAwardsButton" type="button">Try Program Awards demo</button>
-<button class="button button-secondary" id="demoGradeButton" type="button">Try Grade Distribution demo</button></div>
+<p>Working now: Student Headcount, Course Details, Success &amp; Retention, Grade Distribution, Program Awards, and summary-level Credit Courses/Sections.</p>
+<div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div>
 <input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/>
 </div>
 <p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p>
@@ -205,7 +201,144 @@
 </div>
 </div>
 </div>
-</div><div hidden="" id="unsupportedModule">
+</div>
+<div class="headcount-module" hidden="" id="headcountModule">
+<div class="container">
+<div aria-label="Loaded Student Headcount file summary" class="viewer-stats" id="headcountFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="headcount-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">👥</span> Student Headcount</p>
+<h2 id="headcount-filter-heading">Choose the student view</h2>
+<label for="headcountBreakdown">Break down students by</label>
+<select id="headcountBreakdown">
+<option value="gender">Gender</option>
+<option value="age">Age group</option>
+<option value="ethnicity">Ethnicity</option>
+<option value="status">Headcount status</option>
+</select>
+<label for="headcountStatusFilter">Headcount status</label><select id="headcountStatusFilter"></select>
+<label for="headcountGenderFilter">Gender</label><select id="headcountGenderFilter"></select>
+<label for="headcountAgeFilter">Age group</label><select id="headcountAgeFilter"></select>
+<label for="headcountEthnicityFilter">Ethnicity</label><select id="headcountEthnicityFilter"></select>
+<label for="headcountMeasure">Chart display</label>
+<select id="headcountMeasure"><option value="percent">Percent of selected students</option><option value="count">Student count</option></select>
+<p class="field-help">The percentage denominator changes with your filters. The college total remains visible for context.</p>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="headcountDownloadCsv" type="button">Download selected CSV</button>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current result</p>
+<h2 id="headcountResultsTitle">Student Headcount</h2>
+<p class="viewer-result-meta" id="headcountResultMeta"></p>
+<div aria-label="Selected headcount summary" class="viewer-stats result-kpis" id="headcountKpis"></div>
+<div class="data-caution-box"><strong>Student headcount is not enrollment count.</strong> This tool summarizes distinct students represented in the exported headcount population. One student may generate several course enrollments elsewhere in Data Mart.</div>
+<div class="small-n-warning" hidden="" id="headcountWarning"></div>
+<h3 id="headcountChartHeading">Student distribution</h3>
+<div aria-labelledby="headcountChartHeading" class="bar-chart rate-chart" id="headcountBarChart"></div>
+<div class="table-scroll">
+<table class="viewer-table outcome-table">
+<caption>Selected student headcount distribution</caption>
+<thead><tr><th id="headcountCategoryHeader" scope="col">Category</th><th scope="col">Student count</th><th scope="col">Percent</th></tr></thead>
+<tbody id="headcountResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="headcount-method-heading" class="method-box">
+<h2 id="headcount-method-heading">Save the Method, Not Just the Chart</h2>
+<pre class="method-text" id="headcountMethodText"></pre>
+<button class="button button-secondary" id="headcountCopyMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</div>
+
+<div class="course-details-module" hidden="" id="courseDetailsModule">
+<div class="container">
+<div aria-label="Loaded Course Details file summary" class="viewer-stats" id="courseFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="course-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">📚</span> Course Details</p>
+<h2 id="course-filter-heading">Find courses and section counts</h2>
+<label for="courseSearch">Course, title, TOP, or control number</label>
+<input autocomplete="off" id="courseSearch" placeholder="Try ENGL, English, 150100, or C1000" type="search"/>
+<label for="courseCreditFilter">Credit status</label><select id="courseCreditFilter"></select>
+<label for="courseTransferFilter">Transfer status</label><select id="courseTransferFilter"></select>
+<label for="courseSamFilter">SAM status</label><select id="courseSamFilter"></select>
+<label for="courseTableLimit">Rows in table</label>
+<select id="courseTableLimit"><option value="25">25</option><option selected="" value="50">50</option><option value="100">100</option><option value="all">All matching rows</option></select>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="courseDownloadCsv" type="button">Download selected CSV</button>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current result</p>
+<h2 id="courseResultsTitle">Course Details</h2>
+<p class="viewer-result-meta" id="courseResultMeta"></p>
+<div aria-label="Selected course summary" class="viewer-stats result-kpis" id="courseKpis"></div>
+<div class="data-caution-box"><strong>Reported sections are not always the same as locally defined classes.</strong> Linked lecture/lab or other paired components can appear as separate MIS section records. TOP code also is not the same thing as a local department prefix.</div>
+<h3 id="courseChartHeading">Courses with the most reported sections</h3>
+<div aria-labelledby="courseChartHeading" class="bar-chart" id="courseBarChart"></div>
+<p class="small-note" id="courseChartNote"></p>
+<div class="table-scroll">
+<table class="viewer-table course-detail-table">
+<caption>Matching Course Details rows</caption>
+<thead><tr><th scope="col">Course</th><th scope="col">Title</th><th scope="col">TOP</th><th scope="col">Sections</th><th scope="col">Credit status</th><th scope="col">Transfer status</th></tr></thead>
+<tbody id="courseResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="course-method-heading" class="method-box">
+<h2 id="course-method-heading">Save the Method, Not Just the Number</h2>
+<pre class="method-text" id="courseMethodText"></pre>
+<button class="button button-secondary" id="courseCopyMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</div>
+
+<div class="credit-sections-module" hidden="" id="creditSectionsModule">
+<div class="container">
+<div aria-label="Loaded Credit Courses and Sections file summary" class="viewer-stats" id="creditSectionsFileSummary"></div>
+<div class="viewer-layout">
+<aside aria-labelledby="credit-sections-filter-heading" class="viewer-controls">
+<p class="module-label"><span aria-hidden="true">📈</span> Credit Courses/Sections</p>
+<h2 id="credit-sections-filter-heading">Choose the measure</h2>
+<label for="creditSectionsMeasure">Chart display</label>
+<select id="creditSectionsMeasure"><option value="sections">Section count</option><option value="enrollment">Enrollment count</option><option value="ftes">Section FTES</option></select>
+<div class="viewer-control-actions">
+<button class="button button-secondary" id="creditSectionsDownloadCsv" type="button">Download cleaned CSV</button>
+<button class="text-button explore-reset" type="button">Choose another file</button>
+</div>
+</aside>
+<div class="viewer-results">
+<p class="eyebrow">Current result</p>
+<h2 id="creditSectionsResultsTitle">Credit Course Activity</h2>
+<p class="viewer-result-meta" id="creditSectionsResultMeta"></p>
+<div aria-label="Credit course activity summary" class="viewer-stats result-kpis" id="creditSectionsKpis"></div>
+<div class="data-caution-box"><strong>Three different measures answer three different questions.</strong> Enrollment Count is not Student Count. Section Count can include linked instructional components. Data Mart FTES is not the same methodology as CCFS-320 FTES.</div>
+<div class="small-n-warning" hidden="" id="creditSectionsWarning"></div>
+<h3 id="creditSectionsChartHeading">Reported activity</h3>
+<div aria-labelledby="creditSectionsChartHeading" class="bar-chart" id="creditSectionsBarChart"></div>
+<div class="table-scroll">
+<table class="viewer-table outcome-table">
+<caption>Credit Courses and Sections export rows</caption>
+<thead><tr><th scope="col">Row</th><th scope="col">Sections</th><th scope="col">Enrollment</th><th scope="col">FTES</th></tr></thead>
+<tbody id="creditSectionsResultsBody"></tbody>
+</table>
+</div>
+<section aria-labelledby="credit-sections-method-heading" class="method-box">
+<h2 id="credit-sections-method-heading">Save the Method, Not Just the Number</h2>
+<pre class="method-text" id="creditSectionsMethodText"></pre>
+<button class="button button-secondary" id="creditSectionsCopyMethod" type="button">Copy method</button>
+</section>
+</div>
+</div>
+</div>
+</div>
+<div hidden="" id="unsupportedModule">
 <div class="container content-narrow">
 <div class="feature-panel cat-purple unsupported-report-panel">
 <p class="eyebrow">Report recognized</p>
@@ -227,10 +360,10 @@
 <div class="purpose-grid explorer-report-grid">
 <article class="purpose-card themed-card cat-gold"><h3><span aria-hidden="true">🎓</span> Program Awards</h3><p><strong>Working now.</strong> Filter a program and award type, compare colleges, download a cleaned table, and save the method.</p></article>
 <article class="purpose-card themed-card cat-green"><h3><span aria-hidden="true">🎯</span> Success &amp; Retention</h3><p><strong>Working now.</strong> Explore counts and rates by six-digit TOP, course population, and instructional modality.</p></article>
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p>Recognized. Demographic exploration is planned next.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">👥</span> Student Headcount</h3><p><strong>Working now.</strong> Explore gender, age, ethnicity, and headcount status with filters, counts, and percentages.</p></article>
 <article class="purpose-card themed-card cat-purple"><h3><span aria-hidden="true">📊</span> Grade Distribution</h3><p><strong>Working now.</strong> Choose a six-digit TOP area, view counts or percentages, preserve blank categories, download a clean table, and save the method.</p></article>
-<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p>Recognized. Course search, TOP filters, transferability, and section counts are planned.</p></article>
-<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p>Recognized. Sections, enrollments, FTES, and TOP comparisons are planned.</p></article>
+<article class="purpose-card themed-card cat-teal"><h3><span aria-hidden="true">📚</span> Course Details</h3><p><strong>Working now.</strong> Search courses, filter course characteristics, inspect TOP codes, and visualize reported section counts.</p></article>
+<article class="purpose-card themed-card cat-blue"><h3><span aria-hidden="true">📈</span> Credit Courses/Sections</h3><p><strong>Working in summary mode.</strong> Visualize section count, enrollment count, and FTES. Rich TOP comparisons depend on the dimensions included in the export.</p></article>
 </div>
 </div>
 </section>

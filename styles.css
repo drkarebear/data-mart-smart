@@ -2630,3 +2630,54 @@ html { scroll-behavior: auto; }
 .grade-tool-section .bar-fill { background:linear-gradient(90deg,var(--cat-purple),var(--cat-blue)); }
 .grade-tool-section .viewer-table td.numeric,
 .grade-tool-section .viewer-table th.numeric { text-align:right; font-variant-numeric:tabular-nums; }
+
+
+/* v16: major-category explorer + headcount/course modules */
+.demo-picker {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) auto;
+  gap: .55rem;
+  align-items: end;
+  min-width: min(100%, 30rem);
+}
+.demo-picker label {
+  grid-column: 1 / -1;
+  font-weight: 800;
+  color: var(--navy-dark);
+  text-align: left;
+}
+.demo-picker select {
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: .7rem;
+  background: #fff;
+  color: var(--text);
+  padding: .65rem .8rem;
+  font: inherit;
+}
+.major-data-grid .purpose-card p + p { margin-top: .35rem; }
+.headcount-module .module-label,
+.headcount-tool-section .module-label { color: var(--cat-blue); }
+.course-details-module .module-label { color: var(--cat-teal); }
+.credit-sections-module .module-label { color: var(--cat-blue); }
+.headcount-tool-section .viewer-privacy,
+.headcount-tool-section .viewer-status { max-width: 850px; margin-inline: auto; }
+.headcount-tool-section .viewer-layout { padding-top: .4rem; }
+.course-detail-table td:nth-child(4),
+.course-detail-table th:nth-child(4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.course-detail-table td,
+.course-detail-table th { vertical-align: top; }
+.viewer-controls select:disabled {
+  background: var(--surface-soft);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+@media (max-width: 640px) {
+  .demo-picker { grid-template-columns: 1fr; }
+  .demo-picker label { grid-column: auto; }
+  .demo-picker .button { width: 100%; }
+}

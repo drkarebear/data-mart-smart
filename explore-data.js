@@ -53,6 +53,9 @@ const state = {
   awards:null,
   success:null,
   grade:null,
+  headcount:null,
+  courseDetails:null,
+  creditSections:null,
   selectedColleges:new Set()
 };
 
@@ -60,14 +63,17 @@ const els = {};
 
 document.addEventListener("DOMContentLoaded", () => {
   [
-    "exploreFileInput","exploreDropZone","exploreBrowseButton","demoSuccessButton","demoAwardsButton","demoGradeButton","exploreStatus",
-    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","gradeModule","unsupportedModule",
+    "exploreFileInput","exploreDropZone","exploreBrowseButton","demoReportSelect","demoLoadButton","exploreStatus",
+    "detectedReport","detectedReportName","detectedReportNote","exploreWorkspace","awardsModule","successModule","gradeModule","headcountModule","courseDetailsModule","creditSectionsModule","unsupportedModule",
     "unsupportedTitle","unsupportedText","unsupportedGuideLink",
     "awardsFileSummary","awardsProgramSearch","awardsProgramOptions","awardsType","awardsCollegeFilters","awardsResultsTitle",
     "awardsResultMeta","awardsResultsBody","awardsBarChart","awardsMethodText","awardsCopyMethod","awardsDownloadCsv",
     "successFileSummary","successProgramSearch","successProgramOptions","successPopulation","successChartMeasure","successResultsTitle",
     "successResultMeta","successKpis","successSmallN","successBarChart","successResultsBody","successMethodText","successCopyMethod","successDownloadCsv",
-    "exploreGradeFileSummary","exploreGradeProgramSearch","exploreGradeProgramOptions","exploreGradeMeasure","exploreGradeResultsTitle","exploreGradeResultMeta","exploreGradeKpis","exploreGradeWarning","exploreGradeBarChart","exploreGradeResultsBody","exploreGradeMethodText","exploreGradeCopyMethod","exploreGradeDownloadCsv"
+    "exploreGradeFileSummary","exploreGradeProgramSearch","exploreGradeProgramOptions","exploreGradeMeasure","exploreGradeResultsTitle","exploreGradeResultMeta","exploreGradeKpis","exploreGradeWarning","exploreGradeBarChart","exploreGradeResultsBody","exploreGradeMethodText","exploreGradeCopyMethod","exploreGradeDownloadCsv",
+    "headcountFileSummary","headcountBreakdown","headcountStatusFilter","headcountGenderFilter","headcountAgeFilter","headcountEthnicityFilter","headcountMeasure","headcountResultsTitle","headcountResultMeta","headcountKpis","headcountWarning","headcountBarChart","headcountCategoryHeader","headcountResultsBody","headcountMethodText","headcountCopyMethod","headcountDownloadCsv",
+    "courseFileSummary","courseSearch","courseCreditFilter","courseTransferFilter","courseSamFilter","courseTableLimit","courseResultsTitle","courseResultMeta","courseKpis","courseBarChart","courseChartNote","courseResultsBody","courseMethodText","courseCopyMethod","courseDownloadCsv",
+    "creditSectionsFileSummary","creditSectionsMeasure","creditSectionsResultsTitle","creditSectionsResultMeta","creditSectionsKpis","creditSectionsWarning","creditSectionsBarChart","creditSectionsResultsBody","creditSectionsMethodText","creditSectionsCopyMethod","creditSectionsDownloadCsv"
   ].forEach(id => els[id] = document.getElementById(id));
 
   els.exploreBrowseButton.addEventListener("click", () => els.exploreFileInput.click());
@@ -88,9 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (file) loadFile(file);
   });
 
-  els.demoAwardsButton.addEventListener("click", loadAwardsDemo);
-  els.demoSuccessButton.addEventListener("click", loadSuccessDemo);
-  els.demoGradeButton.addEventListener("click", loadGradeDemo);
+  els.demoLoadButton.addEventListener("click", loadSelectedDemo);
   document.querySelectorAll(".explore-reset").forEach(button => button.addEventListener("click", resetExplorer));
 
   els.awardsProgramSearch.addEventListener("input", renderAwards);
@@ -108,6 +112,20 @@ document.addEventListener("DOMContentLoaded", () => {
   els.exploreGradeMeasure.addEventListener("change", renderExploreGrade);
   els.exploreGradeCopyMethod.addEventListener("click", () => copyText(els.exploreGradeMethodText.textContent));
   els.exploreGradeDownloadCsv.addEventListener("click", downloadExploreGradeCsv);
+
+  [els.headcountBreakdown,els.headcountStatusFilter,els.headcountGenderFilter,els.headcountAgeFilter,els.headcountEthnicityFilter,els.headcountMeasure].forEach(control => control.addEventListener("change", renderHeadcount));
+  els.headcountCopyMethod.addEventListener("click", () => copyText(els.headcountMethodText.textContent));
+  els.headcountDownloadCsv.addEventListener("click", downloadHeadcountCsv);
+
+  [els.courseSearch,els.courseCreditFilter,els.courseTransferFilter,els.courseSamFilter,els.courseTableLimit].forEach(control => {
+    control.addEventListener(control === els.courseSearch ? "input" : "change", renderCourseDetails);
+  });
+  els.courseCopyMethod.addEventListener("click", () => copyText(els.courseMethodText.textContent));
+  els.courseDownloadCsv.addEventListener("click", downloadCourseDetailsCsv);
+
+  els.creditSectionsMeasure.addEventListener("change", renderCreditSections);
+  els.creditSectionsCopyMethod.addEventListener("click", () => copyText(els.creditSectionsMethodText.textContent));
+  els.creditSectionsDownloadCsv.addEventListener("click", downloadCreditSectionsCsv);
 
   setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
 });
@@ -182,6 +200,36 @@ async function loadFile(file) {
       return;
     }
 
+    if (detected.kind === "student-headcount") {
+      const parsed = DataMartParsers.parseStudentHeadcount(rows);
+      if (!parsed.records.length) throw new Error("The report was recognized, but no detailed headcount rows could be read from the current layout.");
+      state.headcount = parsed;
+      showDetected("Student Headcount detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The demographic explorer is ready.`, true);
+      initHeadcount();
+      setStatus(`Loaded ${parsed.records.length.toLocaleString()} detailed headcount rows from ${file.name}. The file stayed in this browser tab.`, "success");
+      return;
+    }
+
+    if (detected.kind === "course-details") {
+      const parsed = DataMartParsers.parseCourseDetails(rows);
+      if (!parsed.records.length) throw new Error("The report was recognized, but no course rows could be read from the current layout.");
+      state.courseDetails = parsed;
+      showDetected("Course Details detected", `${parsed.college || "College not detected"}, ${parsed.period || "period not detected"}. The course explorer is ready.`, true);
+      initCourseDetails();
+      setStatus(`Loaded ${parsed.records.length.toLocaleString()} course rows from ${file.name}. The file stayed in this browser tab.`, "success");
+      return;
+    }
+
+    if (detected.kind === "credit-course-sections") {
+      const parsed = DataMartParsers.parseCreditCourseSections(rows);
+      if (!parsed.records.length) throw new Error("The report was recognized, but no course activity rows could be read from the current layout.");
+      state.creditSections = parsed;
+      showDetected("Credit Courses/Sections detected", `${parsed.period || "Period not detected"}. The course activity summary is ready.`, true);
+      initCreditSections();
+      setStatus(`Loaded ${parsed.records.length.toLocaleString()} course activity row${parsed.records.length === 1 ? "" : "s"} from ${file.name}. The file stayed in this browser tab.`, "success");
+      return;
+    }
+
     showDetected(`${detected.label} detected`, "The report is recognized, but its visualization module is not built yet.", false);
     showUnsupported(detected.kind, detected.label);
     setStatus(`Recognized ${detected.label}. This report is in the next phase of Explore Data.`, "success");
@@ -227,11 +275,51 @@ function loadGradeDemo() {
   setStatus("Grade Distribution demo loaded. The demo uses English TOP 150100 records from the supplied LA Mission Fall 2025 export.", "success");
 }
 
+
+function loadSelectedDemo() {
+  const kind = els.demoReportSelect.value;
+  if (kind === "program-awards") return loadAwardsDemo();
+  if (kind === "retention-success") return loadSuccessDemo();
+  if (kind === "grade-distribution") return loadGradeDemo();
+  if (!window.DMS_DEMOS) return setStatus("The sample data did not load. Reload the page and try again.", "error");
+
+  hideModules();
+  if (kind === "student-headcount") {
+    state.sourceName = "Included LA Mission Student Headcount sample";
+    state.kind = kind;
+    state.headcount = JSON.parse(JSON.stringify(window.DMS_DEMOS.headcount));
+    showDetected("Student Headcount sample loaded", "LA Mission, Fall 2025. The demographic explorer is ready.", true);
+    initHeadcount();
+    setStatus("Student Headcount sample loaded from the supplied LA Mission Fall 2025 export.", "success");
+    return;
+  }
+  if (kind === "course-details") {
+    state.sourceName = "Included LA Mission English Course Details sample";
+    state.kind = kind;
+    state.courseDetails = JSON.parse(JSON.stringify(window.DMS_DEMOS.courseDetails));
+    showDetected("Course Details sample loaded", "LA Mission, Fall 2025. The course explorer is ready.", true);
+    initCourseDetails();
+    setStatus("Course Details sample loaded. It uses English course rows from the supplied LA Mission Fall 2025 export.", "success");
+    return;
+  }
+  if (kind === "credit-course-sections") {
+    state.sourceName = "Included LA Mission Credit Courses/Sections sample";
+    state.kind = kind;
+    state.creditSections = JSON.parse(JSON.stringify(window.DMS_DEMOS.creditSections));
+    showDetected("Credit Courses/Sections sample loaded", "LA Mission, Fall 2025. The summary module is ready.", true);
+    initCreditSections();
+    setStatus("Credit Courses/Sections sample loaded from the supplied LA Mission Fall 2025 export.", "success");
+  }
+}
+
 function hideModules() {
   els.exploreWorkspace.hidden = true;
   els.awardsModule.hidden = true;
   els.successModule.hidden = true;
   els.gradeModule.hidden = true;
+  els.headcountModule.hidden = true;
+  els.courseDetailsModule.hidden = true;
+  els.creditSectionsModule.hidden = true;
   els.unsupportedModule.hidden = true;
 }
 
@@ -501,7 +589,7 @@ function renderBarRows(container, rows, options={}) {
   const max = options.fixedMax || Math.max(...valid.map(row => row.value), 1);
   valid.forEach(row => {
     const width = Math.max(2, Math.min(100, (row.value / max) * 100));
-    const value = options.format === "percent" ? formatPercent(row.value) : formatInteger(row.value);
+    const value = options.format === "percent" ? formatPercent(row.value) : options.format === "decimal" ? formatDecimal(row.value) : formatInteger(row.value);
     const item = document.createElement("div");
     item.className = "bar-row explorer-bar-row";
     item.innerHTML = `
@@ -611,13 +699,321 @@ function downloadExploreGradeCsv() {
   setStatus("Grade Distribution CSV downloaded.", "success");
 }
 
+
+function initHeadcount() {
+  els.exploreWorkspace.hidden = false;
+  els.headcountModule.hidden = false;
+  const parsed = state.headcount;
+  fillSummary(els.headcountFileSummary, [
+    ["Report", parsed.reportTitle || "Student Headcount Summary Report"],
+    ["Term", parsed.period || "Not detected"],
+    ["College", parsed.college || "Not detected"],
+    ["College headcount", formatInteger(parsed.collegeTotal)]
+  ]);
+
+  fillSelect(els.headcountStatusFilter, "All headcount statuses", uniqueValues(parsed.records, "status"));
+  fillSelect(els.headcountGenderFilter, "All genders", uniqueValues(parsed.records, "gender"));
+  fillSelect(els.headcountAgeFilter, "All age groups", orderedAgeValues(parsed.records));
+  fillSelect(els.headcountEthnicityFilter, "All ethnicities", uniqueValues(parsed.records, "ethnicity"));
+  els.headcountBreakdown.value = "gender";
+  els.headcountMeasure.value = "percent";
+  renderHeadcount();
+  scrollWorkspace();
+}
+
+function uniqueValues(records, key) {
+  return [...new Set((records || []).map(r => r[key]).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+}
+
+function orderedAgeValues(records) {
+  const order = ["19 or Less","20 to 24","25 to 29","30 to 34","35 to 39","40 to 49","50 +"];
+  const present = new Set((records || []).map(r => r.age).filter(Boolean));
+  return order.filter(x => present.has(x)).concat([...present].filter(x => !order.includes(x)).sort());
+}
+
+function fillSelect(select, allLabel, values) {
+  const current = select.value;
+  select.innerHTML = "";
+  const all = document.createElement("option");
+  all.value = "";
+  all.textContent = allLabel;
+  select.appendChild(all);
+  values.forEach(value => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+  if ([...select.options].some(option => option.value === current)) select.value = current;
+}
+
+function headcountFilteredRecords() {
+  return (state.headcount?.records || []).filter(r =>
+    (!els.headcountStatusFilter.value || r.status === els.headcountStatusFilter.value) &&
+    (!els.headcountGenderFilter.value || r.gender === els.headcountGenderFilter.value) &&
+    (!els.headcountAgeFilter.value || r.age === els.headcountAgeFilter.value) &&
+    (!els.headcountEthnicityFilter.value || r.ethnicity === els.headcountEthnicityFilter.value)
+  );
+}
+
+function aggregateHeadcount() {
+  const records = headcountFilteredRecords();
+  const key = els.headcountBreakdown.value;
+  const grouped = new Map();
+  records.forEach(r => grouped.set(r[key] || "Unreported", (grouped.get(r[key] || "Unreported") || 0) + Number(r.count || 0)));
+  const total = [...grouped.values()].reduce((sum,n) => sum+n, 0);
+  let rows = [...grouped.entries()].map(([category,count]) => ({category,count,percent:total ? count/total : null}));
+  if (key === "age") {
+    const order = ["19 or Less","20 to 24","25 to 29","30 to 34","35 to 39","40 to 49","50 +"];
+    rows.sort((a,b) => {
+      const ai = order.indexOf(a.category), bi = order.indexOf(b.category);
+      return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi) || a.category.localeCompare(b.category);
+    });
+  } else {
+    rows.sort((a,b) => b.count-a.count || a.category.localeCompare(b.category));
+  }
+  return {records,rows,total,key};
+}
+
+function renderHeadcount() {
+  if (!state.headcount) return;
+  const sameFilter = {
+    status: els.headcountStatusFilter,
+    gender: els.headcountGenderFilter,
+    age: els.headcountAgeFilter,
+    ethnicity: els.headcountEthnicityFilter
+  };
+  Object.entries(sameFilter).forEach(([key,control]) => {
+    const isBreakdown = key === els.headcountBreakdown.value;
+    if (isBreakdown && control.value) control.value = "";
+    control.disabled = isBreakdown;
+  });
+
+  const {records,rows,total,key} = aggregateHeadcount();
+  const labels = {status:"Headcount status",gender:"Gender",age:"Age group",ethnicity:"Ethnicity"};
+  const label = labels[key] || "Category";
+  const collegeTotal = Number(state.headcount.collegeTotal || 0);
+  const collegeShare = collegeTotal ? total/collegeTotal : null;
+  els.headcountResultsTitle.textContent = label;
+  els.headcountResultMeta.textContent = `${state.headcount.college || "College not detected"} · ${state.headcount.period || "Term not detected"} · ${formatInteger(total)} selected students`;
+  els.headcountCategoryHeader.textContent = label;
+  fillSummary(els.headcountKpis, [
+    ["Selected students", formatInteger(total)],
+    ["Share of college headcount", formatPercent(collegeShare)],
+    ["Categories shown", rows.length.toLocaleString()],
+    ["College headcount", formatInteger(collegeTotal)]
+  ]);
+
+  const unknownStatusCount = records.filter(r => /^X\s*-\s*Unknown$/i.test(r.status)).reduce((sum,r) => sum + Number(r.count || 0), 0);
+  if (unknownStatusCount > 0 && !els.headcountStatusFilter.value) {
+    els.headcountWarning.hidden = false;
+    els.headcountWarning.innerHTML = `<strong>Unknown headcount status is included.</strong> ${formatInteger(unknownStatusCount)} selected student${unknownStatusCount === 1 ? "" : "s"} are in the reported X - Unknown headcount-status category. The tool keeps that category visible rather than redistributing it.`;
+  } else {
+    els.headcountWarning.hidden = true;
+    els.headcountWarning.textContent = "";
+  }
+
+  const measure = els.headcountMeasure.value;
+  renderBarRows(els.headcountBarChart, rows.map(r => ({label:r.category,value:measure === "percent" ? r.percent : r.count})), {format:measure === "percent" ? "percent" : "integer", fixedMax:measure === "percent" ? 1 : null});
+  els.headcountResultsBody.innerHTML = "";
+  if (!rows.length) {
+    els.headcountResultsBody.innerHTML = '<tr><td colspan="3">No students match the selected filters.</td></tr>';
+  } else {
+    rows.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<th scope="row">${escapeHtml(row.category)}</th><td>${formatInteger(row.count)}</td><td>${formatPercent(row.percent)}</td>`;
+      els.headcountResultsBody.appendChild(tr);
+    });
+  }
+
+  const filters = [
+    ["Headcount status",els.headcountStatusFilter.value || "All"],
+    ["Gender",els.headcountGenderFilter.value || "All"],
+    ["Age group",els.headcountAgeFilter.value || "All"],
+    ["Ethnicity",els.headcountEthnicityFilter.value || "All"]
+  ].map(([a,b]) => `${a}: ${b}`).join("; ");
+  els.headcountMethodText.textContent = [
+    "Source: California Community Colleges Chancellor's Office Data Mart: Student Headcount Summary Report",
+    `File: ${state.sourceName}`,
+    `Term: ${state.headcount.period || "Not detected"}`,
+    `College: ${state.headcount.college || "Not detected"}`,
+    `Measure: Student Count`,
+    `Breakdown: ${label}`,
+    `Filters: ${filters}`,
+    `Selected students: ${formatInteger(total)}`,
+    `College headcount in export: ${formatInteger(collegeTotal)}`,
+    "Caution: Student Count is not Enrollment Count. District and statewide distinct-student totals should not be reconstructed by adding college headcounts."
+  ].join("\n");
+}
+
+function downloadHeadcountCsv() {
+  const {rows,total,key} = aggregateHeadcount();
+  const labels = {status:"Headcount Status",gender:"Gender",age:"Age Group",ethnicity:"Ethnicity"};
+  if (!rows.length) return setStatus("There are no matching headcount rows to download.", "error");
+  downloadCsvFile("data-mart-smart-student-headcount.csv", [[labels[key] || "Category","Student Count","Percent"], ...rows.map(r => [r.category,r.count,decimalPercent(r.percent)]), ["Total",total,"100.0%"]]);
+  setStatus("Student Headcount CSV downloaded.", "success");
+}
+
+function initCourseDetails() {
+  els.exploreWorkspace.hidden = false;
+  els.courseDetailsModule.hidden = false;
+  const parsed = state.courseDetails;
+  fillSummary(els.courseFileSummary, [
+    ["Report", parsed.reportTitle || "Course Details Report"],
+    ["Term", parsed.period || "Not detected"],
+    ["College", parsed.college || "Not detected"],
+    ["Course rows", parsed.records.length.toLocaleString()]
+  ]);
+  fillSelect(els.courseCreditFilter, "All credit statuses", uniqueValues(parsed.records,"creditStatus"));
+  fillSelect(els.courseTransferFilter, "All transfer statuses", uniqueValues(parsed.records,"transferStatus"));
+  fillSelect(els.courseSamFilter, "All SAM statuses", uniqueValues(parsed.records,"samStatus"));
+  els.courseSearch.value = "";
+  els.courseTableLimit.value = "50";
+  renderCourseDetails();
+  scrollWorkspace();
+}
+
+function matchingCourseDetails() {
+  const q = els.courseSearch.value.trim().toLowerCase();
+  return (state.courseDetails?.records || []).filter(r => {
+    const haystack = [r.courseId,r.title,r.topName,r.top,r.controlNumber].join(" ").toLowerCase();
+    return (!q || haystack.includes(q)) &&
+      (!els.courseCreditFilter.value || r.creditStatus === els.courseCreditFilter.value) &&
+      (!els.courseTransferFilter.value || r.transferStatus === els.courseTransferFilter.value) &&
+      (!els.courseSamFilter.value || r.samStatus === els.courseSamFilter.value);
+  });
+}
+
+function renderCourseDetails() {
+  if (!state.courseDetails) return;
+  const records = matchingCourseDetails();
+  const sections = records.reduce((sum,r) => sum + Number(r.sections || 0), 0);
+  const topAreas = new Set(records.map(r => r.top).filter(Boolean)).size;
+  const transferable = records.filter(r => /Transferable/i.test(r.transferStatus) && !/^Not transferable$/i.test(r.transferStatus)).length;
+  els.courseResultsTitle.textContent = els.courseSearch.value.trim() ? `Courses matching "${els.courseSearch.value.trim()}"` : "All matching courses";
+  els.courseResultMeta.textContent = `${state.courseDetails.college || "College not detected"} · ${state.courseDetails.period || "Term not detected"} · ${records.length.toLocaleString()} course rows`;
+  fillSummary(els.courseKpis, [
+    ["Course rows", records.length.toLocaleString()],
+    ["Reported sections", formatInteger(sections)],
+    ["Six-digit TOP areas", topAreas.toLocaleString()],
+    ["Transferable course rows", transferable.toLocaleString()]
+  ]);
+
+  const chartRows = records.filter(r => Number(r.sections) > 0).sort((a,b) => Number(b.sections)-Number(a.sections) || a.courseId.localeCompare(b.courseId)).slice(0,15);
+  renderBarRows(els.courseBarChart, chartRows.map(r => ({label:r.courseId,value:Number(r.sections)})), {format:"integer"});
+  els.courseChartNote.textContent = records.length > 15 ? "The chart shows the 15 matching course rows with the highest reported section counts. The table and downloaded CSV retain the broader selection." : "";
+
+  const limit = els.courseTableLimit.value === "all" ? records.length : Number(els.courseTableLimit.value || 50);
+  const shown = records.slice().sort((a,b) => Number(b.sections||0)-Number(a.sections||0) || a.courseId.localeCompare(b.courseId)).slice(0,limit);
+  els.courseResultsBody.innerHTML = "";
+  if (!shown.length) {
+    els.courseResultsBody.innerHTML = '<tr><td colspan="6">No course rows match the selected filters.</td></tr>';
+  } else {
+    shown.forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<th scope="row">${escapeHtml(r.courseId)}</th><td>${escapeHtml(r.title)}</td><td>${escapeHtml(r.topName)}${r.top ? ` · ${escapeHtml(r.top)}` : ""}</td><td>${formatInteger(r.sections)}</td><td>${escapeHtml(r.creditStatus)}</td><td>${escapeHtml(r.transferStatus)}</td>`;
+      els.courseResultsBody.appendChild(tr);
+    });
+  }
+
+  els.courseMethodText.textContent = [
+    "Source: California Community Colleges Chancellor's Office Data Mart: Course Details Report",
+    `File: ${state.sourceName}`,
+    `Term: ${state.courseDetails.period || "Not detected"}`,
+    `College: ${state.courseDetails.college || "Not detected"}`,
+    `Search: ${els.courseSearch.value.trim() || "None"}`,
+    `Credit status: ${els.courseCreditFilter.value || "All"}`,
+    `Transfer status: ${els.courseTransferFilter.value || "All"}`,
+    `SAM status: ${els.courseSamFilter.value || "All"}`,
+    `Matching course rows: ${records.length.toLocaleString()}`,
+    `Reported sections across matching rows: ${formatInteger(sections)}`,
+    "Caution: Course Details reports MIS section counts. Linked lecture/lab or other paired components may appear as separate reported sections. TOP is a classification and is not the same thing as a local subject prefix."
+  ].join("\n");
+}
+
+function downloadCourseDetailsCsv() {
+  const records = matchingCourseDetails();
+  if (!records.length) return setStatus("There are no matching course rows to download.", "error");
+  downloadCsvFile("data-mart-smart-course-details.csv", [
+    ["District","College","Term","Course ID","Control Number","Course Title","Sections Count","TOP Name","TOP Code","Credit Status","Transfer Status","Minimum Units","Maximum Units","SAM Status"],
+    ...records.map(r => [r.district,r.college,r.term,r.courseId,r.controlNumber,r.title,r.sections,r.topName,r.top,r.creditStatus,r.transferStatus,r.minUnits,r.maxUnits,r.samStatus])
+  ]);
+  setStatus("Course Details CSV downloaded.", "success");
+}
+
+function initCreditSections() {
+  els.exploreWorkspace.hidden = false;
+  els.creditSectionsModule.hidden = false;
+  const parsed = state.creditSections;
+  fillSummary(els.creditSectionsFileSummary, [
+    ["Report", parsed.reportTitle || "Credit Courses/Sections"],
+    ["Term", parsed.period || "Not detected"],
+    ["Rows", parsed.records.length.toLocaleString()],
+    ["Mode", parsed.records.length === 1 ? "Summary" : "Export rows"]
+  ]);
+  els.creditSectionsMeasure.value = "sections";
+  renderCreditSections();
+  scrollWorkspace();
+}
+
+function renderCreditSections() {
+  if (!state.creditSections) return;
+  const records = state.creditSections.records || [];
+  const one = records.length === 1 ? records[0] : null;
+  els.creditSectionsResultsTitle.textContent = one ? one.label : "Credit Course Activity";
+  els.creditSectionsResultMeta.textContent = `${state.creditSections.period || "Term not detected"} · ${records.length.toLocaleString()} export row${records.length === 1 ? "" : "s"}`;
+  if (one) {
+    fillSummary(els.creditSectionsKpis, [
+      ["Credit sections", formatInteger(one.sections)],
+      ["Enrollment count", formatInteger(one.enrollment)],
+      ["Section FTES", formatDecimal(one.ftes)],
+      ["Rows", "1 summary row"]
+    ]);
+    els.creditSectionsWarning.hidden = true;
+  } else {
+    fillSummary(els.creditSectionsKpis, [
+      ["Export rows", records.length.toLocaleString()],
+      ["Measure shown", creditSectionsMeasureLabel()],
+      ["Automatic total", "Not calculated"],
+      ["Reason", "Rows may overlap"]
+    ]);
+    els.creditSectionsWarning.hidden = false;
+    els.creditSectionsWarning.innerHTML = "<strong>Rows are not automatically added.</strong> A detailed Data Mart export can contain totals, subtotals, or overlapping classifications. Data Mart Smart shows the rows but does not assume that summing them is methodologically valid.";
+  }
+  const measure = els.creditSectionsMeasure.value;
+  renderBarRows(els.creditSectionsBarChart, records.map(r => ({label:r.label,value:Number(r[measure])})).filter(r => Number.isFinite(r.value)), {format:measure === "ftes" ? "decimal" : "integer"});
+  els.creditSectionsResultsBody.innerHTML = "";
+  records.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<th scope="row">${escapeHtml(r.label)}</th><td>${formatInteger(r.sections)}</td><td>${formatInteger(r.enrollment)}</td><td>${formatDecimal(r.ftes)}</td>`;
+    els.creditSectionsResultsBody.appendChild(tr);
+  });
+  els.creditSectionsMethodText.textContent = [
+    "Source: California Community Colleges Chancellor's Office Data Mart: Credit Courses/Sections",
+    `File: ${state.sourceName}`,
+    `Term: ${state.creditSections.period || "Not detected"}`,
+    `Export rows shown: ${records.length.toLocaleString()}`,
+    `Chart measure: ${creditSectionsMeasureLabel()}`,
+    one ? `Reported summary: ${formatInteger(one.sections)} credit sections; ${formatInteger(one.enrollment)} enrollments; ${formatDecimal(one.ftes)} section FTES.` : "No automatic grand total was calculated because detailed export rows may contain overlapping categories or subtotals.",
+    "Caution: Enrollment Count is not Student Count. Reported Section Count may include linked components. Data Mart FTES is not the same methodology as CCFS-320 FTES."
+  ].join("\n");
+}
+
+function creditSectionsMeasureLabel() {
+  return {sections:"Section count",enrollment:"Enrollment count",ftes:"Section FTES"}[els.creditSectionsMeasure.value] || "Section count";
+}
+
+function downloadCreditSectionsCsv() {
+  const records = state.creditSections?.records || [];
+  if (!records.length) return setStatus("There are no Credit Courses/Sections rows to download.", "error");
+  downloadCsvFile("data-mart-smart-credit-course-sections.csv", [["Row","Credit Sections Count","Enrollment Count","Credit Sections FTES"], ...records.map(r => [r.label,r.sections,r.enrollment,r.ftes])]);
+  setStatus("Credit Courses/Sections CSV downloaded.", "success");
+}
+
 function showUnsupported(kind, label) {
   els.exploreWorkspace.hidden = false;
   els.unsupportedModule.hidden = false;
   const info = {
-    "student-headcount": {title:"Student Headcount is recognized", text:"The file structure is recognized. The next module will turn the nested headcount, gender, age, ethnicity, and status hierarchy into clearer demographic views.", href:"student-headcount.html", link:"Open the Student Headcount guide"},
-    "course-details": {title:"Course Details is recognized", text:"The file structure is recognized. The planned module will support course search, six-digit TOP, transferability, credit status, units, and reported section counts.", href:"reports.html", link:"Browse the course guides"},
-    "credit-course-sections": {title:"Credit Courses/Sections is recognized", text:"The file structure is recognized. The planned module will visualize sections, enrollments, FTES, TOP areas, and college or term comparisons when those dimensions are present in the export.", href:"sections-across-colleges.html", link:"Open the section comparison guide"},
     "unknown": {title:"This export was not recognized yet", text:"The file does not match one of the Data Mart layouts currently known to Explore Data. Keep the original export and use the report guides to confirm which report produced it.", href:"reports.html", link:"Browse How-To Guides"}
   }[kind] || {title:`${label} is recognized`, text:"This report does not have a visualization module yet.", href:"reports.html", link:"Browse How-To Guides"};
 
@@ -697,6 +1093,10 @@ function formatInteger(value) {
   return Number.isFinite(Number(value)) ? Math.round(Number(value)).toLocaleString() : "Not available";
 }
 
+function formatDecimal(value) {
+  return Number.isFinite(Number(value)) ? Number(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) : "Not available";
+}
+
 function scrollWorkspace() {
   els.exploreWorkspace.scrollIntoView({behavior:preferredScrollBehavior(), block:"start"});
 }
@@ -706,6 +1106,10 @@ function resetExplorer() {
   state.kind = "";
   state.awards = null;
   state.success = null;
+  state.grade = null;
+  state.headcount = null;
+  state.courseDetails = null;
+  state.creditSections = null;
   state.selectedColleges = new Set();
   els.exploreFileInput.value = "";
   els.detectedReport.hidden = true;
