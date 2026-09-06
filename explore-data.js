@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
   els.genericCopyMethod.addEventListener("click", () => copyText(els.genericMethodText.textContent));
   els.genericDownloadCsv.addEventListener("click", downloadGenericCsv);
 
-  setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
+  setStatus("Ready. Choose an Excel or CSV export, or try a sample.", "neutral");
 });
 
 function preferredScrollBehavior() {
@@ -159,7 +159,7 @@ function showDetected(label, note, supported) {
 async function loadFile(file) {
   const lower = file.name.toLowerCase();
   if (![".xlsx",".xls",".csv"].some(ext => lower.endsWith(ext))) {
-    setStatus("Please choose an Excel .xlsx, .xls, or CSV Data Mart export.", "error");
+    setStatus("Please choose an Excel .xlsx, .xls, or CSV file.", "error");
     return;
   }
   if (typeof XLSX === "undefined" || typeof DataMartParsers === "undefined") {
@@ -720,7 +720,7 @@ function renderExploreGrade() {
 function downloadExploreGradeCsv() {
   const {rows,total} = aggregateExploreGrade();
   if (!rows.length) return setStatus("There are no matching grade rows to download.", "error");
-  downloadCsvFile("data-mart-smart-grade-distribution.csv", [["Grade Category","Count","Percent"], ...rows.map(r => [r.grade,r.count,decimalPercent(r.percent)]), ["Total",total,"100.00%"]]);
+  downloadCsvFile("ccc-data-smart-grade-distribution.csv", [["Grade Category","Count","Percent"], ...rows.map(r => [r.grade,r.count,decimalPercent(r.percent)]), ["Total",total,"100.00%"]]);
   setStatus("Grade Distribution CSV downloaded.", "success");
 }
 
@@ -875,7 +875,7 @@ function downloadHeadcountCsv() {
   const {rows,total,key} = aggregateHeadcount();
   const labels = {status:"Headcount Status",gender:"Gender",age:"Age Group",ethnicity:"Ethnicity"};
   if (!rows.length) return setStatus("There are no matching headcount rows to download.", "error");
-  downloadCsvFile("data-mart-smart-student-headcount.csv", [[labels[key] || "Category","Student Count","Percent"], ...rows.map(r => [r.category,r.count,decimalPercent(r.percent)]), ["Total",total,"100.0%"]]);
+  downloadCsvFile("ccc-data-smart-student-headcount.csv", [[labels[key] || "Category","Student Count","Percent"], ...rows.map(r => [r.category,r.count,decimalPercent(r.percent)]), ["Total",total,"100.0%"]]);
   setStatus("Student Headcount CSV downloaded.", "success");
 }
 
@@ -969,7 +969,7 @@ function renderCourseDetails() {
 function downloadCourseDetailsCsv() {
   const records = matchingCourseDetails();
   if (!records.length) return setStatus("There are no matching course rows to download.", "error");
-  downloadCsvFile("data-mart-smart-course-details.csv", [
+  downloadCsvFile("ccc-data-smart-course-details.csv", [
     ["District","College","Term","Course ID","Control Number","Course Title","Sections Count","TOP Name","TOP Code","Credit Status","Transfer Status","Minimum Units","Maximum Units","SAM Status"],
     ...records.map(r => [r.district,r.college,r.term,r.courseId,r.controlNumber,r.title,r.sections,r.topName,r.top,r.creditStatus,r.transferStatus,r.minUnits,r.maxUnits,r.samStatus])
   ]);
@@ -1041,7 +1041,7 @@ function creditSectionsMeasureLabel() {
 function downloadCreditSectionsCsv() {
   const records = state.creditSections?.records || [];
   if (!records.length) return setStatus("There are no Credit Courses/Sections rows to download.", "error");
-  downloadCsvFile("data-mart-smart-credit-course-sections.csv", [["Row","Credit Sections Count","Enrollment Count","Credit Sections FTES"], ...records.map(r => [r.label,r.sections,r.enrollment,r.ftes])]);
+  downloadCsvFile("ccc-data-smart-credit-course-sections.csv", [["Row","Credit Sections Count","Enrollment Count","Credit Sections FTES"], ...records.map(r => [r.label,r.sections,r.enrollment,r.ftes])]);
   setStatus("Credit Courses/Sections CSV downloaded.", "success");
 }
 
@@ -1121,7 +1121,7 @@ function renderGeneric() {
     tr.append(th,td); els.genericResultsBody.appendChild(tr);
   });
   els.genericMethodText.textContent = [
-    "Source: California Community Colleges Chancellor's Office Data Mart export",
+    "Source: User-provided Excel or CSV export (source not identified by CCC Data Smart)",
     `File: ${state.sourceName}`,
     `Detected title: ${state.generic.reportTitle || "Not detected"}`,
     `Period: ${state.generic.period || "Not detected"}`,
@@ -1129,14 +1129,14 @@ function renderGeneric() {
     `Measure column: ${measureCol.name}`,
     `Numeric rows displayed: ${rows.length.toLocaleString()}`,
     "Method note: Basic table view visualized the selected columns only. It did not determine whether rows are mutually exclusive, whether totals/subtotals overlap, how the denominator is defined, or whether suppressed/blank values have report-specific meaning.",
-    "Verification: Consult the official Data Mart report notes before adding rows, calculating rates, or using the result consequentially."
+    "Verification: Confirm the file's original source, measure definition, population, denominator, and any suppression or subtotal rules before using the result consequentially."
   ].join("\n");
 }
 
 function downloadGenericCsv() {
   const {rows,labelCol,measureCol} = genericSelection();
   if (!rows.length || !labelCol || !measureCol) return setStatus("There are no selected numeric rows to download.", "error");
-  downloadCsvFile("data-mart-smart-flexible-view.csv", [[labelCol.name,measureCol.name], ...rows.map(r => [r.label,r.value])]);
+  downloadCsvFile("ccc-data-smart-flexible-view.csv", [[labelCol.name,measureCol.name], ...rows.map(r => [r.label,r.value])]);
   setStatus("Basic table CSV downloaded.", "success");
 }
 
@@ -1179,7 +1179,7 @@ function downloadAwardsCsv() {
   records.forEach(r => grouped.set(r.college, (grouped.get(r.college) || 0) + r.count));
   const rows = [...grouped.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   if (!rows.length) return setStatus("There are no matching award rows to download.", "error");
-  downloadCsvFile("data-mart-smart-program-awards.csv", [["College","Award Count"], ...rows]);
+  downloadCsvFile("ccc-data-smart-program-awards.csv", [["College","Award Count"], ...rows]);
   setStatus("Program Awards comparison CSV downloaded.", "success");
 }
 
@@ -1191,7 +1191,7 @@ function downloadSuccessCsv() {
     ...rows.map(r => [r.modality,r.enrollment,r.retention,decimalPercent(r.retentionRate),r.success,decimalPercent(r.successRate),population]),
     ["Overall",overall.enrollment,overall.retention,decimalPercent(overall.retentionRate),overall.success,decimalPercent(overall.successRate),population]
   ];
-  downloadCsvFile("data-mart-smart-success-retention.csv", data);
+  downloadCsvFile("ccc-data-smart-success-retention.csv", data);
   setStatus("Success and Retention CSV downloaded.", "success");
 }
 
@@ -1416,7 +1416,7 @@ function resetExplorer() {
   els.exploreFileInput.value = "";
   els.detectedReport.hidden = true;
   hideModules();
-  setStatus("Ready. Choose a Data Mart Excel or CSV export, or try a demo.", "neutral");
+  setStatus("Ready. Choose an Excel or CSV export, or try a sample.", "neutral");
   window.scrollTo({top:0, behavior:preferredScrollBehavior()});
   els.exploreBrowseButton.focus();
 }

@@ -4,7 +4,7 @@
   --navy-dark: #082e56;
   --blue: #1467c7;
   --teal: #087c78;
-  --green: #2f9b69;
+  --green: #2b7d58;
   --gold: #f5b51b;
   --purple: #7454bd;
   --ink: #17324d;
@@ -2656,7 +2656,7 @@ html { scroll-behavior: auto; }
   border: 1px solid var(--line);
   border-radius: .7rem;
   background: #fff;
-  color: var(--text);
+  color: var(--ink);
   padding: .65rem .8rem;
   font: inherit;
 }
@@ -3121,3 +3121,32 @@ html { scroll-behavior: auto; }
 .checkmark-list li { position: relative; padding-left: 1.8rem; margin-bottom: 0.65rem; }
 .checkmark-list li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 900; }
 @media print { .skip-link, .site-header, .site-footer { display: none !important; } }
+
+
+/* v21 QA polish: clearer first-step navigation and safer reflow */
+.hero-art { min-width: 0; max-width: 100%; }
+.hero-note { width: min(100%, 280px); overflow-wrap: anywhere; }
+.source-choice, .view-card, .pathway-card, .guide-card { min-width: 0; }
+.source-choice h3, .view-card h3, .pathway-card h3, .guide-card h3 { overflow-wrap: break-word; }
+@media (max-width: 1100px) {
+  .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .source-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .source-grid > :last-child:nth-child(odd) .card-link,
+  .source-grid > :last-child:nth-child(odd) .button { align-self: flex-start; }
+}
+@media (max-width: 850px) {
+  .source-grid { grid-template-columns: 1fr; }
+  .source-grid > :last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (max-width: 980px) {
+  .datavista-view-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 650px) {
+  .datavista-view-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 1100px) {
+  .four-door-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .four-door-grid { grid-template-columns: 1fr; }
+}

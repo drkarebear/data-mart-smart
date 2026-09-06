@@ -31,3 +31,20 @@ The existing Playlab assistant was originally developed around Data Mart workflo
 3. Obtain a few representative DataVista CSV downloads and build/test a DataVista-aware export interpreter.
 4. Add task-specific metric recommendations only when they can be traced to current official metric definitions.
 5. Re-run accessibility and link checks after any deployment-specific changes.
+
+## QA pass completed after the first revision
+
+A second pass focused on usability, accessibility, consistency, and the six most likely faculty journeys through the site.
+
+- Simplified **Start Here** so it begins with the user's task rather than repeating the DataVista/Data Mart/local-data comparison.
+- Made **Explore Data** source-neutral unless a file is positively recognized as a tested Data Mart export. Generic uploads are no longer described as Data Mart data by default.
+- Moved the Explore Data page heading before the interactive uploader so the document outline begins correctly with its H1.
+- Added breadcrumbs to active utility, comparison, export, and task pages that previously lacked them.
+- Linked useful pages that had become difficult to discover, including the current-data notes, examples, manual export workflow, college-comparison task guide, and program-review evidence map.
+- Changed generated download filenames from `data-mart-smart-*` to `ccc-data-smart-*`.
+- Added responsive safeguards for source cards, DataVista view cards, and task-choice grids and strengthened the green icon contrast.
+- Added missing page descriptions and marked legacy compatibility pages `noindex,follow` so old links can continue working without competing with current pages in search results.
+- Changed source-document markup from decorative italics to semantic `<cite>` elements.
+- Re-ran static checks across all 50 HTML pages and JavaScript files after the edits.
+
+See `QA-REPORT.md` for the final audit results and testing limits.

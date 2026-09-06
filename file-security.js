@@ -19,7 +19,7 @@
     const allowed = allowCsv ? [...EXCEL_EXTENSIONS, ...CSV_EXTENSIONS] : EXCEL_EXTENSIONS;
     if (!allowed.includes(ext)) throw new Error(allowCsv ? "Choose an .xlsx, .xls, or .csv file." : "Choose an .xlsx or .xls file.");
     if (!Number.isFinite(file.size) || file.size <= 0) throw new Error("The selected file is empty.");
-    if (file.size > MAX_FILE_BYTES) throw new Error("For safety, choose a file smaller than 10 MB. Large exports should be narrowed in Data Mart before analysis.");
+    if (file.size > MAX_FILE_BYTES) throw new Error("For safety, choose a file smaller than 10 MB. Large exports should be narrowed at the source before analysis.");
     return ext;
   }
 
@@ -47,8 +47,8 @@
       const range = global.XLSX.utils.decode_range(sheet["!ref"]);
       const rowCount = range.e.r - range.s.r + 1;
       const columnCount = range.e.c - range.s.c + 1;
-      if (rowCount > MAX_ROWS) throw new Error(`This worksheet has more than ${MAX_ROWS.toLocaleString()} rows. Narrow the Data Mart export before using it here.`);
-      if (columnCount > MAX_COLUMNS) throw new Error(`This worksheet has more than ${MAX_COLUMNS} columns. Narrow the Data Mart export before using it here.`);
+      if (rowCount > MAX_ROWS) throw new Error(`This worksheet has more than ${MAX_ROWS.toLocaleString()} rows. Narrow the export before using it here.`);
+      if (columnCount > MAX_COLUMNS) throw new Error(`This worksheet has more than ${MAX_COLUMNS} columns. Narrow the export before using it here.`);
     }
 
     const rows = global.XLSX.utils.sheet_to_json(sheet, {
@@ -56,7 +56,7 @@
       raw: true,
       defval: Object.prototype.hasOwnProperty.call(options, "defval") ? options.defval : null
     });
-    if (rows.length > MAX_ROWS) throw new Error(`This worksheet has more than ${MAX_ROWS.toLocaleString()} rows. Narrow the Data Mart export before using it here.`);
+    if (rows.length > MAX_ROWS) throw new Error(`This worksheet has more than ${MAX_ROWS.toLocaleString()} rows. Narrow the export before using it here.`);
     return { workbook, sheet, rows };
   }
 
