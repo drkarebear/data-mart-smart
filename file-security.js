@@ -7,6 +7,15 @@
   const EXCEL_EXTENSIONS = [".xlsx", ".xls"];
   const CSV_EXTENSIONS = [".csv"];
   const SHEETJS_URL = "https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js";
+  // Subresource Integrity hash for the pinned SheetJS build above. CSP already restricts
+  // script-src to this exact CDN origin, but SRI adds a second, independent guarantee: if
+  // cdn.sheetjs.com is ever compromised or serves different bytes than expected, the browser
+  // will refuse to run the script instead of silently executing whatever it returns.
+  // To fill this in: download the exact file from SHEETJS_URL, then run
+  //   openssl dgst -sha384 -binary xlsx.full.min.js | openssl base64 -A
+  // and paste the result below as "sha384-<hash>". Leave empty to skip the integrity check
+  // (the script will still load normally; only this extra guarantee is skipped).
+  const SHEETJS_SRI = "";
   let sheetJsPromise = null;
 
   function extensionOf(name) {
@@ -69,6 +78,8 @@
       script.src = SHEETJS_URL;
       script.async = true;
       script.referrerPolicy = "no-referrer";
+      script.crossOrigin = "anonymous";
+      if (SHEETJS_SRI) script.integrity = SHEETJS_SRI;
       script.dataset.dataMartSmartSheetjs = "true";
       const timer = global.setTimeout(() => {
         script.remove();
