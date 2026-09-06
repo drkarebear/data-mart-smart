@@ -21,8 +21,8 @@
 <section aria-labelledby="page-title" class="page-hero viewer-hero">
 <div class="container page-hero-inner"><p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="explore-data.html">Explore Data</a> <span aria-hidden="true">/</span> District Compare</p>
 <p class="eyebrow">Compare colleges without building a pivot table</p>
-<h1 id="page-title">District Compare</h1>
-<p>Compare the same program and measure across the colleges in one California Community College district. Nine colleges is fine. The chart is designed to stay readable even in a large multi-college district.</p>
+<h1 id="page-title">District Compare &amp; Trends</h1>
+<p>Compare colleges in one period or follow the same colleges across several years. One multi-year Program Awards spreadsheet can show A.A., A.A.-T, A.S., A.S.-T, or other award types across the district without building a pivot table first.</p>
 </div>
 </section>
 <section aria-labelledby="upload-heading">
@@ -45,7 +45,7 @@
 <div class="container content-narrow">
 <h2 id="guardrails-heading">What Data Mart Smart checks first</h2>
 <div aria-label="Comparison guardrails" class="comparison-check-row">
-<span>Same report</span><span>Same period</span><span>Same program definition</span><span>Same measure</span>
+<span>Same report</span><span>Same program definition</span><span>Same measure</span><span>Comparable periods</span>
 </div>
 <p class="small-note">If the files do not support a defensible comparison, the tool stops instead of forcing the chart.</p>
 </div>
@@ -56,12 +56,34 @@
 <aside aria-labelledby="district-setup-heading" class="viewer-controls">
 <p class="module-label"><span aria-hidden="true">🏫</span> District comparison</p>
 <h2 id="district-setup-heading">Choose one fair comparison</h2>
+<label for="districtView">View</label>
+<select id="districtView">
+<option value="compare">Compare colleges in one period</option>
+<option value="trend">Follow colleges over time</option>
+</select>
+<p class="field-help" id="districtViewHelp">Trend view is available when a Program Awards export contains two or more annual periods.</p>
 <div hidden="" id="districtFilterWrap">
 <label for="districtFilter">District</label>
 <select id="districtFilter"></select>
 </div>
+<div id="districtPeriodWrap">
 <label for="districtPeriod">Period</label>
 <select id="districtPeriod"></select>
+</div>
+<div hidden="" id="districtTrendWrap">
+<label for="districtTrendPreset">Years to show</label>
+<select id="districtTrendPreset">
+<option value="latest5">Latest 5 years</option>
+<option value="latest10">Latest 10 years</option>
+<option value="all">All available years</option>
+<option value="custom">Custom range</option>
+</select>
+<div class="district-trend-range">
+<div><label for="districtTrendStart">Start period</label><select id="districtTrendStart"></select></div>
+<div><label for="districtTrendEnd">End period</label><select id="districtTrendEnd"></select></div>
+</div>
+<p class="field-help">One multi-year Program Awards spreadsheet can power the whole trend. Choose a quick year range or set custom start and end periods. Missing college-period values stay missing rather than being turned into zero.</p>
+</div>
 <div id="districtProgramWrap">
 <label for="districtProgram">Program or six-digit TOP</label>
 <select id="districtProgram"></select>
@@ -89,11 +111,11 @@
 <p class="viewer-result-meta" id="districtResultMeta"></p>
 <div class="district-stat-grid" id="districtStats"></div>
 <div class="data-caution-box" id="districtCaution"></div>
-<div aria-label="College comparison bar chart" class="district-chart" id="districtChart"></div>
+<div aria-label="District comparison chart" class="district-chart" id="districtChart"></div>
 <div aria-label="College comparison table" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption id="districtCaption">Selected colleges</caption>
-<thead><tr><th scope="col">College</th><th id="districtValueHeader" scope="col">Value</th><th scope="col">Difference from median</th><th id="districtShareHeader" scope="col">Share of selected total</th></tr></thead>
+<thead id="districtTableHead"><tr><th scope="col">College</th><th id="districtValueHeader" scope="col">Value</th><th scope="col">Difference from median</th><th id="districtShareHeader" scope="col">Share of selected total</th></tr></thead>
 <tbody id="districtResultsBody"></tbody>
 </table>
 </div>
@@ -101,7 +123,7 @@
 <h2 id="district-meaning-heading"><span aria-hidden="true">🧠</span> What does this comparison tell me?</h2>
 <p id="districtMeaning"></p>
 <p><strong>The data do not establish:</strong> that a college with a larger value has a stronger program. College size, enrollment, course mix, staffing, student populations, and local program structures can differ.</p>
-<div class="viewer-actions"><a class="button button-secondary" href="explore-data.html">Explore one export more deeply</a><a class="button button-secondary" href="compare-trends.html">Compare over time</a></div>
+<div class="viewer-actions"><a class="button button-secondary" href="explore-data.html">Explore one export more deeply</a><a class="button button-secondary" href="compare-trends.html">Compare separate exports</a></div>
 </section>
 <details class="reference-details"><summary>Method and cautions</summary><div class="details-body"><pre class="method-text" id="districtMethod"></pre><button class="button button-secondary" id="districtCopyMethod" type="button">Copy method</button></div></details>
 </div>
@@ -110,8 +132,8 @@
 </section>
 <section aria-labelledby="supported-heading" class="soft-section">
 <div class="container content-narrow">
-<h2 id="supported-heading">Best exports for District Compare</h2>
-<p>District Compare currently has report-specific support for <strong>Course Details, Program Awards, Success &amp; Retention, Grade Distribution, and Student Headcount</strong>. Course Details is usually the best starting point for reported section comparisons.</p>
+<h2 id="supported-heading">Best exports for District Compare &amp; Trends</h2>
+<p>District Compare currently has report-specific support for <strong>Course Details, Program Awards, Success &amp; Retention, Grade Distribution, and Student Headcount</strong>. The multi-college line graph works with <strong>one Program Awards export that contains multiple annual columns</strong>. Choose an award type such as A.A. or A.A.-T, choose the latest 5 years, latest 10 years, all years, or a custom range, and follow the same colleges across time.</p>
 <details class="reference-details"><summary>Why not every Data Mart report yet?</summary><div class="details-body"><p>Some Data Mart exports do not identify college, program, period, and measure in a structure that can be compared safely without additional testing. Data Mart Smart will not guess at those fields.</p></div></details><details class="reference-details"><summary>If the Excel reader will not load</summary><div class="details-body"><p>The comparison page itself should still load and the built-in example should still work. Excel support is loaded only when you choose an .xlsx or .xls file. If that external reader is blocked or slow, export the same Data Mart result as <strong>CSV</strong> and try again; CSV is read locally without that dependency.</p></div></details>
 </div>
 </section>

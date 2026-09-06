@@ -112,3 +112,12 @@ Static structural checks and JavaScript syntax checks were rerun after these cha
 ## Recommended next live check
 
 After deployment to GitHub Pages, test District Compare with (1) the built-in demo, (2) a Data Mart CSV export, and (3) the current Program Awards Excel export on the network/browser environment faculty will actually use. This complements the static and parser-level checks performed locally.
+
+## District award-type trend update — 2026-09-06
+
+- Added Program Awards award-type filtering with shorter on-screen labels while preserving official source wording in the method record.
+- Added Latest 5 years, Latest 10 years, All available years, and Custom range controls.
+- Los Angeles CCD trend mode offers all nine LACCD colleges; colleges not returned for the selected program/award type remain `Not available` rather than becoming zero.
+- Tested Program Awards parser against the supplied Speech Communication multi-year export structure: 34 annual periods recognized, with the latest five correctly resolving to 2021-2022 through 2025-2026.
+- JavaScript syntax check passed for all site scripts after the update.
+- Internal HTML target/link and duplicate-ID scan passed after the update.

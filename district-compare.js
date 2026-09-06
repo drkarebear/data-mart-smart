@@ -6,13 +6,16 @@
   const els = {
     input: $("districtFileInput"), browse: $("districtBrowseButton"), demo: $("districtDemoButton"),
     drop: $("districtDropZone"), status: $("districtStatus"), workspace: $("districtWorkspace"),
-    districtWrap: $("districtFilterWrap"), district: $("districtFilter"), period: $("districtPeriod"),
+    view: $("districtView"), viewHelp: $("districtViewHelp"),
+    districtWrap: $("districtFilterWrap"), district: $("districtFilter"),
+    periodWrap: $("districtPeriodWrap"), period: $("districtPeriod"),
+    trendWrap: $("districtTrendWrap"), trendPreset: $("districtTrendPreset"), trendStart: $("districtTrendStart"), trendEnd: $("districtTrendEnd"),
     programWrap: $("districtProgramWrap"), program: $("districtProgram"), extraWrap: $("districtExtraWrap"),
     extraLabel: $("districtExtraLabel"), extra: $("districtExtra"), measure: $("districtMeasure"),
     focus: $("districtFocus"), choices: $("districtCollegeChoices"), stats: $("districtStats"),
     chart: $("districtChart"), body: $("districtResultsBody"), title: $("districtResultTitle"),
     meta: $("districtResultMeta"), caution: $("districtCaution"), meaning: $("districtMeaning"),
-    method: $("districtMethod"), caption: $("districtCaption"), valueHeader: $("districtValueHeader"),
+    method: $("districtMethod"), caption: $("districtCaption"), tableHead: $("districtTableHead"), valueHeader: $("districtValueHeader"),
     shareHeader: $("districtShareHeader"), download: $("districtDownloadCsv"), copy: $("districtCopyMethod"),
     reset: $("districtReset")
   };
@@ -29,7 +32,17 @@
   els.input.addEventListener("change", () => loadFiles([...els.input.files]));
   els.demo.addEventListener("click", loadDemo);
   els.reset.addEventListener("click", resetAll);
-  [els.district, els.period, els.program, els.extra, els.measure, els.focus].forEach(el => el.addEventListener("change", () => { rebuildCollegeChoices(false); render(); }));
+  [els.view, els.district, els.period, els.trendStart, els.trendEnd, els.program, els.extra, els.measure, els.focus].forEach(node => node.addEventListener("change", () => {
+    if (node === els.trendStart || node === els.trendEnd) syncTrendPreset();
+    if (node === els.view || node === els.trendStart || node === els.trendEnd) updateViewControls();
+    rebuildCollegeChoices(false);
+    render();
+  }));
+  els.trendPreset.addEventListener("change", () => {
+    applyTrendPreset(els.trendPreset.value);
+    rebuildCollegeChoices(false);
+    render();
+  });
   els.choices.addEventListener("change", render);
   els.download.addEventListener("click", downloadCsv);
   els.copy.addEventListener("click", copyMethod);
@@ -88,7 +101,7 @@
       parsed: {
         kind: "program-awards", district: "Los Angeles CCD", period: "Annual 2025-2026", reportTitle: "Program Awards Summary Report",
         records: [
-          ["East Los Angeles College",24],["Los Angeles City College",17],["Los Angeles Harbor College",9],["Los Angeles Mission College",12],["Los Angeles Pierce College",15],["Los Angeles Southwest College",5],["Los Angeles Trade-Technical College",2],["Los Angeles Valley College",21],["West Los Angeles College",12]
+          ["East LA",24],["LA City",17],["LA Harbor",9],["LA Mission",12],["LA Pierce",15],["LA Southwest",5],["LA Trade",2],["LA Valley",21],["West LA",12]
         ].map(([college,count]) => ({district:"Los Angeles CCD",college,awardType:"All award types",program:"English",top:"150100",count,period:"Annual 2025-2026"}))
       }
     }];
@@ -112,6 +125,18 @@
     return [...new Set(values.filter(value => value !== null && value !== undefined && String(value).trim() !== "").map(value => String(value).trim()))].sort((a,b) => a.localeCompare(b));
   }
 
+  const LACCD_COLLEGES = ["East LA", "LA City", "LA Harbor", "LA Mission", "LA Pierce", "LA Southwest", "LA Trade", "LA Valley", "West LA"];
+
+  function awardTypeLabel(value) {
+    const text = String(value || "").trim();
+    if (text === "All award types") return "All award types";
+    if (/Associate of Arts \(A\.A\.\)/i.test(text)) return "Associate of Arts (A.A.)";
+    if (/Associate in Arts for Transfer \(A\.A\.-T\)/i.test(text)) return "Associate in Arts for Transfer (A.A.-T)";
+    if (/Associate of Science \(A\.S\.\)/i.test(text)) return "Associate of Science (A.S.)";
+    if (/Associate in Science for Transfer \(A\.S\.-T\)/i.test(text)) return "Associate in Science for Transfer (A.S.-T)";
+    return text.replace(/\s+degree$/i, "").trim();
+  }
+
   function setOptions(select, values, labeler) {
     const prior = select.value;
     select.innerHTML = "";
@@ -124,16 +149,80 @@
     if (values.includes(prior)) select.value = prior;
   }
 
+  function periodOrder(period) {
+    const text = String(period || "").trim();
+    let match = text.match(/(?:Annual\s+)?(\d{4})-(\d{4})/i);
+    if (match) return Number(match[1]) * 10 + 5;
+    match = text.match(/^(Winter|Spring|Summer|Fall)\s+(\d{4})$/i);
+    if (match) {
+      const term = {winter:0,spring:1,summer:2,fall:3}[match[1].toLowerCase()];
+      return Number(match[2]) * 10 + term;
+    }
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  function sortedPeriods(records) {
+    return unique(records.map(r => r.period || r.term)).sort((a,b) => periodOrder(a) - periodOrder(b) || a.localeCompare(b));
+  }
+
+  function isTrendMode() {
+    return els.view.value === "trend" && state.kind === "program-awards" && !els.view.options[1].disabled;
+  }
+
+  function updateViewControls() {
+    const trend = isTrendMode();
+    els.periodWrap.hidden = trend;
+    els.trendWrap.hidden = !trend;
+    els.viewHelp.textContent = state.kind === "program-awards" && !els.view.options[1].disabled
+      ? "Compare one year with bars, or follow the same colleges across several annual periods with a line graph."
+      : "Trend view is currently available for Program Awards exports that contain two or more annual periods.";
+  }
+
+  function applyTrendPreset(value) {
+    const periods = sortedPeriods(allRecords());
+    if (!periods.length || value === "custom") return;
+    els.trendEnd.value = periods[periods.length - 1];
+    if (value === "all") els.trendStart.value = periods[0];
+    else if (value === "latest10") els.trendStart.value = periods[Math.max(0, periods.length - 10)];
+    else els.trendStart.value = periods[Math.max(0, periods.length - 5)];
+    updateViewControls();
+  }
+
+  function syncTrendPreset() {
+    const periods = sortedPeriods(allRecords());
+    if (!periods.length) return;
+    const start = els.trendStart.value;
+    const end = els.trendEnd.value;
+    const last = periods[periods.length - 1];
+    if (end !== last) { els.trendPreset.value = "custom"; return; }
+    if (start === periods[0]) { els.trendPreset.value = "all"; return; }
+    if (start === periods[Math.max(0, periods.length - 10)]) { els.trendPreset.value = "latest10"; return; }
+    if (start === periods[Math.max(0, periods.length - 5)]) { els.trendPreset.value = "latest5"; return; }
+    els.trendPreset.value = "custom";
+  }
+
   function configureControls() {
     const records = allRecords();
     const districts = unique(records.map(r => r.district));
     els.districtWrap.hidden = districts.length < 2;
     setOptions(els.district, districts.length ? districts : [""]);
 
-    let periods = unique(records.map(r => r.period || r.term));
-    if (state.kind === "student-headcount" && !periods.length) periods = unique(state.files.map(f => f.parsed.period));
+    let periods = sortedPeriods(records);
+    if (state.kind === "student-headcount" && !periods.length) periods = unique(state.files.map(f => f.parsed.period)).sort((a,b) => periodOrder(a) - periodOrder(b));
     setOptions(els.period, periods.length ? periods : ["Period not identified"]);
-    if (state.kind === "program-awards" && periods.length) els.period.value = periods[periods.length - 1];
+    setOptions(els.trendStart, periods.length ? periods : ["Period not identified"]);
+    setOptions(els.trendEnd, periods.length ? periods : ["Period not identified"]);
+    const trendOption = els.view.querySelector('option[value="trend"]');
+    const trendAvailable = state.kind === "program-awards" && periods.length >= 2;
+    trendOption.disabled = !trendAvailable;
+    if (!trendAvailable) els.view.value = "compare";
+    if (periods.length) {
+      els.period.value = periods[periods.length - 1];
+      els.trendEnd.value = periods[periods.length - 1];
+      els.trendStart.value = periods[Math.max(0, periods.length - 5)];
+    }
+    els.trendPreset.value = "latest5";
+    updateViewControls();
 
     if (state.kind === "student-headcount") {
       els.programWrap.hidden = true;
@@ -148,7 +237,7 @@
     if (state.kind === "program-awards") {
       els.extraWrap.hidden = false;
       els.extraLabel.textContent = "Award type";
-      setOptions(els.extra, ["All award types", ...unique(records.map(r => r.awardType).filter(v => v && v !== "All award types"))]);
+      setOptions(els.extra, ["All award types", ...unique(records.map(r => r.awardType).filter(v => v && v !== "All award types"))], awardTypeLabel);
       setOptions(els.measure, ["awards"], () => "Awards granted");
     } else if (state.kind === "retention-success") {
       els.extraWrap.hidden = false;
@@ -167,7 +256,11 @@
 
   function currentFilter() {
     const programParts = els.program.value.split("|");
-    return { district: els.district.value, period: els.period.value, top: programParts[0] || "", extra: els.extra.value, measure: els.measure.value };
+    return {
+      district: els.district.value, period: els.period.value, top: programParts[0] || "",
+      extra: els.extra.value, measure: els.measure.value,
+      trendStart: els.trendStart.value, trendEnd: els.trendEnd.value
+    };
   }
 
   function filteredRecords() {
@@ -241,10 +334,54 @@
     return map;
   }
 
+  function trendPeriods() {
+    const f = currentFilter();
+    const periods = sortedPeriods(allRecords());
+    if (!periods.length) return [];
+    const startOrder = periodOrder(f.trendStart);
+    const endOrder = periodOrder(f.trendEnd);
+    const low = Math.min(startOrder, endOrder);
+    const high = Math.max(startOrder, endOrder);
+    return periods.filter(p => { const order = periodOrder(p); return order >= low && order <= high; });
+  }
+
+  function trendSeriesByCollege() {
+    if (!isTrendMode()) return new Map();
+    const f = currentFilter();
+    const periods = trendPeriods();
+    const allowed = new Set(periods);
+    const records = allRecords().filter(r => {
+      if (f.district && r.district && r.district !== f.district) return false;
+      if (f.top && r.top !== f.top) return false;
+      if (!allowed.has(r.period || r.term || "")) return false;
+      if (f.extra !== "All award types" && r.awardType !== f.extra) return false;
+      return true;
+    });
+    const series = new Map();
+    records.forEach(r => {
+      if (!r.college) return;
+      if (!series.has(r.college)) series.set(r.college, new Map());
+      const collegeMap = series.get(r.college);
+      const period = r.period || r.term || "";
+      collegeMap.set(period, (collegeMap.get(period) || 0) + (Number(r.count) || 0));
+    });
+    return series;
+  }
+
+  function collegeUniverse() {
+    if (isTrendMode()) {
+      const found = [...trendSeriesByCollege().keys()];
+      const f = currentFilter();
+      const districtName = f.district || unique(allRecords().map(r => r.district))[0] || "";
+      if (/Los Angeles CCD/i.test(districtName)) return unique([...LACCD_COLLEGES, ...found]);
+      return found;
+    }
+    return [...valuesByCollege().keys()];
+  }
+
   function rebuildCollegeChoices(selectAll) {
-    const values = valuesByCollege();
     const prior = new Set([...els.choices.querySelectorAll("input:checked")].map(x => x.value));
-    const colleges = [...values.keys()].filter(Boolean).sort((a,b) => a.localeCompare(b));
+    const colleges = collegeUniverse().filter(Boolean).sort((a,b) => a.localeCompare(b));
     els.choices.innerHTML = "";
     colleges.forEach(college => {
       const label = document.createElement("label"); label.className = "check-chip";
@@ -255,6 +392,21 @@
     const focusPrior = els.focus.value;
     setOptions(els.focus, ["", ...colleges], value => value || "No highlight");
     if (colleges.includes(focusPrior)) els.focus.value = focusPrior;
+  }
+
+  function selectedTrendSeries() {
+    const selected = new Set([...els.choices.querySelectorAll("input:checked")].map(x => x.value));
+    const periods = trendPeriods();
+    const all = trendSeriesByCollege();
+    return [...selected]
+      .map(college => {
+        const values = all.get(college) || new Map();
+        return {
+          college,
+          points: periods.map(period => ({ period, value: values.has(period) ? values.get(period) : null }))
+        };
+      })
+      .sort((a,b) => a.college.localeCompare(b.college));
   }
 
   function selectedResults() {
@@ -276,11 +428,26 @@
 
   function render() {
     if (els.workspace.hidden) return;
+    if (isTrendMode()) {
+      renderTrend();
+      return;
+    }
+    renderComparison();
+  }
+
+  function resetComparisonHead() {
+    els.tableHead.innerHTML = `<tr><th scope="col">College</th><th id="districtValueHeader" scope="col">${escapeHtml(measureLabel())}</th><th scope="col">Difference from median</th><th id="districtShareHeader" scope="col">${isRate() ? "Share not applicable" : "Share of selected total"}</th></tr>`;
+    els.valueHeader = $("districtValueHeader");
+    els.shareHeader = $("districtShareHeader");
+  }
+
+  function renderComparison() {
     const results = selectedResults();
     if (!results.length) {
       els.chart.innerHTML = "<p class=\"empty-state\">Choose at least one college to display.</p>";
       els.body.innerHTML = ""; els.stats.innerHTML = ""; return;
     }
+    resetComparisonHead();
     const med = median(results.map(r => r.value));
     const total = results.reduce((sum,r) => sum+r.value, 0);
     const max = Math.max(...results.map(r => r.value), 0);
@@ -290,14 +457,13 @@
     const label = measureLabel();
     els.title.textContent = `${programLabel()} across ${results.length} college${results.length === 1 ? "" : "s"}`;
     els.meta.textContent = `${label} • ${period}${els.districtWrap.hidden ? "" : ` • ${districtName}`}`;
-    els.valueHeader.textContent = label;
-    els.shareHeader.textContent = isRate() ? "Share not applicable" : "Share of selected total";
     els.caption.textContent = `${label} for ${programLabel()} across selected colleges`;
     els.caution.innerHTML = cautionText(results.length);
     els.stats.innerHTML = statCard("Colleges", results.length) + statCard("Median", formatValue(med)) + statCard("Highest", formatValue(results[0].value));
+    els.chart.setAttribute("aria-label", "College comparison bar chart");
 
     els.chart.innerHTML = "";
-    results.forEach((item,index) => {
+    results.forEach(item => {
       const row = document.createElement("div"); row.className = "district-bar-row" + (item.college === focus ? " is-focus" : "");
       const name = document.createElement("div"); name.className = "district-bar-label"; name.textContent = `${item.college === focus ? "★ " : ""}${item.college}`;
       const track = document.createElement("div"); track.className = "district-bar-track";
@@ -318,6 +484,130 @@
     const high = results[0], low = results[results.length-1];
     els.meaning.textContent = results.length > 1 ? `Among the ${results.length} selected colleges, ${high.college} has the highest reported ${label.toLowerCase()} (${formatValue(high.value)}), while ${low.college} has the lowest (${formatValue(low.value)}). This is a descriptive comparison, not a quality ranking.` : `The selected college reports ${formatValue(high.value)} for ${label.toLowerCase()}. Add more colleges to create a district comparison.`;
     els.method.textContent = buildMethod(results);
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[ch]));
+  }
+
+  function renderTrend() {
+    const series = selectedTrendSeries();
+    const periods = trendPeriods();
+    if (!series.length || periods.length < 2) {
+      els.chart.innerHTML = `<p class="empty-state">Choose at least one college and at least two periods to build a trend.</p>`;
+      els.body.innerHTML = ""; els.stats.innerHTML = ""; return;
+    }
+    const label = measureLabel();
+    const validValues = series.flatMap(s => s.points.map(p => p.value).filter(v => Number.isFinite(Number(v))));
+    const latestPeriod = periods[periods.length - 1];
+    const firstPeriod = periods[0];
+    const latestValues = series.map(s => ({college:s.college, value:s.points[s.points.length-1].value})).filter(x => Number.isFinite(Number(x.value)));
+    const changes = series.map(s => {
+      const first = s.points.find(p => Number.isFinite(Number(p.value)));
+      const last = [...s.points].reverse().find(p => Number.isFinite(Number(p.value)));
+      return { college:s.college, first:first ? first.value : null, last:last ? last.value : null, change:first && last ? Number(last.value)-Number(first.value) : null };
+    }).filter(x => Number.isFinite(Number(x.change)));
+    const largestIncrease = [...changes].sort((a,b) => b.change-a.change)[0];
+    const awardLabel = state.kind === "program-awards" ? awardTypeLabel(els.extra.value) : "";
+    els.title.textContent = `${awardLabel && awardLabel !== "All award types" ? `${awardLabel} awards in ` : ""}${programLabel()} across ${series.length} college${series.length === 1 ? "" : "s"} over time`;
+    els.meta.textContent = `${label}${awardLabel ? ` • ${awardLabel}` : ""} • ${firstPeriod} to ${latestPeriod}`;
+    els.caption.textContent = `${label} by college from ${firstPeriod} through ${latestPeriod}`;
+    els.caution.innerHTML = trendCautionText(series, periods);
+    const latestTotal = latestValues.reduce((sum,item)=>sum+Number(item.value),0);
+    const collegesWithData = series.filter(s => s.points.some(p => Number.isFinite(Number(p.value)))).length;
+    els.stats.innerHTML = statCard("Colleges selected", series.length) + statCard("With returned data", collegesWithData) + statCard("Periods", periods.length) + statCard(`Selected total, ${latestPeriod.replace(/^Annual\s+/i,"")}`, formatValue(latestTotal));
+    els.chart.setAttribute("aria-label", `Line chart following ${series.length} colleges from ${firstPeriod} through ${latestPeriod}`);
+    renderMultiLineChart(series, periods, label);
+    renderTrendTable(series, periods);
+    if (largestIncrease) {
+      const direction = largestIncrease.change > 0 ? "increased" : largestIncrease.change < 0 ? "decreased" : "did not change";
+      els.meaning.textContent = `This view follows each selected college across the same ${periods.length} annual periods. ${largestIncrease.college} has the largest numeric increase among colleges with values at both ends of the selected range (${largestIncrease.change >= 0 ? "+" : ""}${formatValue(largestIncrease.change)}). Use the lines to see direction and volatility, not to rank program quality.`;
+    } else {
+      els.meaning.textContent = `This view follows each selected college across the same ${periods.length} annual periods. Missing values stay missing, so a line may have a gap rather than an invented zero.`;
+    }
+    els.method.textContent = buildTrendMethod(series, periods);
+  }
+
+  function trendCautionText(series, periods) {
+    const expectedCells = series.length * periods.length;
+    const observed = series.reduce((sum,s) => sum + s.points.filter(p => Number.isFinite(Number(p.value))).length, 0);
+    let text = `<strong>Follow the pattern, not just the endpoints.</strong> The same Program Awards definition and award filter are applied across ${periods.length} annual periods.`;
+    if (observed < expectedCells) text += " At least one college-period value is absent from the export. Missing values are left blank and are not converted to zero.";
+    text += " Award count is not unique graduate headcount. A college omitted from the export is not assumed to have zero awards.";
+    if (state.demo) text += " The built-in example is a demonstration and is not a live data feed.";
+    return text;
+  }
+
+  function renderTrendTable(series, periods) {
+    els.tableHead.innerHTML = `<tr><th scope="col">College</th>${periods.map(p => `<th scope="col">${escapeHtml(p.replace(/^Annual\s+/i,""))}</th>`).join("")}<th scope="col">First to latest</th></tr>`;
+    const focus = els.focus.value;
+    els.body.innerHTML = "";
+    series.forEach(s => {
+      const tr = document.createElement("tr"); if (s.college === focus) tr.className = "focus-row";
+      const th = document.createElement("th"); th.scope = "row"; th.textContent = `${s.college === focus ? "★ " : ""}${s.college}`; tr.append(th);
+      s.points.forEach(p => { const td=document.createElement("td"); td.className="numeric"; td.textContent = Number.isFinite(Number(p.value)) ? formatValue(p.value) : "Not available"; tr.append(td); });
+      const first = s.points.find(p => Number.isFinite(Number(p.value)));
+      const last = [...s.points].reverse().find(p => Number.isFinite(Number(p.value)));
+      const td=document.createElement("td"); td.className="numeric"; td.textContent = first && last ? `${Number(last.value)-Number(first.value) >= 0 ? "+" : ""}${formatValue(Number(last.value)-Number(first.value))}` : "Not available"; tr.append(td);
+      els.body.append(tr);
+    });
+  }
+
+  function renderMultiLineChart(series, periods, label) {
+    const width = 1040, height = 500, left = 70, right = 210, top = 32, bottom = 72;
+    const values = series.flatMap(s => s.points.map(p => Number(p.value)).filter(Number.isFinite));
+    const maxRaw = Math.max(...values, 0);
+    const max = maxRaw > 0 ? maxRaw * 1.12 : 1;
+    const x = i => left + (periods.length === 1 ? 0 : i * (width-left-right)/(periods.length-1));
+    const y = v => top + (max-v)/max*(height-top-bottom);
+    const colors = ["#1f5f99","#8b3f87","#087c78","#9a6700","#7b4b2a","#4b6584","#b03a2e","#526b2d","#6a5acd"];
+    const dashes = ["","10 4","3 4","12 3 3 3","16 5","6 3","14 3 2 3","8 2 2 2","2 3"];
+    const grid = [0,.25,.5,.75,1].map(frac => { const value=max*frac, yy=y(value); return `<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" class="trend-grid"></line><text x="${left-10}" y="${yy+4}" text-anchor="end" class="trend-axis-label">${escapeHtml(formatValue(value))}</text>`; }).join("");
+    const xLabels = periods.map((p,i)=>`<text x="${x(i)}" y="${height-bottom+30}" text-anchor="middle" class="trend-x-label">${escapeHtml(p.replace(/^Annual\s+/i,""))}</text>`).join("");
+    const focus = els.focus.value;
+    const labelCandidates = [];
+    let paths = "";
+    series.forEach((s,idx) => {
+      const color = colors[idx % colors.length];
+      const dash = dashes[idx % dashes.length];
+      const segments = [];
+      let current = [];
+      s.points.forEach((p,i)=>{
+        if (Number.isFinite(Number(p.value))) current.push(`${x(i)},${y(Number(p.value))}`);
+        else if (current.length) { segments.push(current); current=[]; }
+      });
+      if (current.length) segments.push(current);
+      const focused = !focus || s.college === focus;
+      const opacity = focus && s.college !== focus ? .24 : 1;
+      segments.forEach(seg => { if (seg.length >= 2) paths += `<polyline points="${seg.join(" ")}" fill="none" stroke="${color}" stroke-width="${s.college===focus ? 5 : 3}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${opacity}" class="district-trend-line"></polyline>`; });
+      s.points.forEach((p,i)=>{ if (Number.isFinite(Number(p.value))) paths += `<circle cx="${x(i)}" cy="${y(Number(p.value))}" r="${s.college===focus ? 5 : 3.5}" fill="${color}" opacity="${opacity}"><title>${escapeHtml(`${s.college}, ${p.period}: ${formatValue(p.value)}`)}</title></circle>`; });
+      const lastIndex = [...s.points].map(p => p.value).findLastIndex ? [...s.points].map(p=>p.value).findLastIndex(v => Number.isFinite(Number(v))) : (()=>{for(let i=s.points.length-1;i>=0;i--) if(Number.isFinite(Number(s.points[i].value))) return i; return -1;})();
+      if (lastIndex >= 0) labelCandidates.push({college:s.college, y:y(Number(s.points[lastIndex].value)), color, dash, opacity, value:s.points[lastIndex].value});
+    });
+    labelCandidates.sort((a,b)=>a.y-b.y);
+    const minGap=18;
+    for (let i=1;i<labelCandidates.length;i++) if (labelCandidates[i].y-labelCandidates[i-1].y<minGap) labelCandidates[i].y=labelCandidates[i-1].y+minGap;
+    if (labelCandidates.length && labelCandidates[labelCandidates.length-1].y > height-bottom-4) {
+      const shift=labelCandidates[labelCandidates.length-1].y-(height-bottom-4); labelCandidates.forEach(item=>item.y-=shift);
+    }
+    const labels=labelCandidates.map(item=>`<line x1="${width-right+8}" y1="${item.y}" x2="${width-right+28}" y2="${item.y}" stroke="${item.color}" stroke-width="3" ${item.dash ? `stroke-dasharray="${item.dash}"` : ""} opacity="${item.opacity}"></line><text x="${width-right+34}" y="${item.y+4}" class="district-trend-end-label" opacity="${item.opacity}">${escapeHtml(item.college)} (${escapeHtml(formatValue(item.value))})</text>`).join("");
+    const desc = series.map(s => `${s.college}: ${s.points.map(p => `${p.period} ${Number.isFinite(Number(p.value)) ? formatValue(p.value) : "not available"}`).join(", ")}`).join("; ");
+    els.chart.innerHTML = `<div class="trend-chart-scroll" tabindex="0"><svg class="district-trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="districtTrendTitle districtTrendDesc"><title id="districtTrendTitle">${escapeHtml(label)} by college over time</title><desc id="districtTrendDesc">${escapeHtml(desc)}</desc>${grid}${xLabels}${paths}${labels}</svg></div><p class="small-note">Each college keeps the same line style across years. Use “Highlight my college” to make one line stand out. Exact values are in the table below.</p>`;
+  }
+
+  function buildTrendMethod(series, periods) {
+    return [
+      `Source: CCC Data Mart`,
+      `Report: ${kindLabels[state.kind]}`,
+      `Periods: ${periods.join("; ")}`,
+      `District: ${els.districtWrap.hidden ? "District represented by the selected export(s)" : els.district.value}`,
+      `Program: ${programLabel()}`,
+      `${els.extraWrap.hidden ? "" : `${els.extraLabel.textContent}: ${els.extra.value}\n`}Measure: ${measureLabel()}`,
+      `Trend range preset: ${els.trendPreset.options[els.trendPreset.selectedIndex] ? els.trendPreset.options[els.trendPreset.selectedIndex].textContent : "Custom"}`,
+      `Colleges followed: ${series.map(s => s.college).join(", ")}`,
+      `Files used: ${state.files.map(f => f.name).join(", ")}`,
+      `Special handling: Missing college-period values remain missing and are not converted to zero. Award counts are not unique graduate headcounts.`
+    ].filter(Boolean).join("\n");
   }
 
   function cautionText(count) {
@@ -347,12 +637,26 @@
   }
 
   function downloadCsv() {
-    const results = selectedResults(); if (!results.length) return;
-    const med = median(results.map(r => r.value)); const total = results.reduce((s,r)=>s+r.value,0);
-    const rows = [["College",measureLabel(),"Difference from median",isRate()?"Share not applicable":"Share of selected total"]];
-    results.forEach(r => rows.push([r.college, isRate() ? (r.value*100).toFixed(1)+"%" : r.value, r.value-med, isRate()?"":(total ? (r.value/total*100).toFixed(1)+"%":"")]));
+    let rows;
+    if (isTrendMode()) {
+      const periods = trendPeriods();
+      const series = selectedTrendSeries();
+      if (!series.length) return;
+      rows = [["College", ...periods, "First to latest"]];
+      series.forEach(s => {
+        const first = s.points.find(p => Number.isFinite(Number(p.value)));
+        const last = [...s.points].reverse().find(p => Number.isFinite(Number(p.value)));
+        const change = first && last ? Number(last.value)-Number(first.value) : "";
+        rows.push([s.college, ...s.points.map(p => Number.isFinite(Number(p.value)) ? p.value : ""), change]);
+      });
+    } else {
+      const results = selectedResults(); if (!results.length) return;
+      const med = median(results.map(r => r.value)); const total = results.reduce((s,r)=>s+r.value,0);
+      rows = [["College",measureLabel(),"Difference from median",isRate()?"Share not applicable":"Share of selected total"]];
+      results.forEach(r => rows.push([r.college, isRate() ? (r.value*100).toFixed(1)+"%" : r.value, r.value-med, isRate()?"":(total ? (r.value/total*100).toFixed(1)+"%":"")]));
+    }
     const csv = rows.map(row => row.map(DataMartFileSecurity.csvCell).join(",")).join("\r\n");
-    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="data-mart-smart-district-comparison.csv"; document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download=isTrendMode()?"data-mart-smart-district-trend.csv":"data-mart-smart-district-comparison.csv"; document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
 
   async function copyMethod() {
