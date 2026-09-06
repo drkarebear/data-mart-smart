@@ -23,7 +23,7 @@
 <h2 id="coach-question-heading">What are you trying to figure out?</h2>
 <form id="coachForm" novalidate>
 <label class="coach-question-label" for="coachQuestion">Your CCC data question</label>
-<textarea id="coachQuestion" name="coachQuestion" rows="5" maxlength="700" placeholder="Example: I am writing program review and want to know whether online English students are succeeding at the same rate as in-person students."></textarea>
+<textarea id="coachQuestion" name="coachQuestion" aria-describedby="coachQuestionHelp" rows="5" maxlength="700" placeholder="Example: I am writing program review and want to know whether online English students are succeeding at the same rate as in-person students."></textarea>
 <p class="field-help" id="coachQuestionHelp">Use ordinary language. Do not include student names, IDs, credentials, or confidential records.</p>
 <div class="coach-form-actions"><button class="button button-primary" type="submit">Recommend a data path</button><button class="button button-quiet" id="clearCoachButton" type="button">Clear</button></div>
 <p class="coach-browser-note"><strong>Private first pass:</strong> this question is matched to the site's decision guide in your browser. It is not sent to Data Mart Smart or Playlab.</p>
@@ -45,7 +45,7 @@
 </div></section>
 
 <section aria-labelledby="coach-result-heading" class="coach-result-section" hidden id="coachResultSection"><div class="container">
-<div aria-live="polite" aria-atomic="false" class="coach-result" id="coachResult" tabindex="-1">
+<div aria-labelledby="coach-result-heading" class="coach-result" id="coachResult" role="region" tabindex="-1">
 <p class="section-kicker">Coach recommendation</p>
 <h2 id="coach-result-heading">Your best first path</h2>
 <p class="coach-question-echo"><span class="visually-hidden">Question: </span><q id="coachQuestionEcho"></q></p>
@@ -68,6 +68,6 @@
 
 <section aria-labelledby="coach-note-heading" class="soft-section"><div class="container content-narrow coach-note"><h2 id="coach-note-heading">Use recommendations as a starting point</h2><p>No statewide dashboard can tell you why a pattern occurred by itself. Use the Coach to choose a defensible first source and frame the next question; use local knowledge, institutional research, and current official definitions before making consequential decisions.</p></div></section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="mailto:karencrozer@gmail.com?subject=Data%20Mart%20Smart%20accessibility%20issue">Report an accessibility issue</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>

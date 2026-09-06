@@ -42,7 +42,7 @@
 </div>
 <label for="withinCompareMeasure">Measure</label>
 <select id="withinCompareMeasure"></select>
-<fieldset>
+<fieldset aria-describedby="withinCompareAvailability">
 <legend id="withinCompareChoicesLegend">Choose items</legend>
 <div class="check-chip-group" id="withinCompareChoices"></div>
 </fieldset>
@@ -54,7 +54,7 @@
 <p class="viewer-result-meta" id="withinCompareMeta"></p>
 <div class="data-caution-box" id="withinCompareCaution"></div>
 <div aria-label="Comparison chart" class="bar-chart" id="withinCompareChart"></div>
-<div aria-label="Comparison table" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Comparison table" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption id="withinCompareCaption">Selected comparison</caption>
 <thead><tr><th id="withinCompareLabelHeader" scope="col">Item</th><th id="withinCompareValueHeader" scope="col">Value</th></tr></thead>
@@ -73,9 +73,9 @@
 <p class="module-label"><span aria-hidden="true">🎓</span> Program Awards</p>
 <h2 id="awards-filter-heading">Choose what to compare</h2>
 <label for="awardsProgramSearch">Program or TOP code</label>
-<input autocomplete="off" id="awardsProgramSearch" list="awardsProgramOptions" placeholder="Try English or 150100" type="search"/>
+<input autocomplete="off" id="awardsProgramSearch" aria-describedby="awardsProgramHelp" list="awardsProgramOptions" placeholder="Try English or 150100" type="search"/>
 <datalist id="awardsProgramOptions"></datalist>
-<p class="field-help">Start typing a program name, or enter a six-digit TOP code.</p>
+<p class="field-help" id="awardsProgramHelp">Start typing a program name, or enter a six-digit TOP code.</p>
 <label for="awardsType">Award type</label>
 <select id="awardsType"><option value="">All award types</option></select>
 <fieldset>
@@ -96,7 +96,7 @@
             One student may receive more than one award.
           </div>
 <div aria-label="Award count comparison chart" class="bar-chart" id="awardsBarChart"></div>
-<div aria-label="Selected program awards by college" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Selected program awards by college" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption>Selected program awards by college</caption>
 <thead><tr><th scope="col">College</th><th scope="col">Awards granted</th></tr></thead>
@@ -120,9 +120,9 @@
 <p class="module-label"><span aria-hidden="true">🎯</span> Success &amp; Retention</p>
 <h2 id="success-filter-heading">Choose what to explore</h2>
 <label for="successProgramSearch">Program or TOP code</label>
-<input autocomplete="off" id="successProgramSearch" list="successProgramOptions" placeholder="Try English or 150100" type="search"/>
+<input autocomplete="off" id="successProgramSearch" aria-describedby="successProgramHelp" list="successProgramOptions" placeholder="Try English or 150100" type="search"/>
 <datalist id="successProgramOptions"></datalist>
-<p class="field-help">The tool recalculates rates from the underlying counts when several modality rows are combined.</p>
+<p class="field-help" id="successProgramHelp">The tool recalculates rates from the underlying counts when several modality rows are combined.</p>
 <label for="successPopulation">Course population</label>
 <select id="successPopulation"></select>
 <label for="successChartMeasure">Chart</label>
@@ -148,7 +148,7 @@
 <div class="small-n-warning" hidden="" id="successSmallN"></div>
 <h3 id="successChartHeading">By instructional modality</h3>
 <div aria-labelledby="successChartHeading" class="bar-chart rate-chart" id="successBarChart"></div>
-<div aria-label="Selected success and retention results by instructional modality" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Selected success and retention results by instructional modality" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Selected success and retention results by instructional modality</caption>
 <thead>
@@ -181,9 +181,9 @@
 <p class="module-label"><span aria-hidden="true">📊</span> Grade Distribution</p>
 <h2 id="explore-grade-filter-heading">Choose what to explore</h2>
 <label for="exploreGradeProgramSearch">Program or TOP code</label>
-<input autocomplete="off" id="exploreGradeProgramSearch" list="exploreGradeProgramOptions" placeholder="Try English or 150100" type="search"/>
+<input autocomplete="off" id="exploreGradeProgramSearch" aria-describedby="exploreGradeProgramHelp" list="exploreGradeProgramOptions" placeholder="Try English or 150100" type="search"/>
 <datalist id="exploreGradeProgramOptions"></datalist>
-<p class="field-help">Select a six-digit TOP area from the export.</p>
+<p class="field-help" id="exploreGradeProgramHelp">Select a six-digit TOP area from the export.</p>
 <label for="exploreGradeMeasure">Chart display</label>
 <select id="exploreGradeMeasure"><option value="percent">Percent of selected grade records</option><option value="count">Grade count</option></select>
 <div class="viewer-control-actions"><button class="button button-secondary" id="exploreGradeDownloadCsv" type="button">Download cleaned CSV</button><button class="text-button explore-reset" type="button">Choose another file</button></div>
@@ -194,7 +194,7 @@
 <div class="data-caution-box"><strong>This is grade composition, not the CCCCO success rate.</strong> Use the Enrollment Retention and Success Rate report when you need the Chancellor's Office success or retention measures.</div>
 <div class="small-n-warning" hidden="" id="exploreGradeWarning"></div>
 <h3 id="exploreGradeChartHeading">Reported grade categories</h3><div aria-labelledby="exploreGradeChartHeading" class="bar-chart rate-chart" id="exploreGradeBarChart"></div>
-<div aria-label="Selected grade distribution" class="table-scroll" tabindex="0"><table class="viewer-table outcome-table"><caption>Selected grade distribution</caption><thead><tr><th scope="col">Grade category</th><th scope="col">Count</th><th scope="col">Percent</th></tr></thead><tbody id="exploreGradeResultsBody"></tbody></table></div>
+<div role="region" aria-label="Selected grade distribution" class="table-scroll" tabindex="0"><table class="viewer-table outcome-table"><caption>Selected grade distribution</caption><thead><tr><th scope="col">Grade category</th><th scope="col">Count</th><th scope="col">Percent</th></tr></thead><tbody id="exploreGradeResultsBody"></tbody></table></div>
 <section aria-labelledby="explore-grade-method-heading" class="method-box"><h2 id="explore-grade-method-heading">Save the Method, Not Just the Chart (Grade Distribution)</h2><pre class="method-text" id="exploreGradeMethodText"></pre><button class="button button-secondary" id="exploreGradeCopyMethod" type="button">Copy method</button></section>
 </div>
 </div>
@@ -219,8 +219,8 @@
 <label for="headcountAgeFilter">Age group</label><select id="headcountAgeFilter"></select>
 <label for="headcountEthnicityFilter">Ethnicity</label><select id="headcountEthnicityFilter"></select>
 <label for="headcountMeasure">Chart display</label>
-<select id="headcountMeasure"><option value="percent">Percent of selected students</option><option value="count">Distinct students</option></select>
-<p class="field-help">The percentage denominator changes with your filters. The college total remains visible for context.</p>
+<select id="headcountMeasure" aria-describedby="headcountMeasureHelp"><option value="percent">Percent of selected students</option><option value="count">Distinct students</option></select>
+<p class="field-help" id="headcountMeasureHelp">The percentage denominator changes with your filters. The college total remains visible for context.</p>
 <div class="viewer-control-actions">
 <button class="button button-secondary" id="headcountDownloadCsv" type="button">Download selected CSV</button>
 <button class="text-button explore-reset" type="button">Choose another file</button>
@@ -235,7 +235,7 @@
 <div class="small-n-warning" hidden="" id="headcountWarning"></div>
 <h3 id="headcountChartHeading">Student distribution</h3>
 <div aria-labelledby="headcountChartHeading" class="bar-chart rate-chart" id="headcountBarChart"></div>
-<div aria-label="Selected student headcount distribution" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Selected student headcount distribution" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Selected student headcount distribution</caption>
 <thead><tr><th id="headcountCategoryHeader" scope="col">Category</th><th scope="col">Distinct students</th><th scope="col">Percent</th></tr></thead>
@@ -279,7 +279,7 @@
 <h3 id="courseChartHeading">Courses with the most reported sections</h3>
 <div aria-labelledby="courseChartHeading" class="bar-chart" id="courseBarChart"></div>
 <p class="small-note" id="courseChartNote"></p>
-<div aria-label="Matching Course Details rows" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Matching Course Details rows" class="table-scroll" tabindex="0">
 <table class="viewer-table course-detail-table">
 <caption>Matching Course Details rows</caption>
 <thead><tr><th scope="col">Course</th><th scope="col">Title</th><th scope="col">TOP</th><th scope="col">Sections</th><th scope="col">Credit status</th><th scope="col">Transfer status</th></tr></thead>
@@ -318,7 +318,7 @@
 <div class="small-n-warning" hidden="" id="creditSectionsWarning"></div>
 <h3 id="creditSectionsChartHeading">Reported activity</h3>
 <div aria-labelledby="creditSectionsChartHeading" class="bar-chart" id="creditSectionsBarChart"></div>
-<div aria-label="Credit Courses and Sections export rows" class="table-scroll" tabindex="0">
+<div role="region" aria-label="Credit Courses and Sections export rows" class="table-scroll" tabindex="0">
 <table class="viewer-table outcome-table">
 <caption>Credit Courses and Sections export rows</caption>
 <thead><tr><th scope="col">Row</th><th scope="col">Sections</th><th scope="col">Enrollment</th><th scope="col">FTES</th></tr></thead>
@@ -352,7 +352,7 @@
 <div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> Data Mart Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
 <div class="small-n-warning" hidden="" id="genericWarning"></div>
 <h3 id="genericChartHeading">Selected measure</h3><div aria-labelledby="genericChartHeading" class="bar-chart" id="genericBarChart"></div>
-<div aria-label="Selected columns from the uploaded export" class="table-scroll" tabindex="0"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
+<div role="region" aria-label="Selected columns from the uploaded export" class="table-scroll" tabindex="0"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
 <section aria-labelledby="generic-method-heading" class="method-box"><h2 id="generic-method-heading">Save What You Selected</h2><pre class="method-text" id="genericMethodText"></pre><button class="button button-secondary" id="genericCopyMethod" type="button">Copy method</button></section>
 </div></div></div></div><div hidden="" id="unsupportedModule">
 <div class="container content-narrow">
@@ -368,6 +368,6 @@
 </section>
 <section aria-labelledby="scope-heading"><div class="container content-narrow"><div class="boundary-box"><h2 id="scope-heading">Keep the source with the chart</h2><p>Data Mart Smart does not create new official measures. Keep the report, period, population, denominator, and relevant caution with the result, and verify consequential findings against the official source.</p></div></div></section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="mailto:karencrozer@gmail.com?subject=Data%20Mart%20Smart%20accessibility%20issue">Report an accessibility issue</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>

@@ -522,7 +522,7 @@
       const xx=x(i), yy=y(Number(r.value));
       return `<g><circle cx="${xx}" cy="${yy}" r="5" class="trend-point"></circle><text x="${xx}" y="${yy-12}" text-anchor="middle" class="trend-value-label">${esc(formatValue(r.value, info))}</text><text x="${xx}" y="${height-bottom+26}" text-anchor="middle" class="trend-x-label">${esc(r.period || r.fileName)}</text></g>`;
     }).join("");
-    chart.innerHTML = `<div class="trend-chart-scroll" tabindex="0" aria-label="Scrollable trend chart"><svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="trendTitle trendDesc"><title id="trendTitle">${esc(info.label)} trend</title><desc id="trendDesc">${esc(rows.map(r => `${r.period || r.fileName}: ${formatValue(r.value, info)}`).join("; "))}</desc>${grid}<polyline points="${points}" class="trend-line"></polyline>${marks}</svg></div><p class="small-note">Exact values, institutions, periods, and context are available in the table below.</p>`;
+    chart.innerHTML = `<div class="trend-chart-scroll" role="region" tabindex="0" aria-label="Scrollable trend chart"><svg class="trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="trendTitle trendDesc"><title id="trendTitle">${esc(info.label)} trend</title><desc id="trendDesc">${esc(rows.map(r => `${r.period || r.fileName}: ${formatValue(r.value, info)}`).join("; "))}</desc>${grid}<polyline points="${points}" class="trend-line"></polyline>${marks}</svg></div><p class="small-note">Exact values, institutions, periods, and context are available in the table below.</p>`;
   }
 
   function renderTable(results, info) {

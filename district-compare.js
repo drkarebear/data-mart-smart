@@ -484,6 +484,7 @@
     const high = results[0], low = results[results.length-1];
     els.meaning.textContent = results.length > 1 ? `Among the ${results.length} selected colleges, ${high.college} has the highest reported ${label.toLowerCase()} (${formatValue(high.value)}), while ${low.college} has the lowest (${formatValue(low.value)}). This is a descriptive comparison, not a quality ranking.` : `The selected college reports ${formatValue(high.value)} for ${label.toLowerCase()}. Add more colleges to create a district comparison.`;
     els.method.textContent = buildMethod(results);
+    setStatus(`Comparison updated: ${results.length} college${results.length === 1 ? "" : "s"}, ${label}, ${period}.`);
   }
 
   function escapeHtml(value) {
@@ -526,6 +527,7 @@
       els.meaning.textContent = `This view follows each selected college across the same ${periods.length} annual periods. Missing values stay missing, so a line may have a gap rather than an invented zero.`;
     }
     els.method.textContent = buildTrendMethod(series, periods);
+    setStatus(`Trend updated: ${series.length} college${series.length === 1 ? "" : "s"}, ${periods.length} annual periods, ${firstPeriod} through ${latestPeriod}.`);
   }
 
   function trendCautionText(series, periods) {
@@ -600,7 +602,7 @@
         else if (current.length) { segments.push(current); current=[]; }
       });
       if (current.length) segments.push(current);
-      const opacity = focus && s.college !== focus ? .42 : .92;
+      const opacity = focus && s.college !== focus ? .76 : .94;
       const lineWidth = s.college === focus ? 5.5 : 3.2;
       segments.forEach(seg => {
         if (seg.length >= 2) paths += `<polyline points="${seg.join(" ")}" fill="none" stroke="${color}" stroke-width="${lineWidth}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${opacity}" vector-effect="non-scaling-stroke" class="district-trend-line"></polyline>`;
@@ -626,8 +628,8 @@
         <span class="district-trend-legend-value" aria-label="Latest returned value ${escapeHtml(item.value)}">${escapeHtml(item.value)}</span>
       </div>`).join("");
 
-    const desc = series.map(s => `${s.college}: ${s.points.map(p => `${p.period} ${Number.isFinite(Number(p.value)) ? formatValue(p.value) : "not available"}`).join(", ")}`).join("; ");
-    els.chart.innerHTML = `<div class="district-trend-frame"><div class="trend-chart-scroll" tabindex="0"><svg class="district-trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="districtTrendTitle districtTrendDesc"><title id="districtTrendTitle">${escapeHtml(label)} by college over time</title><desc id="districtTrendDesc">${escapeHtml(desc)}</desc>${grid}${xLabels}${paths}</svg></div><div class="district-trend-legend" role="list" aria-label="College line legend and latest returned value">${legend}</div></div><p class="small-note">Each college keeps the same color and line pattern across years. Hover a point for its value, or use the table below for exact values. “Highlight my college” emphasizes one line without hiding the others.</p>`;
+    const desc = `Line chart comparing ${series.length} selected colleges across ${periods.length} annual periods. Each college uses a distinct color and line pattern. Missing values remain missing. Exact values are provided in the table following the chart.`;
+    els.chart.innerHTML = `<div class="district-trend-frame"><div class="trend-chart-scroll" role="region" tabindex="0" aria-label="Scrollable district trend chart"><svg class="district-trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="districtTrendTitle districtTrendDesc"><title id="districtTrendTitle">${escapeHtml(label)} by college over time</title><desc id="districtTrendDesc">${escapeHtml(desc)}</desc>${grid}${xLabels}${paths}</svg></div><div class="district-trend-legend" role="list" aria-label="College line legend and latest returned value">${legend}</div></div><p class="small-note">Each college keeps the same color and line pattern across years. Hover a point for its value, or use the table below for exact values. “Highlight my college” emphasizes one line without hiding the others.</p>`;
   }
 
   function buildTrendMethod(series, periods) {

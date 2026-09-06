@@ -57,7 +57,7 @@
 <p class="module-label"><span aria-hidden="true">🏫</span> District comparison</p>
 <h2 id="district-setup-heading">Choose one fair comparison</h2>
 <label for="districtView">View</label>
-<select id="districtView">
+<select id="districtView" aria-describedby="districtViewHelp">
 <option value="compare">Compare colleges in one period</option>
 <option value="trend">Follow colleges over time</option>
 </select>
@@ -72,17 +72,17 @@
 </div>
 <div hidden="" id="districtTrendWrap">
 <label for="districtTrendPreset">Years to show</label>
-<select id="districtTrendPreset">
+<select id="districtTrendPreset" aria-describedby="districtTrendHelp">
 <option value="latest5">Latest 5 years</option>
 <option value="latest10">Latest 10 years</option>
 <option value="all">All available years</option>
 <option value="custom">Custom range</option>
 </select>
 <div class="district-trend-range">
-<div><label for="districtTrendStart">Start period</label><select id="districtTrendStart"></select></div>
-<div><label for="districtTrendEnd">End period</label><select id="districtTrendEnd"></select></div>
+<div><label for="districtTrendStart">Start period</label><select id="districtTrendStart" aria-describedby="districtTrendHelp"></select></div>
+<div><label for="districtTrendEnd">End period</label><select id="districtTrendEnd" aria-describedby="districtTrendHelp"></select></div>
 </div>
-<p class="field-help">One multi-year Program Awards spreadsheet can power the whole trend. Choose a quick year range or set custom start and end periods. Missing college-period values stay missing rather than being turned into zero.</p>
+<p class="field-help" id="districtTrendHelp">One multi-year Program Awards spreadsheet can power the whole trend. Choose a quick year range or set custom start and end periods. Missing college-period values stay missing rather than being turned into zero.</p>
 </div>
 <div id="districtProgramWrap">
 <label for="districtProgram">Program or six-digit TOP</label>
@@ -105,14 +105,14 @@
 <button class="text-button" id="districtReset" type="button">Choose different files</button>
 </div>
 </aside>
-<div aria-live="polite" class="viewer-results">
+<div class="viewer-results">
 <p class="eyebrow" id="districtResultEyebrow">District comparison</p>
 <h2 id="districtResultTitle">College comparison</h2>
 <p class="viewer-result-meta" id="districtResultMeta"></p>
 <div class="district-stat-grid" id="districtStats"></div>
 <div class="data-caution-box" id="districtCaution"></div>
 <div aria-label="District comparison chart" class="district-chart" id="districtChart"></div>
-<div aria-label="College comparison table" class="table-scroll" tabindex="0">
+<div role="region" aria-label="College comparison table" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption id="districtCaption">Selected colleges</caption>
 <thead id="districtTableHead"><tr><th scope="col">College</th><th id="districtValueHeader" scope="col">Value</th><th scope="col">Difference from median</th><th id="districtShareHeader" scope="col">Share of selected total</th></tr></thead>
@@ -138,6 +138,6 @@
 </div>
 </section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="mailto:karencrozer@gmail.com?subject=Data%20Mart%20Smart%20accessibility%20issue">Report an accessibility issue</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>
