@@ -348,7 +348,7 @@
     const rows = [["College",measureLabel(),"Difference from median",isRate()?"Share not applicable":"Share of selected total"]];
     results.forEach(r => rows.push([r.college, isRate() ? (r.value*100).toFixed(1)+"%" : r.value, r.value-med, isRate()?"":(total ? (r.value/total*100).toFixed(1)+"%":"")]));
     const csv = rows.map(row => row.map(DataMartFileSecurity.csvCell).join(",")).join("\r\n");
-    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="ccc-data-smart-district-comparison.csv"; document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="data-mart-smart-district-comparison.csv"; document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
 
   async function copyMethod() {

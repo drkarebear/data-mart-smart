@@ -327,7 +327,7 @@ function downloadCsv() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "ccc-data-smart-program-awards.csv";
+  a.download = "data-mart-smart-program-awards.csv";
   a.click();
   URL.revokeObjectURL(url);
   setStatus("Comparison CSV downloaded.", "success");

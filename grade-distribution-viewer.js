@@ -242,7 +242,7 @@ function downloadGradeCsv() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "ccc-data-smart-grade-distribution.csv";
+  a.download = "data-mart-smart-grade-distribution.csv";
   document.body.appendChild(a);
   a.click();
   a.remove();

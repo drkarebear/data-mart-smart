@@ -230,7 +230,7 @@ function downloadHeadcountPageCsv() {
   const labels={status:"Headcount Status",gender:"Gender",age:"Age Group",ethnicity:"Ethnicity"};
   if (!rows.length) return setHeadcountPageStatus("There are no matching headcount rows to download.","error");
   const data=[[labels[key]||"Category","Student Count","Percent"],...rows.map(r=>[r.category,r.count,(r.percent*100).toFixed(1)+"%"]),["Total",total,"100.0%"]];
-  downloadHeadcountPageCsvFile("ccc-data-smart-student-headcount.csv",data);
+  downloadHeadcountPageCsvFile("data-mart-smart-student-headcount.csv",data);
   setHeadcountPageStatus("Student Headcount CSV downloaded.","success");
 }
 
