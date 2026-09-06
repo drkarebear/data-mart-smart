@@ -560,7 +560,7 @@ function renderSuccess() {
   const smallRows = rows.filter(row => row.enrollment > 0 && row.enrollment < 30);
   if (smallRows.length) {
     els.successSmallN.hidden = false;
-    els.successSmallN.innerHTML = `<strong>Small comparison group.</strong> ${smallRows.map(r => `${escapeHtml(r.modality)} (${formatInteger(r.enrollment)} enrollments)`).join(", ")} ${smallRows.length === 1 ? "is" : "are"} below 30 enrollments. Data Mart Smart flags this for context. It is not a CCCCO suppression rule.`;
+    els.successSmallN.innerHTML = `<strong>Small comparison group.</strong> ${smallRows.map(r => `${escapeHtml(r.modality)} (${formatInteger(r.enrollment)} enrollments)`).join(", ")} ${smallRows.length === 1 ? "is" : "are"} below 30 enrollments. CCC Data Smart flags this for context. It is not a CCCCO suppression rule.`;
   } else {
     els.successSmallN.hidden = true;
     els.successSmallN.textContent = "";
@@ -601,7 +601,7 @@ function renderSuccess() {
     `Enrollment count: ${formatInteger(overall.enrollment)}`,
     `Retention count and rate: ${formatInteger(overall.retention)}; ${formatPercent(overall.retentionRate)}`,
     `Success count and rate: ${formatInteger(overall.success)}; ${formatPercent(overall.successRate)}`,
-    "Calculation: When modality rows are combined, Data Mart Smart sums the counts and recalculates each rate from the combined denominator. It does not average percentages.",
+    "Calculation: When modality rows are combined, CCC Data Smart sums the counts and recalculates each rate from the combined denominator. It does not average percentages.",
     `Caution: These are grade-defined enrollment outcomes, not unique students.${smallNote}`
   ].join("\n");
   els.successMethodText.textContent = method;
@@ -688,7 +688,7 @@ function renderExploreGrade() {
   fillSummary(els.exploreGradeKpis, [["Grade records",formatInteger(total)],["Categories",rows.length.toLocaleString()],["Withdrew",formatInteger(byName["Withdrew"]||0)],["Excused withdrawal",formatInteger(byName["Excused Withdrawal"]||0)]]);
   if (blankCount) {
     els.exploreGradeWarning.hidden = false;
-    els.exploreGradeWarning.innerHTML = `<strong>Blank grade label preserved.</strong> ${formatInteger(blankCount)} selected record${blankCount === 1 ? "" : "s"} had no visible grade-category label in the export. Data Mart Smart keeps ${blankCount === 1 ? "it" : "them"} instead of silently dropping ${blankCount === 1 ? "it" : "them"}.`;
+    els.exploreGradeWarning.innerHTML = `<strong>Blank grade label preserved.</strong> ${formatInteger(blankCount)} selected record${blankCount === 1 ? "" : "s"} had no visible grade-category label in the export. CCC Data Smart keeps ${blankCount === 1 ? "it" : "them"} instead of silently dropping ${blankCount === 1 ? "it" : "them"}.`;
   } else {
     els.exploreGradeWarning.hidden = true;
     els.exploreGradeWarning.textContent = "";
@@ -1013,7 +1013,7 @@ function renderCreditSections() {
       ["Reason", "Rows may overlap"]
     ]);
     els.creditSectionsWarning.hidden = false;
-    els.creditSectionsWarning.innerHTML = "<strong>Rows are not automatically added.</strong> A detailed Data Mart export can contain totals, subtotals, or overlapping classifications. Data Mart Smart shows the rows but does not assume that summing them is methodologically valid.";
+    els.creditSectionsWarning.innerHTML = "<strong>Rows are not automatically added.</strong> A detailed Data Mart export can contain totals, subtotals, or overlapping classifications. CCC Data Smart shows the rows but does not assume that summing them is methodologically valid.";
   }
   const measure = els.creditSectionsMeasure.value;
   renderBarRows(els.creditSectionsBarChart, records.map(r => ({label:r.label,value:Number(r[measure])})).filter(r => Number.isFinite(r.value)), {format:measure === "ftes" ? "decimal" : "integer"});

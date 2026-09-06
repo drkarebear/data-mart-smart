@@ -4,120 +4,24 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
-<meta name="referrer" content="no-referrer"/>
-<title>Examples | Data Mart Smart</title>
-<meta content="Examples showing how institutional questions translate into CCC Data Mart reports, measures, populations, and cautions." name="description"/>
+<meta content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<title>Examples | CCC Data Smart</title>
+<meta content="Examples showing how California Community Colleges institutional questions route to DataVista, Data Mart, or local data." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header">
-<div class="container header-inner">
-<a aria-label="Data Mart Smart home" class="brand" href="index.html">
-<img alt="" src="favicon8.png"/>
-<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-</a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a aria-current="page" href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
-</div>
-</header>
-<main id="main-content">
-<section aria-labelledby="page-title" class="page-hero">
-<div class="container page-hero-inner">
-<p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Examples</p>
-<p class="eyebrow">See the method in action</p>
-<h1 id="page-title">Example Data Mart Questions</h1>
-<p>These examples show how a real institutional question becomes a report, measure, population, and set of cautions. The examples teach the method; they do not provide fabricated results.</p>
-</div>
-</section>
-<section>
-<div class="container">
-<div class="example-list">
-<article class="example-card">
-<h2>Example 1: Compare English Sections Across Colleges</h2>
-<p class="example-question">Question: “How many English sections did each college in my district offer in Fall 2026?”</p>
-<dl class="example-method">
-<dt>Best starting report</dt><dd>Course Details when identifiable local courses matter</dd>
-<dt>Measure</dt><dd>Sections Count</dd>
-<dt>Time period</dt><dd>Fall 2026</dd>
-<dt>Population</dt><dd>Selected colleges and a documented definition of “English”</dd>
-<dt>Main caution</dt><dd>Local ENGL/ENGLISH prefixes, TOP-code scope, and linked lecture/lab or support records can change the count</dd>
-</dl>
-<p><a href="sections-across-colleges.html">Follow the full section-count recipe <span aria-hidden="true">→</span></a></p>
-</article>
-<article class="example-card">
-<h2>Example 2: Compare Communication Studies Awards</h2>
-<p class="example-question">Question: “How many associate degrees in Communication Studies did each college award?”</p>
-<dl class="example-method">
-<dt>Best starting report</dt><dd>Program Awards</dd>
-<dt>Measure</dt><dd>Award Count</dd>
-<dt>Time period</dt><dd>One consistent academic year or a consistent multi-year range</dd>
-<dt>Population</dt><dd>Selected colleges, relevant program/TOP classification, and associate-degree award type</dd>
-<dt>Main caution</dt><dd>Award Count is not automatically a count of unique graduates, and different award categories should not be combined casually</dd>
-</dl>
-<p><a href="program-awards.html">Follow the Program Awards recipe <span aria-hidden="true">→</span></a></p>
-</article>
-<article class="example-card">
-<h2>Example 3: Examine a Five-Year Enrollment Trend</h2>
-<p class="example-question">Question: “Has enrollment in our program declined over the last five fall terms?”</p>
-<dl class="example-method">
-<dt>Best starting report</dt><dd>Depends on whether “enrollment” means distinct students or course enrollments</dd>
-<dt>Measure</dt><dd>Define Student Count or Enrollment Count before proceeding</dd>
-<dt>Time period</dt><dd>Fall-to-Fall for five consistent terms</dd>
-<dt>Population</dt><dd>Same program/course definition each year</dd>
-<dt>Main caution</dt><dd>Course renumbering, TOP-code changes, or changing local prefixes can create an artificial trend</dd>
-</dl>
-<p><a href="enrollment-trends.html">Follow the enrollment-trend recipe <span aria-hidden="true">→</span></a></p>
-</article>
-<article class="example-card">
-<h2>Example 4: Compare Course Success</h2>
-<p class="example-question">Question: “How does our success rate compare with neighboring colleges?”</p>
-<dl class="example-method">
-<dt>Best starting report</dt><dd>Enrollment Retention and Success Rate</dd>
-<dt>Measure</dt><dd>Success Rate and the underlying enrollment count</dd>
-<dt>Time period</dt><dd>Same term or year for every college</dd>
-<dt>Population</dt><dd>Same course/TOP and credit-status definition</dd>
-<dt>Main caution</dt><dd>A difference in rates is descriptive; it does not establish why the difference exists</dd>
-</dl>
-<p><a href="course-success.html">Follow the success-and-retention recipe <span aria-hidden="true">→</span></a></p>
-</article>
-<article class="example-card">
-<h2>Example 5: Ask an Equity Question</h2>
-<p class="example-question">Question: “Are there meaningful differences in course outcomes among student groups?”</p>
-<dl class="example-method">
-<dt>Best starting report</dt><dd>A report that supports the desired outcome measure and demographic breakout</dd>
-<dt>Measure</dt><dd>Define the outcome, numerator, denominator, and underlying N</dd>
-<dt>Time period</dt><dd>Use the same period across groups</dd>
-<dt>Population</dt><dd>Keep course/program definitions consistent</dd>
-<dt>Main caution</dt><dd>A disparity is a signal to investigate, not an explanation of why the disparity exists</dd>
-</dl>
-</article>
-</div>
-</div>
-</section>
-</main>
-<footer class="site-footer">
-<div class="container footer-grid">
-<div>
-<div class="footer-brand">
-<img alt="" src="favicon8.png"/>
-<span>Data Mart Smart</span>
-</div>
-</div>
-<p class="footer-copy">
-<strong>Data Mart Smart is an independent, faculty-led educational project.</strong>
-        It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities.
-        Guidance may contain errors or become outdated as Data Mart changes. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.
-      </p>
-<ul aria-label="Project links" class="footer-links">
-<li><a href="about.html">About this project</a></li><li><a href="examples.html">Examples</a></li>
-<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-<li><a href="accessibility.html">Accessibility</a></li>
-<li><a href="sources.html">Sources and methods</a></li>
-<li><a href="privacy.html">Privacy</a></li>
-</ul>
-</div>
-</footer>
+<header class="site-header"><div class="container header-inner"><a aria-label="CCC Data Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">CCC Data Smart</span><span class="brand-tagline">A faculty-friendly guide to California Community Colleges data</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a aria-current="page" href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Data Tools</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
+<main id="main-content"><section aria-labelledby="page-title" class="page-hero"><div class="container page-hero-inner"><p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> Examples</p><p class="eyebrow">See the method in action</p><h1 id="page-title">Example CCC Data Questions</h1><p>These examples show how the question determines the source. They teach the method and do not provide fabricated results.</p></div></section>
+<section><div class="container content-narrow"><div class="source-list">
+<article class="source-card"><h2>Example 1: Program activity over time</h2><p><strong>Question:</strong> “How has English instructional activity changed over the last five years?”</p><p><strong>Start with:</strong> DataVista for program-level sections, enrollments, online/DE sections, calculated FTES, and related multi-year measures.</p><p><strong>Add:</strong> local current schedule/fill data if the finding will inform future scheduling.</p><p><strong>Main caution:</strong> keep the same program/TOP definition across years and note that DataVista calculated FTES is not official CCFS-320 FTES.</p></article>
+<article class="source-card"><h2>Example 2: A current scheduling decision</h2><p><strong>Question:</strong> “Should we add another evening section next semester?”</p><p><strong>Start with:</strong> local enrollment, waitlists, fill rates, cancellations, schedule, and staffing.</p><p><strong>Add:</strong> DataVista or Data Mart historical context only after the live demand is clear.</p><p><strong>Main caution:</strong> lagged statewide data cannot answer what is filling right now.</p></article>
+<article class="source-card"><h2>Example 3: Grade patterns</h2><p><strong>Question:</strong> “What grades were awarded in this course across several colleges?”</p><p><strong>Start with:</strong> Data Mart Grade Distribution.</p><p><strong>Add:</strong> DataVista for broader success/equity context if the grade pattern raises a larger question.</p><p><strong>Main caution:</strong> a grade distribution is descriptive and does not establish why colleges differ.</p></article>
+<article class="source-card"><h2>Example 4: Equity</h2><p><strong>Question:</strong> “Are there meaningful differences in an outcome among student groups?”</p><p><strong>Start with:</strong> DataVista and a defined outcome/denominator.</p><p><strong>Add:</strong> local student experience, curriculum, services, and institutional context.</p><p><strong>Main caution:</strong> suppressed values are not zero, and a disparity is not a diagnosis.</p></article>
+<article class="source-card"><h2>Example 5: Program review</h2><p><strong>Question:</strong> “What is the clearest evidence set for our comprehensive program review?”</p><p><strong>Start with:</strong> DataVista for the broad program and student story.</p><p><strong>Add:</strong> Data Mart only for detailed gaps and local data for current operations.</p><p><strong>Main caution:</strong> more metrics do not automatically make the review stronger.</p></article>
+</div><p><a class="button button-primary" href="query-guide.html">Find the right data source for my question</a></p></div></section></main>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>CCC Data Smart</span></div></div><p class="footer-copy"><strong>CCC Data Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>

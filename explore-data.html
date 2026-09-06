@@ -4,9 +4,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests"/>
-<meta name="referrer" content="no-referrer"/>
-<title>Explore Data | Data Mart Smart</title>
+<meta content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<title>Explore Data | CCC Data Smart</title>
 <meta content="Open a California Community Colleges Data Mart export in your browser and turn it into clearer filters, comparisons, charts, tables, cautions, and method notes." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
@@ -17,28 +17,20 @@
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header">
-<div class="container header-inner">
-<a aria-label="Data Mart Smart home" class="brand" href="index.html">
-<img alt="" src="favicon8.png"/>
-<span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">A practical, faculty-led guide to CCC Data Mart</span></span>
-</a>
-<nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav>
-</div>
-</header>
+<header class="site-header"><div class="container header-inner"><a aria-label="CCC Data Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">CCC Data Smart</span><span class="brand-tagline">A faculty-friendly guide to California Community Colleges data</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Data Tools</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
 <main id="main-content">
-<section aria-labelledby="upload-heading"><div class="container content-narrow"><div class="viewer-privacy" role="note"><strong>Your spreadsheet stays in this browser tab.</strong> Data Mart Smart reads the selected file locally with JavaScript. The spreadsheet itself is not uploaded to Data Mart Smart.</div><div class="upload-zone" id="exploreDropZone"><div aria-hidden="true" class="upload-icon">⇧</div><h2 id="upload-heading">Choose your Excel or CSV export</h2><p>Choose the file. I will identify the report when possible, then show the controls, comparisons, and cautions that belong with it.</p><div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div><input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" id="exploreFileInput" type="file"/></div><p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p><div class="detected-report" hidden="" id="detectedReport"><span aria-hidden="true" class="detected-report-icon">✅</span><div><strong id="detectedReportName">Report detected</strong><span id="detectedReportNote"></span></div></div>
-<details class="reference-details support-reference"><summary>What files can I open?</summary><div class="details-body"><p><strong>Full support:</strong> Data Mart Smart understands the tested report structure and can add report-specific interpretation and cautions.</p><ul><li>Student Headcount</li><li>Course Details</li><li>Credit Courses/Sections</li><li>Success &amp; Retention</li><li>Grade Distribution</li><li>Program Awards</li></ul><p><strong>Basic support:</strong> For many other tabular Excel or CSV exports, you can choose a category and numeric measure to chart. The site will not invent report-specific definitions.</p></div></details>
-</div></section>
+<section aria-labelledby="upload-heading"><div class="container content-narrow"><div class="viewer-privacy" role="note"><strong>Your spreadsheet stays in this browser tab.</strong> CCC Data Smart reads the selected file locally with JavaScript. The spreadsheet itself is not uploaded to CCC Data Smart.</div><div class="upload-zone" id="exploreDropZone"><div aria-hidden="true" class="upload-icon">⇧</div><h2 id="upload-heading">Choose your Excel or CSV export</h2><p>Choose the file. I will identify the report when possible, then show the controls, comparisons, and cautions that belong with it.</p><div class="viewer-actions"><button class="button button-primary" id="exploreBrowseButton" type="button">Choose Excel or CSV file</button><div class="demo-picker"><label for="demoReportSelect">Or try a sample</label><select id="demoReportSelect"><option value="student-headcount">Student Headcount</option><option value="course-details">Course Details</option><option value="retention-success">Success &amp; Retention</option><option value="grade-distribution">Grade Distribution</option><option value="program-awards">Program Awards</option><option value="credit-course-sections">Credit Courses/Sections</option></select><button class="button button-secondary" id="demoLoadButton" type="button">Load sample</button></div></div><input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" aria-label="Choose an Excel or CSV data export" id="exploreFileInput" type="file"/></div><p aria-live="polite" class="viewer-status" id="exploreStatus" role="status"></p><div class="detected-report" hidden="" id="detectedReport"><span aria-hidden="true" class="detected-report-icon">✅</span><div><strong id="detectedReportName">Report detected</strong><span id="detectedReportNote"></span></div></div>
+<details class="reference-details support-reference"><summary>What files can I open?</summary><div class="details-body"><p><strong>Full support:</strong> CCC Data Smart understands the tested report structure and can add report-specific interpretation and cautions.</p><ul><li>Student Headcount</li><li>Course Details</li><li>Credit Courses/Sections</li><li>Success &amp; Retention</li><li>Grade Distribution</li><li>Program Awards</li></ul><p><strong>Basic support:</strong> For many other tabular Excel or CSV exports, you can choose a category and numeric measure to chart. The site will not invent report-specific definitions.</p></div></details>
+</div></section><div class="container content-narrow" id="datavista-export-status" style="padding-top:1rem;"><div class="info-box"><h2>What about DataVista downloads?</h2><p>DataVista can export multi-year data, but this version of CCC Data Smart does not yet apply DataVista-specific metric logic to those files. If a DataVista CSV opens in the basic table view, treat the chart as a convenience only and verify the metric definition, population, denominator, suppression, and completeness in DataVista.</p></div></div>
 <section aria-labelledby="what-have-heading" class="section-cool"><div class="container content-narrow"><h2 id="what-have-heading">What do you have?</h2><div class="explore-choice-grid"><article class="explore-choice-card cat-teal"><h3><span aria-hidden="true">📄</span> One export</h3><p>Open, understand, and compare programs or colleges already included in one Data Mart file.</p><a class="button button-primary" href="#upload-heading">Open one export</a></article><article class="explore-choice-card cat-purple"><h3><span aria-hidden="true">📈</span> Several versions of the same report</h3><p>Compare colleges or build a trend.</p><a class="button button-secondary" href="compare-trends.html">Compare files</a></article><article class="explore-choice-card cat-blue"><h3><span aria-hidden="true">📋</span> Several kinds of evidence for one program</h3><p>Build a program review picture without mixing unlike measures.</p><a class="button button-secondary" href="program-review-dashboard.html">Build a program review picture</a></article><article class="explore-choice-card cat-gold"><h3><span aria-hidden="true">🏫</span> A whole district</h3><p>Compare the same program and measure across every college in a district.</p><a class="button button-secondary" href="district-compare.html">Compare colleges in a district</a></article></div></div></section>
-<section aria-labelledby="page-title" class="page-hero viewer-hero"><div class="container page-hero-inner"><p class="eyebrow">Your file stays in this browser tab</p><h1 id="page-title">Open a Data Mart Export</h1><p>Choose what you have. Data Mart Smart will identify the report when it can and show the shortest useful next step.</p></div></section>
+<section aria-labelledby="page-title" class="page-hero viewer-hero"><div class="container page-hero-inner"><p class="eyebrow">Your file stays in this browser tab</p><h1 id="page-title">Open a Data Export</h1><p>Full report-specific support is currently strongest for tested Data Mart exports. Other tabular Excel or CSV files receive basic support without invented definitions.</p></div></section>
 <section hidden="" id="exploreWorkspace">
-<details class="reference-details support-reference" hidden id="withinFileCompare">
+<details class="reference-details support-reference" hidden="" id="withinFileCompare">
 <summary><span aria-hidden="true">🔀</span> Compare programs or colleges in this file</summary>
 <div class="details-body">
 <p id="withinFileCompareIntro">If this export contains more than one program or college, you can compare them without making another spreadsheet.</p>
 <div class="viewer-layout">
-<div class="viewer-controls" aria-labelledby="within-compare-heading">
+<div aria-labelledby="within-compare-heading" class="viewer-controls">
 <h2 id="within-compare-heading">Choose the comparison</h2>
 <label for="withinCompareDimension">Compare</label>
 <select id="withinCompareDimension"></select>
@@ -46,7 +38,7 @@
 <label for="withinCompareContext" id="withinCompareContextLabel">Keep this fixed</label>
 <select id="withinCompareContext"></select>
 </div>
-<div id="withinCompareExtraWrap" hidden>
+<div hidden="" id="withinCompareExtraWrap">
 <label for="withinCompareExtra" id="withinCompareExtraLabel">Filter</label>
 <select id="withinCompareExtra"></select>
 </div>
@@ -63,11 +55,11 @@
 <h2 id="withinCompareTitle">Comparison</h2>
 <p class="viewer-result-meta" id="withinCompareMeta"></p>
 <div class="data-caution-box" id="withinCompareCaution"></div>
-<div class="bar-chart" id="withinCompareChart" aria-label="Comparison chart"></div>
-<div class="table-scroll" tabindex="0" aria-label="Comparison table">
+<div aria-label="Comparison chart" class="bar-chart" id="withinCompareChart"></div>
+<div aria-label="Comparison table" class="table-scroll" tabindex="0">
 <table class="viewer-table">
 <caption id="withinCompareCaption">Selected comparison</caption>
-<thead><tr><th scope="col" id="withinCompareLabelHeader">Item</th><th scope="col" id="withinCompareValueHeader">Value</th></tr></thead>
+<thead><tr><th id="withinCompareLabelHeader" scope="col">Item</th><th id="withinCompareValueHeader" scope="col">Value</th></tr></thead>
 <tbody id="withinCompareBody"></tbody>
 </table>
 </div>
@@ -359,7 +351,7 @@
 </aside>
 <div class="viewer-results">
 <p class="eyebrow">Basic table view</p><h2 id="genericResultsTitle">Visualize an export</h2><p class="viewer-result-meta" id="genericResultMeta"></p>
-<div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> Data Mart Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
+<div class="data-caution-box"><strong>This is a flexible view, not report-specific interpretation.</strong> CCC Data Smart can chart the columns in this file, but it does not yet know whether rows are totals, subtotals, overlapping groups, suppressed values, or a report-specific denominator. Do not add rows or interpret a rate until the report definition supports it.</div>
 <div class="small-n-warning" hidden="" id="genericWarning"></div>
 <h3 id="genericChartHeading">Selected measure</h3><div aria-labelledby="genericChartHeading" class="bar-chart" id="genericBarChart"></div>
 <div aria-label="Selected columns from the uploaded export" class="table-scroll" tabindex="0"><table class="viewer-table"><caption>Selected columns from the uploaded export</caption><thead><tr><th id="genericLabelHeader" scope="col">Category</th><th id="genericMeasureHeader" scope="col">Measure</th></tr></thead><tbody id="genericResultsBody"></tbody></table></div>
@@ -376,20 +368,8 @@
 </div>
 </div>
 </section>
-<section aria-labelledby="scope-heading"><div class="container content-narrow"><div class="boundary-box"><h2 id="scope-heading">Keep the source with the chart</h2><p>Data Mart Smart does not create new official measures. Keep the report, period, population, denominator, and relevant caution with the result, and verify consequential findings against the official source.</p></div></div></section>
+<section aria-labelledby="scope-heading"><div class="container content-narrow"><div class="boundary-box"><h2 id="scope-heading">Keep the source with the chart</h2><p>CCC Data Smart does not create new official measures. Keep the report, period, population, denominator, and relevant caution with the result, and verify consequential findings against the official source.</p></div></div></section>
 </main>
-<footer class="site-footer">
-<div class="container footer-grid">
-<div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div>
-<p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office or CCC Data Mart product and is not funded, sponsored, or endorsed by those entities. Verify consequential findings against current official CCCCO documentation and appropriate local institutional sources.</p>
-<ul aria-label="Project links" class="footer-links">
-<li><a href="about.html">About this project</a></li>
-<li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li>
-<li><a href="accessibility.html">Accessibility</a></li>
-<li><a href="sources.html">Sources and methods</a></li>
-<li><a href="privacy.html">Privacy</a></li>
-</ul>
-</div>
-</footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>CCC Data Smart</span></div></div><p class="footer-copy"><strong>CCC Data Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>
