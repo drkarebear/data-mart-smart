@@ -17,6 +17,12 @@
     return Number.isFinite(parsed) ? parsed : null;
   }
 
+  function normalizeCollegeName(value) {
+    const name = clean(value);
+    if (/^LA\s+Swest(?:\s+College)?$/i.test(name)) return "LA Southwest";
+    return name;
+  }
+
   function detectReport(rows) {
     const sample = rows.slice(0, 20).flat().map(clean).filter(Boolean).join(" | ");
     if (/Program Awards Summary Report/i.test(sample)) return { kind: "program-awards", label: "Program Awards Summary Report", supported: true };
@@ -82,7 +88,7 @@
       }
 
       if (a && /\sTotal$/i.test(a)) district = a.replace(/\sTotal$/i, "").trim();
-      if (b && /\sTotal$/i.test(b)) college = b.replace(/\sTotal$/i, "").trim();
+      if (b && /\sTotal$/i.test(b)) college = normalizeCollegeName(b.replace(/\sTotal$/i, "").trim());
       if (c && /\sTotal$/i.test(c)) awardType = c.replace(/\s+Total$/i, "").trim();
 
       if (!d) continue;
@@ -194,7 +200,7 @@
       const e = clean(row[4]);
 
       if (a && /\sTotal$/i.test(a)) {
-        college = a.replace(/\sTotal$/i, "").trim();
+        college = normalizeCollegeName(a.replace(/\sTotal$/i, "").trim());
         Object.assign(collegeTotals, readMeasures(row));
       }
 
@@ -294,7 +300,7 @@
       const count = numberValue(row[countCol]);
 
       if (a && /\sTotal$/i.test(a) && count !== null) {
-        college = a.replace(/\s+Total$/i, "").trim();
+        college = normalizeCollegeName(a.replace(/\s+Total$/i, "").trim());
         collegeTotal = count;
         continue;
       }
@@ -386,7 +392,7 @@
       const topMatch = topText.match(/^(.*)-(\d{6})$/);
       records.push({
         district: indexes.district >= 0 ? clean(row[indexes.district]) : "",
-        college: indexes.college >= 0 ? clean(row[indexes.college]) : "",
+        college: indexes.college >= 0 ? normalizeCollegeName(row[indexes.college]) : "",
         courseId,
         controlNumber: indexes.controlNumber >= 0 ? clean(row[indexes.controlNumber]) : "",
         title: indexes.title >= 0 ? clean(row[indexes.title]) : "",
@@ -574,7 +580,7 @@
       const percent = percentCol >= 0 ? numberValue(row[percentCol]) : null;
 
       if (a && /\sTotal$/i.test(a)) {
-        college = a.replace(/\s+Total$/i, "").trim();
+        college = normalizeCollegeName(a.replace(/\s+Total$/i, "").trim());
         collegeTotal = count;
         currentProgram = null;
         continue;
@@ -620,6 +626,7 @@
   return {
     clean,
     numberValue,
+    normalizeCollegeName,
     detectReport,
     parseProgramAwards,
     parseRetentionSuccess,

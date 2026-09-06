@@ -19,3 +19,9 @@
 
 ## Why this change
 The previous `defer`-loaded external SheetJS script could delay every later deferred script on a spreadsheet page. If the CDN was slow or blocked, District Compare could appear not to load at all. Loading the Excel reader on demand prevents that external dependency from blocking the page itself. A second issue was also found in current Program Awards exports: the report now places multiple annual periods in separate columns, while the older parser assumed a single hard-coded count column. The revised parser detects all annual columns instead.
+
+
+## College display-name normalization
+
+- Data Mart's `LA Swest` label is displayed as **LA Southwest** in browser-based viewers and District Compare.
+- The underlying Data Mart value is not changed in the user's source file; this is a display/readability normalization only.

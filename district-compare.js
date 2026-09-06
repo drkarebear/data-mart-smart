@@ -233,7 +233,7 @@
         const label = DataMartParsers.clean(row[0]);
         const count = DataMartParsers.numberValue(row[countCol]);
         if (!label || !/\sTotal$/i.test(label) || count === null) continue;
-        const college = label.replace(/\s+Total$/i, "").trim();
+        const college = DataMartParsers.normalizeCollegeName(label.replace(/\s+Total$/i, "").trim());
         if (/statewide|districtwide|\bCCD\b|district$/i.test(college)) continue;
         map.set(college, count);
       }
