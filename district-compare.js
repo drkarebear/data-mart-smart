@@ -554,19 +554,42 @@
   }
 
   function renderMultiLineChart(series, periods, label) {
-    const width = 1040, height = 500, left = 70, right = 210, top = 32, bottom = 72;
+    const width = 920, height = 500, left = 64, right = 28, top = 30, bottom = 60;
     const values = series.flatMap(s => s.points.map(p => Number(p.value)).filter(Number.isFinite));
     const maxRaw = Math.max(...values, 0);
-    const max = maxRaw > 0 ? maxRaw * 1.12 : 1;
+
+    const niceStep = value => {
+      if (!(value > 0)) return 1;
+      const rough = value / 4;
+      const magnitude = 10 ** Math.floor(Math.log10(rough));
+      const normalized = rough / magnitude;
+      const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+      return Math.max(1, nice * magnitude);
+    };
+    const step = niceStep(maxRaw);
+    const max = maxRaw > 0 ? Math.ceil(maxRaw / step) * step : step;
+    const tickCount = Math.max(1, Math.round(max / step));
+    const ticks = Array.from({length: tickCount + 1}, (_, i) => i * step);
+
     const x = i => left + (periods.length === 1 ? 0 : i * (width-left-right)/(periods.length-1));
     const y = v => top + (max-v)/max*(height-top-bottom);
     const colors = ["#1f5f99","#8b3f87","#087c78","#9a6700","#7b4b2a","#4b6584","#b03a2e","#526b2d","#6a5acd"];
     const dashes = ["","10 4","3 4","12 3 3 3","16 5","6 3","14 3 2 3","8 2 2 2","2 3"];
-    const grid = [0,.25,.5,.75,1].map(frac => { const value=max*frac, yy=y(value); return `<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" class="trend-grid"></line><text x="${left-10}" y="${yy+4}" text-anchor="end" class="trend-axis-label">${escapeHtml(formatValue(value))}</text>`; }).join("");
-    const xLabels = periods.map((p,i)=>`<text x="${x(i)}" y="${height-bottom+30}" text-anchor="middle" class="trend-x-label">${escapeHtml(p.replace(/^Annual\s+/i,""))}</text>`).join("");
+    const compactPeriod = period => {
+      const clean = String(period || "").replace(/^Annual\s+/i, "");
+      const match = clean.match(/^(\d{4})-(\d{4})$/);
+      return match ? `${match[1]}–${match[2].slice(2)}` : clean;
+    };
+
+    const grid = ticks.map(value => {
+      const yy = y(value);
+      return `<line x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}" class="trend-grid"></line><text x="${left-10}" y="${yy+4}" text-anchor="end" class="trend-axis-label">${escapeHtml(formatValue(value))}</text>`;
+    }).join("");
+    const xLabels = periods.map((p,i)=>`<text x="${x(i)}" y="${height-bottom+32}" text-anchor="middle" class="trend-x-label">${escapeHtml(compactPeriod(p))}</text>`).join("");
     const focus = els.focus.value;
-    const labelCandidates = [];
     let paths = "";
+    const legendItems = [];
+
     series.forEach((s,idx) => {
       const color = colors[idx % colors.length];
       const dash = dashes[idx % dashes.length];
@@ -577,22 +600,34 @@
         else if (current.length) { segments.push(current); current=[]; }
       });
       if (current.length) segments.push(current);
-      const focused = !focus || s.college === focus;
-      const opacity = focus && s.college !== focus ? .24 : 1;
-      segments.forEach(seg => { if (seg.length >= 2) paths += `<polyline points="${seg.join(" ")}" fill="none" stroke="${color}" stroke-width="${s.college===focus ? 5 : 3}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${opacity}" class="district-trend-line"></polyline>`; });
-      s.points.forEach((p,i)=>{ if (Number.isFinite(Number(p.value))) paths += `<circle cx="${x(i)}" cy="${y(Number(p.value))}" r="${s.college===focus ? 5 : 3.5}" fill="${color}" opacity="${opacity}"><title>${escapeHtml(`${s.college}, ${p.period}: ${formatValue(p.value)}`)}</title></circle>`; });
-      const lastIndex = [...s.points].map(p => p.value).findLastIndex ? [...s.points].map(p=>p.value).findLastIndex(v => Number.isFinite(Number(v))) : (()=>{for(let i=s.points.length-1;i>=0;i--) if(Number.isFinite(Number(s.points[i].value))) return i; return -1;})();
-      if (lastIndex >= 0) labelCandidates.push({college:s.college, y:y(Number(s.points[lastIndex].value)), color, dash, opacity, value:s.points[lastIndex].value});
+      const opacity = focus && s.college !== focus ? .42 : .92;
+      const lineWidth = s.college === focus ? 5.5 : 3.2;
+      segments.forEach(seg => {
+        if (seg.length >= 2) paths += `<polyline points="${seg.join(" ")}" fill="none" stroke="${color}" stroke-width="${lineWidth}" ${dash ? `stroke-dasharray="${dash}"` : ""} opacity="${opacity}" vector-effect="non-scaling-stroke" class="district-trend-line"></polyline>`;
+      });
+      s.points.forEach((p,i)=>{
+        if (Number.isFinite(Number(p.value))) paths += `<circle cx="${x(i)}" cy="${y(Number(p.value))}" r="${s.college===focus ? 5.5 : 4}" fill="${color}" stroke="#fff" stroke-width="1.6" opacity="${opacity}" vector-effect="non-scaling-stroke"><title>${escapeHtml(`${s.college}, ${p.period}: ${formatValue(p.value)}`)}</title></circle>`;
+      });
+      const last = [...s.points].reverse().find(p => Number.isFinite(Number(p.value)));
+      legendItems.push({
+        college: s.college,
+        value: last ? formatValue(last.value) : "Not available",
+        color,
+        dash,
+        opacity,
+        focused: s.college === focus
+      });
     });
-    labelCandidates.sort((a,b)=>a.y-b.y);
-    const minGap=18;
-    for (let i=1;i<labelCandidates.length;i++) if (labelCandidates[i].y-labelCandidates[i-1].y<minGap) labelCandidates[i].y=labelCandidates[i-1].y+minGap;
-    if (labelCandidates.length && labelCandidates[labelCandidates.length-1].y > height-bottom-4) {
-      const shift=labelCandidates[labelCandidates.length-1].y-(height-bottom-4); labelCandidates.forEach(item=>item.y-=shift);
-    }
-    const labels=labelCandidates.map(item=>`<line x1="${width-right+8}" y1="${item.y}" x2="${width-right+28}" y2="${item.y}" stroke="${item.color}" stroke-width="3" ${item.dash ? `stroke-dasharray="${item.dash}"` : ""} opacity="${item.opacity}"></line><text x="${width-right+34}" y="${item.y+4}" class="district-trend-end-label" opacity="${item.opacity}">${escapeHtml(item.college)} (${escapeHtml(formatValue(item.value))})</text>`).join("");
+
+    const legend = legendItems.map(item => `
+      <div class="district-trend-legend-item${item.focused ? " is-focus" : ""}" role="listitem">
+        <svg class="district-trend-legend-swatch" viewBox="0 0 36 10" aria-hidden="true" focusable="false"><line x1="2" y1="5" x2="34" y2="5" stroke="${item.color}" stroke-width="3" ${item.dash ? `stroke-dasharray="${item.dash}"` : ""} opacity="${item.opacity}" vector-effect="non-scaling-stroke"></line></svg>
+        <span class="district-trend-legend-name">${escapeHtml(item.focused ? `★ ${item.college}` : item.college)}</span>
+        <span class="district-trend-legend-value" aria-label="Latest returned value ${escapeHtml(item.value)}">${escapeHtml(item.value)}</span>
+      </div>`).join("");
+
     const desc = series.map(s => `${s.college}: ${s.points.map(p => `${p.period} ${Number.isFinite(Number(p.value)) ? formatValue(p.value) : "not available"}`).join(", ")}`).join("; ");
-    els.chart.innerHTML = `<div class="trend-chart-scroll" tabindex="0"><svg class="district-trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="districtTrendTitle districtTrendDesc"><title id="districtTrendTitle">${escapeHtml(label)} by college over time</title><desc id="districtTrendDesc">${escapeHtml(desc)}</desc>${grid}${xLabels}${paths}${labels}</svg></div><p class="small-note">Each college keeps the same line style across years. Use “Highlight my college” to make one line stand out. Exact values are in the table below.</p>`;
+    els.chart.innerHTML = `<div class="district-trend-frame"><div class="trend-chart-scroll" tabindex="0"><svg class="district-trend-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="districtTrendTitle districtTrendDesc"><title id="districtTrendTitle">${escapeHtml(label)} by college over time</title><desc id="districtTrendDesc">${escapeHtml(desc)}</desc>${grid}${xLabels}${paths}</svg></div><div class="district-trend-legend" role="list" aria-label="College line legend and latest returned value">${legend}</div></div><p class="small-note">Each college keeps the same color and line pattern across years. Hover a point for its value, or use the table below for exact values. “Highlight my college” emphasizes one line without hiding the others.</p>`;
   }
 
   function buildTrendMethod(series, periods) {
