@@ -1,25 +1,73 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
 <meta content="no-referrer" name="referrer"/>
-<title>Ask the CCC Data Coach | CCC Data Smart</title>
-<meta content="Ask the CCC Data Coach for help choosing a source, understanding a Data Mart setup, interpreting a result, or planning a DataVista inquiry." name="description"/>
+<title>Ask the CCC Data Coach | Data Mart Smart</title>
+<meta content="Describe a California Community Colleges data question and get a private, browser-based first recommendation for DataVista, Data Mart, or local institutional data." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
-<script defer="" src="coach-loader.js"></script></head>
+<script defer src="coach-loader.js"></script>
+</head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header"><div class="container header-inner"><a aria-label="CCC Data Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">CCC Data Smart</span><span class="brand-tagline">A faculty-friendly guide to California Community Colleges data</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Data Tools</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a aria-current="page" href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
+<header class="site-header"><div class="container header-inner"><a aria-label="Data Mart Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">Data Mart first. DataVista when it adds something.</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Which Tool?</a></li><li><a href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a aria-current="page" href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
 <main id="main-content">
-<section aria-labelledby="coach-page-title" class="hero coach-hero"><div class="container hero-inner coach-hero-inner"><div><p class="eyebrow">Help with a specific CCC data question</p><h1 id="coach-page-title">Ask the CCC Data Coach</h1><p class="hero-lede">Describe what you are trying to find out. The Coach can help you choose a source, plan a DataVista inquiry, check a Data Mart setup, or make sense of an export.</p><p class="hero-confidence">You do not need to know the database terminology before you start.</p></div></div></section>
-<section aria-labelledby="coach-start-heading"><div class="container content-narrow coach-intro"><h2 id="coach-start-heading">Start with your question</h2><p>Try something natural, such as “Should I start in DataVista or Data Mart for program review?” or “Can you check whether I set this Data Mart query up correctly?”</p><p><a class="button button-secondary" href="https://www.playlab.ai/project/cmtnmjss41hazln0w4c8v2f30" rel="noopener noreferrer" target="_blank">Open the Coach in a new tab <span class="visually-hidden">(opens in a new tab)</span></a></p></div></section>
-<section aria-labelledby="coach-embed-heading" class="coach-embed-section"><div class="container"><h2 class="visually-hidden" id="coach-embed-heading">CCC Data Coach interactive assistant</h2><div class="coach-frame-wrap"><div class="viewer-privacy" role="note"><strong>Playlab loads only when you choose to open it.</strong> Until you select the button below, this page does not connect to the embedded Coach service. Do not enter student records, credentials, or confidential institutional information.</div><p><button class="button button-primary" id="loadCoachButton" type="button">Load the CCC Data Coach</button></p><div hidden="" id="coachFrameContainer"><iframe allow="clipboard-write" class="coach-frame" data-src="https://www.playlab.ai/embedded/cmtnmjss41hazln0w4c8v2f30" height="700" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" title="CCC Data Coach interactive assistant"></iframe></div></div></div></section>
-<section aria-labelledby="coach-note-heading" class="soft-section"><div class="container content-narrow coach-note"><h2 id="coach-note-heading">Use the answer as a starting point</h2><p><strong>The embedded Coach was originally developed around Data Mart workflows.</strong> It can help orient broader questions, but DataVista guidance should be verified against the current Metric Definition Dictionary and official DataVista Toolkit. AI responses can be incomplete, incorrect, or outdated.</p><p class="small-note">The embedded assistant is hosted by Playlab. If the embedded version does not load or is difficult to use with your setup, use the new-tab link above.</p></div></section>
+<section aria-labelledby="coach-page-title" class="hero coach-hero"><div class="container hero-inner coach-hero-inner"><div><p class="eyebrow">Question first. Source second.</p><h1 id="coach-page-title">Ask the CCC Data Coach</h1><p class="hero-lede">Tell the Coach what you are trying to learn. It will suggest the best first source, the right kind of view or report, and the cautions worth checking before you use the number.</p><p class="hero-confidence"><strong>No database vocabulary required.</strong> The first recommendation runs entirely in your browser.</p></div></div></section>
+
+<section aria-labelledby="coach-question-heading" class="coach-local-section"><div class="container coach-local-grid">
+<div class="coach-question-panel">
+<p class="section-kicker">Start here</p>
+<h2 id="coach-question-heading">What are you trying to figure out?</h2>
+<form id="coachForm" novalidate>
+<label class="coach-question-label" for="coachQuestion">Your CCC data question</label>
+<textarea id="coachQuestion" name="coachQuestion" rows="5" maxlength="700" placeholder="Example: I am writing program review and want to know whether online English students are succeeding at the same rate as in-person students."></textarea>
+<p class="field-help" id="coachQuestionHelp">Use ordinary language. Do not include student names, IDs, credentials, or confidential records.</p>
+<div class="coach-form-actions"><button class="button button-primary" type="submit">Recommend a data path</button><button class="button button-quiet" id="clearCoachButton" type="button">Clear</button></div>
+<p class="coach-browser-note"><strong>Private first pass:</strong> this question is matched to the site's decision guide in your browser. It is not sent to Data Mart Smart or Playlab.</p>
+</form>
+</div>
+<aside aria-labelledby="coach-examples-heading" class="coach-example-panel">
+<h2 id="coach-examples-heading">Try an example</h2>
+<p>Choose one to see how the Coach routes different kinds of questions.</p>
+<div class="coach-example-list">
+<button class="coach-example-button" data-example="I am writing program review. What data should I pull first?" type="button">Program review</button>
+<button class="coach-example-button" data-example="Are there equity gaps in course success for our program?" type="button">Equity</button>
+<button class="coach-example-button" data-example="Should we add another section next semester?" type="button">Scheduling</button>
+<button class="coach-example-button" data-example="What grades were students receiving in this course?" type="button">Grade distribution</button>
+<button class="coach-example-button" data-example="How many English sections were offered in Fall 2025?" type="button">Term sections</button>
+<button class="coach-example-button" data-example="Why is a subgroup missing or masked in DataVista?" type="button">Missing values</button>
+<button class="coach-example-button" data-example="I downloaded a CSV and want to understand what it shows." type="button">I have a file</button>
+</div>
+</aside>
+</div></section>
+
+<section aria-labelledby="coach-result-heading" class="coach-result-section" hidden id="coachResultSection"><div class="container">
+<div aria-live="polite" aria-atomic="false" class="coach-result" id="coachResult" tabindex="-1">
+<p class="section-kicker">Coach recommendation</p>
+<h2 id="coach-result-heading">Your best first path</h2>
+<p class="coach-question-echo"><span class="visually-hidden">Question: </span><q id="coachQuestionEcho"></q></p>
+<div class="coach-result-topline"><span class="coach-route-badge" id="coachRouteBadge"></span><strong id="coachRouteTitle"></strong></div>
+<p class="coach-route-summary" id="coachRouteSummary"></p>
+<div class="coach-result-grid">
+<section aria-labelledby="coach-why-heading" class="coach-result-card"><h3 id="coach-why-heading">Why this fits</h3><p id="coachRouteWhy"></p></section>
+<section aria-labelledby="coach-population-heading" class="coach-result-card"><h3 id="coach-population-heading">Check the population</h3><p id="coachRoutePopulation"></p></section>
+<section aria-labelledby="coach-steps-heading" class="coach-result-card coach-result-card-wide"><h3 id="coach-steps-heading">Use this path</h3><ol class="coach-step-list" id="coachRouteSteps"></ol></section>
+<section aria-labelledby="coach-caution-heading" class="coach-result-card coach-caution-card"><h3 id="coach-caution-heading">Before you cite the number</h3><ul id="coachRouteCautions"></ul></section>
+<section aria-labelledby="coach-links-heading" class="coach-result-card"><h3 id="coach-links-heading">Continue</h3><div class="coach-result-links" id="coachRouteLinks"></div></section>
+</div>
+<p class="small-note coach-method-note">This is a transparent routing tool, not an AI interpretation of your data. Definitions, populations, and data availability change; verify consequential findings against the current CCCCO Metric Definition Dictionary, DataVista Toolkit, Data Mart documentation, and local institutional sources.</p>
+</div>
+</div></section>
+
+<section aria-labelledby="coach-how-heading" class="soft-section"><div class="container content-narrow coach-how"><h2 id="coach-how-heading">What the Coach is deciding</h2><p>The routing logic follows the same sequence used throughout Data Mart Smart:</p><p class="coach-sequence"><strong>Question → source → population → metric → denominator → interpretation → limitation → next question.</strong></p><details class="reference-details"><summary>What the three source choices mean</summary><div class="details-body"><p><strong>Data Mart</strong> is often the simplest first stop for specific term, course, grade, section, student-count, service, award, or staffing reports. <strong>DataVista</strong> is strongest when the question needs cohorts, equity, pathways, completion, transfer, labor-market outcomes, or an integrated annual student-outcomes view. <strong>Local institutional data</strong> should lead when the decision depends on what is happening now, such as live enrollment, waitlists, fill rates, scheduling, staffing, or institution-specific definitions.</p></div></details></div></section>
+
+<section aria-labelledby="coach-ai-heading" class="coach-embed-section"><div class="container"><div class="section-heading"><p class="section-kicker">Optional second step</p><h2 id="coach-ai-heading">Want a conversational follow-up?</h2><p>The Playlab assistant can help you talk through a more specific question, screenshot, setup, or export. It is a separate external service and loads only if you choose it.</p></div><div class="coach-frame-wrap"><div class="viewer-privacy" role="note"><strong>Playlab is optional.</strong> Your browser-based routing question above is not sent to Playlab. If you load the external assistant, do not enter student records, credentials, or confidential institutional information.</div><div class="coach-ai-actions"><p><button class="button button-primary" id="loadCoachButton" type="button">Load the conversational Coach</button></p><p><a class="button button-secondary" href="https://www.playlab.ai/project/cmtnmjss41hazln0w4c8v2f30" rel="noopener noreferrer" target="_blank">Open Playlab Coach in a new tab <span class="visually-hidden">(opens in a new tab)</span></a></p></div><div hidden id="coachFrameContainer"><iframe allow="clipboard-write" class="coach-frame" data-src="https://www.playlab.ai/embedded/cmtnmjss41hazln0w4c8v2f30" height="700" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" title="CCC Data Coach conversational assistant"></iframe></div></div></div></section>
+
+<section aria-labelledby="coach-note-heading" class="soft-section"><div class="container content-narrow coach-note"><h2 id="coach-note-heading">Use recommendations as a starting point</h2><p>No statewide dashboard can tell you why a pattern occurred by itself. Use the Coach to choose a defensible first source and frame the next question; use local knowledge, institutional research, and current official definitions before making consequential decisions.</p></div></section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>CCC Data Smart</span></div></div><p class="footer-copy"><strong>CCC Data Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>

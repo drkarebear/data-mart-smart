@@ -1,7 +1,7 @@
-# CCC Data Smart Security Notes
+# Data Mart Smart Security Notes
 
 ## Intended data
-CCC Data Smart is designed for aggregate, public, or otherwise appropriately shareable CCC Data Mart exports. Do not use it for student-level records, credentials, protected education records, or confidential institutional data.
+Data Mart Smart is designed for aggregate, public, or otherwise appropriately shareable CCC Data Mart exports. Do not use it for student-level records, credentials, protected education records, or confidential institutional data.
 
 ## Architecture
 The site is static. It has no application backend, user accounts, application database, cookies, localStorage, sessionStorage, or analytics code. Spreadsheet parsing occurs in the browser.

@@ -47,9 +47,27 @@
     let district = "";
     let college = "";
     let awardType = "";
-    let period = "";
     let reportTitle = "";
     const records = [];
+
+    // Current Program Awards exports can contain several annual columns in one file.
+    // Detect every visible period column instead of assuming one hard-coded count column.
+    const periodColumns = [];
+    for (const sourceRow of rows) {
+      const row = Array.isArray(sourceRow) ? sourceRow : [];
+      const found = [];
+      row.forEach((cell, col) => {
+        const text = clean(cell);
+        const m = text.match(/(?:Annual\s+)?\d{4}-\d{4}/i);
+        if (m) found.push({ col, period: m[0] });
+      });
+      if (found.length) {
+        periodColumns.push(...found);
+        break;
+      }
+    }
+
+    const fallbackPeriod = firstMatch(rows, /(?:Annual\s+)?\d{4}-\d{4}/i);
 
     for (const sourceRow of rows) {
       const row = Array.isArray(sourceRow) ? sourceRow : [];
@@ -57,32 +75,50 @@
       const b = clean(row[1]);
       const c = clean(row[2]);
       const d = clean(row[3]);
-      const f = numberValue(row[5]);
 
       for (const cell of row) {
         const text = clean(cell);
         if (!reportTitle && /Program Awards Summary Report/i.test(text)) reportTitle = text;
-        if (!period && /(?:Annual\s+)?\d{4}-\d{4}/i.test(text)) {
-          const m = text.match(/(?:Annual\s+)?\d{4}-\d{4}/i);
-          if (m) period = m[0];
-        }
       }
 
       if (a && /\sTotal$/i.test(a)) district = a.replace(/\sTotal$/i, "").trim();
       if (b && /\sTotal$/i.test(b)) college = b.replace(/\sTotal$/i, "").trim();
       if (c && /\sTotal$/i.test(c)) awardType = c.replace(/\s+Total$/i, "").trim();
 
-      if (d) {
-        const match = d.match(/^(.*)-(\d{6})$/);
-        if (match && f !== null) {
+      if (!d) continue;
+      const match = d.match(/^(.*)-(\d{6})$/);
+      if (!match) continue;
+
+      if (periodColumns.length) {
+        for (const item of periodColumns) {
+          const count = numberValue(row[item.col]);
+          if (count === null) continue;
           records.push({
             district,
             college,
             awardType,
             program: match[1].trim(),
             top: match[2],
-            count: f,
-            period
+            count,
+            period: item.period
+          });
+        }
+      } else {
+        // Backward-compatible fallback for older one-period layouts.
+        let count = null;
+        for (let col = 4; col < row.length; col += 1) {
+          count = numberValue(row[col]);
+          if (count !== null) break;
+        }
+        if (count !== null) {
+          records.push({
+            district,
+            college,
+            awardType,
+            program: match[1].trim(),
+            top: match[2],
+            count,
+            period: fallbackPeriod
           });
         }
       }
@@ -92,7 +128,8 @@
       kind: "program-awards",
       records,
       district,
-      period,
+      period: [...new Set(records.map(r => r.period).filter(Boolean))][0] || fallbackPeriod,
+      periods: [...new Set(records.map(r => r.period).filter(Boolean))],
       reportTitle: reportTitle || "Program Awards Summary Report"
     };
   }

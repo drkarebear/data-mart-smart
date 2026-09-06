@@ -37,6 +37,9 @@
   ["dragleave", "drop"].forEach(type => els.drop.addEventListener(type, event => { event.preventDefault(); els.drop.classList.remove("dragover"); }));
   els.drop.addEventListener("drop", event => loadFiles([...event.dataTransfer.files]));
 
+  setStatus("District Compare is ready. Choose files or try the built-in example.");
+  if (new URLSearchParams(globalThis.location ? globalThis.location.search : "").get("demo") === "1") loadDemo();
+
   function parseRows(rows, kind) {
     if (kind === "course-details") return DataMartParsers.parseCourseDetails(rows);
     if (kind === "program-awards") return DataMartParsers.parseProgramAwards(rows);
@@ -130,6 +133,7 @@
     let periods = unique(records.map(r => r.period || r.term));
     if (state.kind === "student-headcount" && !periods.length) periods = unique(state.files.map(f => f.parsed.period));
     setOptions(els.period, periods.length ? periods : ["Period not identified"]);
+    if (state.kind === "program-awards" && periods.length) els.period.value = periods[periods.length - 1];
 
     if (state.kind === "student-headcount") {
       els.programWrap.hidden = true;

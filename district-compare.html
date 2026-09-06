@@ -6,21 +6,20 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="default-src 'self'; script-src 'self' https://cdn.sheetjs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.playlab.ai; base-uri 'self'; form-action 'self'; manifest-src 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
 <meta content="no-referrer" name="referrer"/>
-<title>District Compare | CCC Data Smart</title>
+<title>District Compare | Data Mart Smart</title>
 <meta content="Compare colleges within a California Community College district using compatible CCC Data Mart exports." name="description"/>
 <link href="favicon8.png" rel="icon" type="image/png"/>
 <link href="styles.css" rel="stylesheet"/>
-<script defer="" referrerpolicy="no-referrer" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script defer="" src="file-security.js"></script>
 <script defer="" src="data-mart-parsers.js"></script>
 <script defer="" src="district-compare.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<header class="site-header"><div class="container header-inner"><a aria-label="CCC Data Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">CCC Data Smart</span><span class="brand-tagline">A faculty-friendly guide to California Community Colleges data</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Data Tools</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
-<main id="main-content">
+<header class="site-header"><div class="container header-inner"><a aria-label="Data Mart Smart home" class="brand" href="index.html"><img alt="" src="favicon8.png"/><span><span class="brand-title">Data Mart Smart</span><span class="brand-tagline">Data Mart first. DataVista when it adds something.</span></span></a><nav aria-label="Primary navigation" class="site-nav"><ul><li><a href="index.html">Home</a></li><li><a href="start-here.html">Start Here</a></li><li><a href="data-tools.html">Which Tool?</a></li><li><a aria-current="page" href="explore-data.html">Explore Data</a></li><li><a href="reports.html">Guides &amp; Tasks</a></li><li><a href="coach.html">Ask the Coach</a></li></ul></nav></div></header>
+<main id="main-content"><noscript><div class="container"><div class="caution-box"><strong>JavaScript is required for District Compare.</strong> The comparison happens locally in your browser.</div></div></noscript>
 <section aria-labelledby="page-title" class="page-hero viewer-hero">
-<div class="container page-hero-inner">
+<div class="container page-hero-inner"><p class="breadcrumbs"><a href="index.html">Home</a> <span aria-hidden="true">/</span> <a href="explore-data.html">Explore Data</a> <span aria-hidden="true">/</span> District Compare</p>
 <p class="eyebrow">Compare colleges without building a pivot table</p>
 <h1 id="page-title">District Compare</h1>
 <p>Compare the same program and measure across the colleges in one California Community College district. Nine colleges is fine. The chart is designed to stay readable even in a large multi-college district.</p>
@@ -28,23 +27,23 @@
 </section>
 <section aria-labelledby="upload-heading">
 <div class="container content-narrow">
-<div class="viewer-privacy" role="note"><strong>Your spreadsheets stay in this browser tab.</strong> Files are read locally. They are not uploaded to CCC Data Smart.</div>
+<div class="viewer-privacy" role="note"><strong>Your spreadsheets stay in this browser tab.</strong> Files are read locally. They are not uploaded to Data Mart Smart.</div>
 <div class="upload-zone" id="districtDropZone">
 <div aria-hidden="true" class="upload-icon">⇧</div>
 <h2 id="upload-heading">Add a district-wide export or several college exports</h2>
-<p>A single broad export is easiest when it already contains all colleges. If Data Mart gives you separate files, add those together.</p>
+<p>A single broad export is easiest when it already contains all colleges. If Data Mart gives you separate files, add those together. <strong>CSV files work without loading the external Excel reader.</strong></p>
 <div class="viewer-actions">
 <button class="button button-primary" id="districtBrowseButton" type="button">Choose Excel or CSV files</button>
-<button class="button button-secondary" id="districtDemoButton" type="button">Try the 9-college LACCD example</button>
+<button class="button button-secondary" id="districtDemoButton" type="button">Try the built-in 9-college example</button>
 </div>
-<input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden="" aria-label="Choose district comparison Excel or CSV files" id="districtFileInput" multiple="" type="file"/>
+<input accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" aria-label="Choose district comparison Excel or CSV files" hidden="" id="districtFileInput" multiple="" type="file"/>
 </div>
 <p aria-live="polite" class="viewer-status" id="districtStatus" role="status"></p>
 </div>
 </section>
 <section aria-labelledby="guardrails-heading" class="section-cool">
 <div class="container content-narrow">
-<h2 id="guardrails-heading">What CCC Data Smart checks first</h2>
+<h2 id="guardrails-heading">What Data Mart Smart checks first</h2>
 <div aria-label="Comparison guardrails" class="comparison-check-row">
 <span>Same report</span><span>Same period</span><span>Same program definition</span><span>Same measure</span>
 </div>
@@ -113,10 +112,10 @@
 <div class="container content-narrow">
 <h2 id="supported-heading">Best exports for District Compare</h2>
 <p>District Compare currently has report-specific support for <strong>Course Details, Program Awards, Success &amp; Retention, Grade Distribution, and Student Headcount</strong>. Course Details is usually the best starting point for reported section comparisons.</p>
-<details class="reference-details"><summary>Why not every Data Mart report yet?</summary><div class="details-body"><p>Some Data Mart exports do not identify college, program, period, and measure in a structure that can be compared safely without additional testing. CCC Data Smart will not guess at those fields.</p></div></details>
+<details class="reference-details"><summary>Why not every Data Mart report yet?</summary><div class="details-body"><p>Some Data Mart exports do not identify college, program, period, and measure in a structure that can be compared safely without additional testing. Data Mart Smart will not guess at those fields.</p></div></details><details class="reference-details"><summary>If the Excel reader will not load</summary><div class="details-body"><p>The comparison page itself should still load and the built-in example should still work. Excel support is loaded only when you choose an .xlsx or .xls file. If that external reader is blocked or slow, export the same Data Mart result as <strong>CSV</strong> and try again; CSV is read locally without that dependency.</p></div></details>
 </div>
 </section>
 </main>
-<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>CCC Data Smart</span></div></div><p class="footer-copy"><strong>CCC Data Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
+<footer class="site-footer"><div class="container footer-grid"><div><div class="footer-brand"><img alt="" src="favicon8.png"/><span>Data Mart Smart</span></div></div><p class="footer-copy"><strong>Data Mart Smart is an independent, faculty-led educational project.</strong> It is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product and is not funded, sponsored, or endorsed by those entities. Data systems and definitions change. Verify consequential findings against current official CCCCO documentation and the appropriate local institutional sources.</p><ul aria-label="Project links" class="footer-links"><li><a href="about.html">About this project</a></li><li><a href="sources.html">Sources and methods</a></li><li><a href="https://datavista.cccco.edu/">Open official DataVista</a></li><li><a href="https://datamart.cccco.edu/">Open official CCC Data Mart</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></footer>
 </body>
 </html>

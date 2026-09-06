@@ -172,7 +172,7 @@ function renderGrade() {
 
   if (blankCount > 0) {
     gradeEls.gradeWarning.hidden = false;
-    gradeEls.gradeWarning.innerHTML = `<strong>Blank grade label preserved.</strong> ${formatGradeInteger(blankCount)} record${blankCount === 1 ? "" : "s"} in this selection had no visible grade-category label in the export. CCC Data Smart keeps ${blankCount === 1 ? "it" : "them"} instead of treating ${blankCount === 1 ? "it" : "them"} as zero or silently dropping ${blankCount === 1 ? "it" : "them"}.`;
+    gradeEls.gradeWarning.innerHTML = `<strong>Blank grade label preserved.</strong> ${formatGradeInteger(blankCount)} record${blankCount === 1 ? "" : "s"} in this selection had no visible grade-category label in the export. Data Mart Smart keeps ${blankCount === 1 ? "it" : "them"} instead of treating ${blankCount === 1 ? "it" : "them"} as zero or silently dropping ${blankCount === 1 ? "it" : "them"}.`;
   } else {
     gradeEls.gradeWarning.hidden = true;
     gradeEls.gradeWarning.textContent = "";

@@ -172,7 +172,7 @@ function renderHeadcountPage() {
   const unknown=records.filter(r=>/^X\s*-\s*Unknown$/i.test(r.status)).reduce((s,r)=>s+Number(r.count||0),0);
   if (unknown>0 && !headcountPageEls.headcountPageStatusFilter.value) {
     headcountPageEls.headcountPageWarning.hidden=false;
-    headcountPageEls.headcountPageWarning.innerHTML=`<strong>Unknown headcount status is included.</strong> ${formatHeadcountPageInteger(unknown)} selected student${unknown===1?"":"s"} are in the reported X - Unknown status category. CCC Data Smart keeps that category visible rather than redistributing it.`;
+    headcountPageEls.headcountPageWarning.innerHTML=`<strong>Unknown headcount status is included.</strong> ${formatHeadcountPageInteger(unknown)} selected student${unknown===1?"":"s"} are in the reported X - Unknown status category. Data Mart Smart keeps that category visible rather than redistributing it.`;
   } else {
     headcountPageEls.headcountPageWarning.hidden=true;
     headcountPageEls.headcountPageWarning.textContent="";

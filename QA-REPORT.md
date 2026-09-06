@@ -1,4 +1,4 @@
-# CCC Data Smart QA Report
+# Data Mart Smart QA Report
 
 **QA date:** September 6, 2026  
 **Scope:** Revised static GitHub Pages site, 50 HTML pages
@@ -16,7 +16,7 @@ This pass examined the site as a faculty-facing information and analysis tool ra
 - responsive layout risks;
 - privacy and local-file-processing claims;
 - safe spreadsheet handling and CSV export behavior;
-- consistent CCC Data Smart branding;
+- consistent Data Mart Smart branding;
 - JavaScript syntax.
 
 ## User-journey results
@@ -52,7 +52,7 @@ The H1 and introductory content now occur before the interactive uploader in the
 
 Breadcrumbs were added to active utility and workflow pages that lacked them. Current-data notes, examples, manual-export instructions, the college-comparison guide, and the program-review evidence map are now reachable from related pages.
 
-Generated filenames now use `ccc-data-smart-*` rather than the previous `data-mart-smart-*` branding.
+Generated filenames now use `data-mart-smart-*` rather than the previous `data-mart-smart-*` branding.
 
 ### Reflow and visual clarity
 
@@ -101,10 +101,14 @@ Before treating the revision as final, deploy it to GitHub Pages and do one live
 - actual Excel/CSV upload, analysis, comparison, and download workflows;
 - external links and the embedded Coach after deployment.
 
-## Recommended next build
+## Current spreadsheet-tool verification
 
-The site architecture is stable enough that the next development phase should be the **CCC Data Coach**. Its decision sequence should match the site:
+The District Compare and Program Awards pathways received an additional reliability pass after this QA report was first created. Spreadsheet pages no longer wait for the external Excel-reading library during page startup. CSV parsing works without that dependency, while Excel support loads on demand with a clear timeout/fallback message.
 
-**question → best source → appropriate DataVista view/Data Mart report/local source → population → metric → denominator → interpretation cautions**
+The Program Awards parser was also tested against a current multi-year CCCCO Program Awards workbook. It now detects multiple annual columns in a single export rather than assuming one fixed count column.
 
-After the Coach is updated, the next technical feature should be a tested DataVista CSV interpreter using representative exports from DataVista rather than inferred column structures.
+Static structural checks and JavaScript syntax checks were rerun after these changes and passed. The current Program Awards parser test produced records across all detected annual periods.
+
+## Recommended next live check
+
+After deployment to GitHub Pages, test District Compare with (1) the built-in demo, (2) a Data Mart CSV export, and (3) the current Program Awards Excel export on the network/browser environment faculty will actually use. This complements the static and parser-level checks performed locally.

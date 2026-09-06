@@ -4,7 +4,7 @@
   --navy-dark: #082e56;
   --blue: #1467c7;
   --teal: #087c78;
-  --green: #2f9b69;
+  --green: #2b7d58;
   --gold: #f5b51b;
   --purple: #7454bd;
   --ink: #17324d;
@@ -2656,7 +2656,7 @@ html { scroll-behavior: auto; }
   border: 1px solid var(--line);
   border-radius: .7rem;
   background: #fff;
-  color: var(--text);
+  color: var(--ink);
   padding: .65rem .8rem;
   font: inherit;
 }
@@ -3121,3 +3121,90 @@ html { scroll-behavior: auto; }
 .checkmark-list li { position: relative; padding-left: 1.8rem; margin-bottom: 0.65rem; }
 .checkmark-list li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 900; }
 @media print { .skip-link, .site-header, .site-footer { display: none !important; } }
+
+
+/* v21 QA polish: clearer first-step navigation and safer reflow */
+.hero-art { min-width: 0; max-width: 100%; }
+.hero-note { width: min(100%, 280px); overflow-wrap: anywhere; }
+.source-choice, .view-card, .pathway-card, .guide-card { min-width: 0; }
+.source-choice h3, .view-card h3, .pathway-card h3, .guide-card h3 { overflow-wrap: break-word; }
+@media (max-width: 1100px) {
+  .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .source-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .source-grid > :last-child:nth-child(odd) .card-link,
+  .source-grid > :last-child:nth-child(odd) .button { align-self: flex-start; }
+}
+@media (max-width: 850px) {
+  .source-grid { grid-template-columns: 1fr; }
+  .source-grid > :last-child:nth-child(odd) { grid-column: auto; }
+}
+@media (max-width: 980px) {
+  .datavista-view-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 650px) {
+  .datavista-view-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 1100px) {
+  .four-door-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .four-door-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- v22 CCC Data Coach: private question-first router ---------- */
+.coach-local-section { padding-block: clamp(2.4rem, 5vw, 4.2rem); }
+.coach-local-grid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(280px,.72fr); gap:1.4rem; align-items:start; }
+.coach-question-panel,
+.coach-example-panel { border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 10px 30px rgba(8,46,86,.06); padding:clamp(1.25rem,3vw,2rem); }
+.coach-question-panel h2,
+.coach-example-panel h2 { margin-top:0; color:var(--navy-dark); }
+.coach-question-label { display:block; margin:.8rem 0 .45rem; font-weight:800; color:var(--navy-dark); }
+#coachQuestion { width:100%; min-height:9.5rem; resize:vertical; padding:.9rem 1rem; border:2px solid #9eb4c7; border-radius:12px; background:#fff; color:var(--ink); font:inherit; line-height:1.5; }
+#coachQuestion:focus-visible { outline:4px solid var(--focus); outline-offset:3px; border-color:var(--navy); }
+.field-help { margin:.5rem 0 0; color:var(--muted); font-size:.92rem; }
+.coach-form-actions { display:flex; gap:.7rem; flex-wrap:wrap; align-items:center; margin-top:1rem; }
+.coach-browser-note { margin:1rem 0 0; padding:.8rem .9rem; border-left:4px solid var(--teal); background:var(--teal-soft); color:#244b55; border-radius:0 9px 9px 0; font-size:.92rem; }
+.coach-example-panel { background:linear-gradient(150deg,#f8fbff,#f1f8fb); }
+.coach-example-panel > p { color:var(--muted); }
+.coach-example-list { display:grid; gap:.65rem; }
+.coach-example-button { width:100%; min-height:46px; padding:.72rem .85rem; text-align:left; border:1px solid #abc5d8; border-radius:11px; background:#fff; color:var(--navy-dark); font:inherit; font-weight:750; cursor:pointer; }
+.coach-example-button:hover { border-color:var(--blue); background:var(--blue-soft); }
+.coach-result-section { padding-block:clamp(2.2rem,5vw,4rem); background:#f4f9fc; border-block:1px solid var(--line); scroll-margin-top:90px; }
+.coach-result { max-width:1050px; margin-inline:auto; padding:clamp(1.2rem,3vw,2rem); border:1px solid #b9d5e5; border-radius:20px; background:#fff; box-shadow:0 14px 34px rgba(8,46,86,.08); }
+.coach-result:focus { outline:none; }
+.coach-result h2 { margin:.05rem 0 .55rem; color:var(--navy-dark); }
+.coach-question-echo { margin:.35rem 0 1.2rem; color:var(--muted); }
+.coach-question-echo q { font-style:italic; }
+.coach-result-topline { display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; margin:.4rem 0 .6rem; font-size:1.1rem; }
+.coach-route-badge { display:inline-flex; align-items:center; min-height:32px; padding:.35rem .7rem; border-radius:999px; background:var(--navy); color:#fff; font-size:.8rem; font-weight:850; letter-spacing:.025em; }
+.coach-route-summary { margin:0 0 1.4rem; font-size:1.06rem; }
+.coach-result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.coach-result-card { min-width:0; padding:1.1rem 1.15rem; border:1px solid var(--line); border-radius:14px; background:#fff; }
+.coach-result-card h3 { margin:0 0 .45rem; color:var(--navy-dark); font-size:1.05rem; }
+.coach-result-card p:last-child,
+.coach-result-card ul:last-child,
+.coach-result-card ol:last-child { margin-bottom:0; }
+.coach-result-card-wide { grid-column:1 / -1; background:#f9fbfd; }
+.coach-caution-card { border-left:5px solid #946200; background:#fff9e9; }
+.coach-step-list { margin:.55rem 0 0; padding-left:1.3rem; }
+.coach-step-list li { margin:.5rem 0; padding-left:.2rem; }
+.coach-result-links { display:flex; flex-wrap:wrap; gap:.65rem; align-items:center; }
+.coach-result-links .button { margin:0; }
+.coach-method-note { margin:1.25rem 0 0; padding-top:1rem; border-top:1px solid var(--line); }
+.coach-how { padding-block:1rem; }
+.coach-sequence { padding:1rem 1.1rem; border-radius:12px; background:#fff; border:1px solid var(--line); text-align:center; overflow-wrap:anywhere; }
+.coach-ai-actions { display:flex; gap:.8rem; flex-wrap:wrap; align-items:center; padding:0 1rem 1rem; }
+.coach-ai-actions p { margin:0; }
+@media (max-width: 850px) {
+  .coach-local-grid,
+  .coach-result-grid { grid-template-columns:1fr; }
+  .coach-result-card-wide { grid-column:auto; }
+}
+@media (max-width: 620px) {
+  .coach-form-actions,
+  .coach-result-links,
+  .coach-ai-actions { align-items:stretch; flex-direction:column; }
+  .coach-form-actions .button,
+  .coach-result-links .button,
+  .coach-ai-actions .button { width:100%; text-align:center; }
+}

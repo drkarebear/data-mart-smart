@@ -1,6 +1,6 @@
-# CCC Data Smart
+# Data Mart Smart
 
-CCC Data Smart is an independent, faculty-led guide to choosing, understanding, and responsibly using California Community Colleges data.
+Data Mart Smart is an independent, faculty-led guide to choosing, understanding, and responsibly using California Community Colleges data.
 
 ## Core idea
 
@@ -30,4 +30,8 @@ The site was broadened from the original Data Mart Smart project after review of
 
 ## Independence
 
-CCC Data Smart is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product. Verify consequential findings against current official documentation and appropriate local institutional sources.
+Data Mart Smart is not an official California Community Colleges Chancellor's Office, DataVista, Data Mart, or local-college product. Verify consequential findings against current official documentation and appropriate local institutional sources.
+
+## September 2026 Coach update
+
+The Ask the Coach page now includes a private, browser-based question router that recommends DataVista, Data Mart, local institutional data, or a combination before the optional external Playlab assistant is loaded. See `COACH-UPDATE.md` for details.

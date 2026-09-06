@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   els.downloadCsv.addEventListener("click", downloadCsv);
   els.resetButton.addEventListener("click", resetViewer);
 
-  setStatus("Ready. Choose the included demo or drop a CCCCO Program Awards Excel export.", "neutral");
+  setStatus("Ready. Choose the included demo or drop a CCCCO Program Awards Excel or CSV export.", "neutral");
 });
 
 function preferredScrollBehavior() {
@@ -67,82 +67,36 @@ function loadDemo() {
 
 async function loadWorkbookFile(file) {
   const lower = file.name.toLowerCase();
-  if (!lower.endsWith(".xlsx") && !lower.endsWith(".xls")) {
-    setStatus("Please choose an Excel .xlsx or .xls Data Mart export.", "error");
-    return;
-  }
-  if (typeof XLSX === "undefined") {
-    setStatus("The spreadsheet reader did not load. Check your internet connection and reload this page.", "error");
+  if (!lower.endsWith(".xlsx") && !lower.endsWith(".xls") && !lower.endsWith(".csv")) {
+    setStatus("Please choose a Data Mart .xlsx, .xls, or .csv export.", "error");
     return;
   }
 
   setStatus(`Reading ${file.name} in your browser…`, "neutral");
   try {
-    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:false, defval:null});
-    const parsed = parseProgramAwards(rows);
+    const {rows} = await DataMartFileSecurity.readRows(file, {allowCsv:true, defval:null});
+    const parsed = DataMartParsers.parseProgramAwards(rows);
 
     if (parsed.records.length === 0) {
       throw new Error("I could not find program-level award rows in the expected CCCCO Program Awards Summary layout.");
     }
 
-    state.records = parsed.records;
+    const periods = (parsed.periods || [...new Set(parsed.records.map(r => r.period).filter(Boolean))]).sort();
+    const selectedPeriod = periods.length ? periods[periods.length - 1] : (parsed.period || "Period not detected");
+    state.records = periods.length ? parsed.records.filter(r => r.period === selectedPeriod) : parsed.records;
     state.sourceName = file.name;
     state.reportTitle = parsed.reportTitle || "Program Awards Summary Report";
-    state.period = parsed.period || "Period not detected";
+    state.period = selectedPeriod;
     state.district = parsed.district || "District not detected";
 
     const english = uniquePrograms().find(p => p.top === "150100" || p.program.toLowerCase() === "english");
     initializeWorkspace(english ? `${english.program} · TOP ${english.top}` : "");
-    setStatus(`Loaded ${state.records.length.toLocaleString()} program-award rows from ${file.name}. The file stayed in this browser tab.`, "success");
+    const multi = periods.length > 1 ? ` The export contains ${periods.length} annual periods; this viewer opened the latest (${selectedPeriod}). Use Compare & Trends for a multi-year view.` : "";
+    setStatus(`Loaded ${state.records.length.toLocaleString()} program-award rows from ${file.name}.${multi} The file stayed in this browser tab.`, "success");
   } catch (err) {
     console.error(err);
     setStatus(err.message || "I could not read this workbook.", "error");
   }
-}
-
-function parseProgramAwards(rows) {
-  let district = "";
-  let college = "";
-  let awardType = "";
-  let period = "";
-  let reportTitle = "";
-  const records = [];
-
-  for (const sourceRow of rows) {
-    const row = Array.isArray(sourceRow) ? sourceRow : [];
-    const a = clean(row[0]), b = clean(row[1]), c = clean(row[2]), d = clean(row[3]);
-    const f = row[5];
-
-    for (const cell of row) {
-      const text = clean(cell);
-      if (!reportTitle && /Program Awards Summary Report/i.test(text)) reportTitle = text;
-      if (!period && /(?:Annual\s+)?\d{4}-\d{4}/i.test(text)) {
-        const m = text.match(/(?:Annual\s+)?\d{4}-\d{4}/i);
-        if (m) period = m[0];
-      }
-    }
-
-    if (a && /\sTotal$/i.test(a)) district = a.replace(/\sTotal$/i, "").trim();
-    if (b && /\sTotal$/i.test(b)) college = b.replace(/\sTotal$/i, "").trim();
-    if (c && /\sTotal$/i.test(c)) awardType = c.replace(/\s+Total$/i, "").trim();
-
-    if (d) {
-      const match = d.match(/^(.*)-(\d{6})$/);
-      const count = Number(f);
-      if (match && Number.isFinite(count)) {
-        records.push({
-          district,
-          college,
-          awardType,
-          program: match[1].trim(),
-          top: match[2],
-          count,
-          period
-        });
-      }
-    }
-  }
-  return {records, district, period, reportTitle};
 }
 
 function clean(value) {
@@ -344,7 +298,7 @@ function resetViewer() {
   els.workspace.hidden = true;
   els.fileInput.value = "";
   els.programSearch.value = "";
-  setStatus("Reset. Choose the included demo or drop a CCCCO Program Awards Excel export.", "neutral");
+  setStatus("Reset. Choose the included demo or drop a CCCCO Program Awards Excel or CSV export.", "neutral");
   window.scrollTo({top:0, behavior:preferredScrollBehavior()});
   els.browseButton.focus();
 }
